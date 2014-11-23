@@ -2,7 +2,17 @@
 <resources>
 
     <string name="app_name">Freelancers</string>
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+
+    <!--Authentication activity-->
+    <string name="email_label">Email</string>
+    <string name="password_label">Password</string>
+    <string name="connect_button">Connect</string>
+    <string name="joinIn_button">Join in</string>
+
+    <!--JoinIn activity-->
+    <string name="lastname_label">Last name</string>
+    <string name="firstname_label">First name</string>
+    <string name="repeatPass_label">Repeat</string>
 
 </resources>
