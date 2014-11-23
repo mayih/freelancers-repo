@@ -4,15 +4,20 @@
     <string name="app_name">Freelancers</string>
     <string name="action_settings">Settings</string>
 
-    <!--Authentication activity-->
+    <!-- Authentication activity -->
     <string name="email_label">Email</string>
     <string name="password_label">Password</string>
     <string name="connect_button">Connect</string>
-    <string name="joinIn_button">Join in</string>
+    <string name="joinin_button">Join in</string>
 
-    <!--JoinIn activity-->
+    <!-- JoinIn activity -->
     <string name="lastname_label">Last name</string>
     <string name="firstname_label">First name</string>
     <string name="repeatPass_label">Repeat</string>
+    <string name="title_activity_sign_in">Sign In</string>
+
+
+    <string name="Welcome">Welcome home!</string>
+    <string name="title_activity_home">Home</string>
 
 </resources>
