@@ -22,6 +22,11 @@
             </intent-filter>
         </activity>
         <activity
+            android:name="il.bruzn.freelancers.JoinInActivity"
+            android:label="@string/title_activity_join_in"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
             android:name="il.bruzn.freelancers.HomeActivity"
             android:label="@string/title_activity_home" >
         </activity>
