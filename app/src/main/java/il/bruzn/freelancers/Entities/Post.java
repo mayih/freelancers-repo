@@ -3,8 +3,6 @@ package il.bruzn.freelancers.Entities;
 import java.util.ArrayList;
 import java.util.Date;
 
-import il.bruzn.freelancers.basic.Opinion;
-
 /**
  * Created by Moshe on 20/11/14.
  */

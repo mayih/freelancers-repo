@@ -20,4 +20,24 @@ public class Member {
 	private String _linkedIn;
 	private WayToPay _payment;
 
+	public String getEmail() {
+		return _email;
+	}
+	public Member setEmail(String email) {
+		_email = email;
+		return this;
+	}
+
+	public String getPassword() {
+		return _password;
+	}
+	public Member setPassword(String password) {
+		_password = password;
+		return this;
+	}
+
+
+	public boolean authenticate(String email, String password){
+		return (_email.equals(email) && _password.equals(password));
+	}
 }

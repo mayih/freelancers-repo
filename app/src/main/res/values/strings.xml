@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Freelancers</string>
+    <string name="app_name">Freelance-it</string>
     <string name="action_settings">Settings</string>
 
     <!-- Authentication activity -->
@@ -15,10 +15,11 @@
     <string name="title_activity_join_in">Join-In</string>
     <string name="lastname_edtext">Last name</string>
     <string name="firstname_edtext">First name</string>
-    <string name="repeatPass_label">Repeat password</string>
+    <string name="repeatpass_edtext">Repeat password</string>
 
-
-    <string name="Welcome">Welcome home!</string>
+    <!--Home activity-->
     <string name="title_activity_home">Home</string>
+    <string name="Welcome">Welcome home!</string>
+    <string name="disconnect_button">Disconnect</string>
 
 </resources>

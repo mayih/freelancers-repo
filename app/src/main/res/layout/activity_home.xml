@@ -9,8 +9,19 @@
                 tools:context="il.bruzn.freelancers.HomeActivity">
 
     <TextView
-        android:text="@string/Welcome"
+        android:id="@+id/welcometext"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
+
+    <Button
+        android:id="@+id/disconnect_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/welcometext"
+        android:text="@string/disconnect_button"
+        />
 
 </RelativeLayout>

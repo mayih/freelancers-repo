@@ -1,4 +1,6 @@
-package il.bruzn.freelancers.basic;
+package il.bruzn.freelancers.Entities;
+
+import il.bruzn.freelancers.basic.Level;
 
 /**
  * Created by Yair on 20/11/2014.
