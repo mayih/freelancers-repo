@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 import il.bruzn.freelancers.Entities.Member;
 import il.bruzn.freelancers.basic.ConnectedMember;
@@ -20,19 +21,14 @@ public class SignInActivity extends ActionBarActivity {
 	EditText	_email, _password;
 	Button		_connect, _joinin;
 
-	Member[] _members ={new Member().setEmail("yairopro").setPassword(""),
-						new Member().setEmail("mayih").setPassword(""),
-						new Member().setEmail("moshe").setPassword(""),
-						new Member().setEmail("ruben").setPassword(""),
-						new Member().setEmail("jeremy").setPassword(""),
-	};
+	ConnectedMember _coMembers;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		String email = getSharedPreferences(ConnectedMember.filename, MODE_PRIVATE).getString(ConnectedMember.key, null);
-		Member member = selectByEmail(email, _members);
+		Member member = selectByEmail(email, _coMembers.MembersArray);
 		if (member != null){ // Check if already connected
 			ConnectedMember.setMember(member);
 			startActivity(new Intent(this, HomeActivity.class));
@@ -57,7 +53,7 @@ public class SignInActivity extends ActionBarActivity {
 				// Check email and password
 				String email = _email.getText().toString(), password = _password.getText().toString();
 
-				Member member = selectByEmail(email, _members);
+				Member member = selectByEmail(email, _coMembers.MembersArray);
 				if (member != null && member.authenticate(email, password)) {
 					ConnectedMember.setMember(member);
 					SharedPreferences.Editor edit = getSharedPreferences(ConnectedMember.filename, MODE_PRIVATE).edit();
@@ -72,7 +68,7 @@ public class SignInActivity extends ActionBarActivity {
 		});
 	}
 
-	private Member selectByEmail(String email, Member[] members){
+	private Member selectByEmail(String email, ArrayList<Member> members){
 		for (Member member:members){
 			if (member.getEmail().equals(email))
 				return member;
