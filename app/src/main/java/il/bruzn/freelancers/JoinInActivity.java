@@ -93,7 +93,7 @@ public class JoinInActivity extends ActionBarActivity {
                         Toast.makeText(getApplicationContext(), "f", Toast.LENGTH_LONG).show();
 
                     } else if ((_password.getText().length() == 0) ||
-                            (_password.getText().equals(_repeatPassword.getText()))) {
+                            !_password.getText().toString().equals(_repeatPassword.getText().toString()) ) {
 
                     } else {
                             Member member = new Member().setEmail(_email.getText().toString()).setPassword(_password.getText().toString());
