@@ -1455,11 +1455,12 @@ containing a value of this type.
         public static final int lastname_edtext=0x7f0a0017;
         public static final int menu_closed=0x7f0a0018;
         public static final int menu_opened=0x7f0a0019;
-        public static final int password_edtext=0x7f0a001a;
-        public static final int repeatpass_edtext=0x7f0a001b;
-        public static final int title_activity_home=0x7f0a001c;
-        public static final int title_activity_join_in=0x7f0a001d;
-        public static final int title_activity_sign_in=0x7f0a001e;
+        public static final int name_allowed_digits=0x7f0a001a;
+        public static final int password_edtext=0x7f0a001b;
+        public static final int repeatpass_edtext=0x7f0a001c;
+        public static final int title_activity_home=0x7f0a001d;
+        public static final int title_activity_join_in=0x7f0a001e;
+        public static final int title_activity_sign_in=0x7f0a001f;
     }
     public static final class style {
         /**  Customize your theme here. 

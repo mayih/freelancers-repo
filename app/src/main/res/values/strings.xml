@@ -11,11 +11,12 @@
 	<string name="connect_button">Connect</string>
 	<string name="joinin_button">Join in</string>
 
-	<!-- JoinIn activity -->
-	<string name="title_activity_join_in">Join-In</string>
-	<string name="lastname_edtext">Last name</string>
-	<string name="firstname_edtext">First name</string>
-	<string name="repeatpass_edtext">Repeat password</string>
+    <!-- JoinIn activity -->
+    <string name="title_activity_join_in">Join-In</string>
+    <string name="lastname_edtext">Last name</string>
+    <string name="firstname_edtext">First name</string>
+    <string name="repeatpass_edtext">Repeat password</string>
+    <string name="name_allowed_digits">azeéèrtyuiopqsdfghjklmwxcçvbnAZERTYUIOPQSDFGHJKLMWXCVBN</string>
 
 	<!--Home activity-->
 	<string name="title_activity_home">Home</string>

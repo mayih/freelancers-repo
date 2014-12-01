@@ -175,6 +175,7 @@
     <string name="lastname_edtext">Last name</string>
     <string name="menu_closed">Menu closed</string>
     <string name="menu_opened">Menu opened</string>
+    <string name="name_allowed_digits">azeéèrtyuiopqsdfghjklmwxcçvbnAZERTYUIOPQSDFGHJKLMWXCVBN</string>
     <string name="password_edtext">Password</string>
     <string name="repeatpass_edtext">Repeat password</string>
     <string name="title_activity_home">Home</string>

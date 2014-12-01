@@ -478,11 +478,12 @@ int string joinin_button 0x7f0a0016
 int string lastname_edtext 0x7f0a0017
 int string menu_closed 0x7f0a0018
 int string menu_opened 0x7f0a0019
-int string password_edtext 0x7f0a001a
-int string repeatpass_edtext 0x7f0a001b
-int string title_activity_home 0x7f0a001c
-int string title_activity_join_in 0x7f0a001d
-int string title_activity_sign_in 0x7f0a001e
+int string name_allowed_digits 0x7f0a001a
+int string password_edtext 0x7f0a001b
+int string repeatpass_edtext 0x7f0a001c
+int string title_activity_home 0x7f0a001d
+int string title_activity_join_in 0x7f0a001e
+int string title_activity_sign_in 0x7f0a001f
 int style AppTheme 0x7f0b0000
 int style Base_TextAppearance_AppCompat 0x7f0b0001
 int style Base_TextAppearance_AppCompat_Body1 0x7f0b0002
