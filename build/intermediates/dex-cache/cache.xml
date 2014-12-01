@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<pre-dex-items>
+
+    <item
+        dex="C:\Users\yairo_000\Documents\Java-Projects\Freelancers\app\build\intermediates\pre-dexed\debug\classes-cc15ee08dc0080457a73acc84cdde3cae77af050.jar"
+        jar="C:\Users\yairo_000\Documents\Java-Projects\Freelancers\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\21.0.0\classes.jar"
+        jumboMode="false"
+        revision="21.1.0"
+        sha1="95fd37732ec852e99f07eeb516a3650172f1d136"/>
+    <item
+        dex="C:\Users\yairo_000\Documents\Java-Projects\Freelancers\app\build\intermediates\pre-dexed\debug\internal_impl-21.0.0-535d54c36768f9745eda3a5101112ac5e4b32a2b.jar"
+        jar="C:\Users\yairo_000\Documents\Java-Projects\Freelancers\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.0\libs\internal_impl-21.0.0.jar"
+        jumboMode="false"
+        revision="21.1.0"
+        sha1="1609e6d42d0480b0f4188e2c29f75388fa12a8f0"/>
+    <item
+        dex="C:\Users\yairo_000\Documents\Java-Projects\Freelancers\app\build\intermediates\pre-dexed\debug\classes-d1788415daf08ee436d00fba23d0be51849224bd.jar"
+        jar="C:\Users\yairo_000\Documents\Java-Projects\Freelancers\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.0\classes.jar"
+        jumboMode="false"
+        revision="21.1.0"
+        sha1="686344a780033e4ba22b926cd225f8d4941247e6"/>
+    <item
+        dex="C:\Users\yairo_000\Documents\Java-Projects\Freelancers\app\build\intermediates\pre-dexed\debug\support-annotations-21.0.0-673f5d72a763bcdd65c7f688eb500fea6a5a8d71.jar"
+        jar="C:\Users\yairo_000\ANDROID\sdk\extras\android\m2repository\com\android\support\support-annotations\21.0.0\support-annotations-21.0.0.jar"
+        jumboMode="false"
+        revision="21.1.0"
+        sha1="1a578b9607b36266c63d43a4fa0ab5664dbe911e"/>
+
+</pre-dex-items>

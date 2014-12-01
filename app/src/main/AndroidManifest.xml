@@ -8,10 +8,6 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
         <activity
-            android:name="il.bruzn.freelancers.MainActivity"
-            android:label="@string/app_name" >
-        </activity>
-        <activity
             android:name="il.bruzn.freelancers.SignInActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait">
@@ -26,7 +22,7 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="il.bruzn.freelancers.HomeActivity"
+            android:name=".MainActivity"
             android:label="@string/title_activity_home">
         </activity>
     </application>

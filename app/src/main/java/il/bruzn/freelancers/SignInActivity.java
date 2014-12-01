@@ -7,9 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Toast;
-
-import java.lang.reflect.Array;
 
 import il.bruzn.freelancers.Entities.Member;
 import il.bruzn.freelancers.basic.ConnectedMember;
@@ -19,6 +18,7 @@ public class SignInActivity extends ActionBarActivity {
 
 	EditText	_email, _password;
 	Button		_connect, _joinin;
+	ListView	_menu;
 
 	Member[] _members ={new Member().setEmail("yairopro").setPassword(""),
 						new Member().setEmail("mayih").setPassword(""),
@@ -35,39 +35,39 @@ public class SignInActivity extends ActionBarActivity {
 		Member member = selectByEmail(email, _members);
 		if (member != null){ // Check if already connected
 			ConnectedMember.setMember(member);
-			startActivity(new Intent(this, HomeActivity.class));
+			startActivity(new Intent(this, MainActivity.class));
 			finish();
 		}
 
 		setContentView(R.layout.activity_sign_in);
-		_email		= (EditText) findViewById(R.id.email);
-		_password	= (EditText) findViewById(R.id.password);
-		_connect	= (Button) findViewById(R.id.connect_button);
-		_joinin		= (Button) findViewById(R.id.joinin_button);
+		_email		= (EditText)findViewById(R.id.email);
+		_password	= (EditText)findViewById(R.id.password);
+		_connect	= (Button)	findViewById(R.id.connect_button);
+		_joinin		= (Button)	findViewById(R.id.joinin_button);
 
 		_joinin.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				startActivity(new Intent(SignInActivity.this, JoinInActivity.class));
+			startActivity(new Intent(SignInActivity.this, JoinInActivity.class));
 			}
 		});
 		_connect.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				// Check email and password
-				String email = _email.getText().toString(), password = _password.getText().toString();
+			// Check email and password
+			String email = _email.getText().toString(), password = _password.getText().toString();
 
-				Member member = selectByEmail(email, _members);
-				if (member != null && member.authenticate(email, password)) {
-					ConnectedMember.setMember(member);
-					SharedPreferences.Editor edit = getSharedPreferences(ConnectedMember.filename, MODE_PRIVATE).edit();
-					edit.putString(ConnectedMember.key, member.getEmail()).commit();
+			Member member = selectByEmail(email, _members);
+			if (member != null && member.authenticate(email, password)) {
+				ConnectedMember.setMember(member);
+				SharedPreferences.Editor edit = getSharedPreferences(ConnectedMember.filename, MODE_PRIVATE).edit();
+				edit.putString(ConnectedMember.key, member.getEmail()).commit();
 
-					startActivity(new Intent(SignInActivity.this, HomeActivity.class));
-					finish();
-				}
-				else
-					Toast.makeText(getApplicationContext(), "The email or the password doesn't match with our datas", Toast.LENGTH_LONG).show();
+				startActivity(new Intent(SignInActivity.this, MainActivity.class));
+				finish();
+			}
+			else
+				Toast.makeText(getApplicationContext(), "The email or the password doesn't match with our datas", Toast.LENGTH_LONG).show();
 			}
 		});
 	}
