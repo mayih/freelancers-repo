@@ -1,8 +1,6 @@
 package il.bruzn.freelancers.basic;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import il.bruzn.freelancers.Entities.Member;
 
@@ -10,7 +8,7 @@ import il.bruzn.freelancers.Entities.Member;
  * Created by Yair on 24/11/2014.
  */
 public class ConnectedMember {
-	private static Member instance = null;
+	private static Member theOneConnected = null;
 	public static String filename = "connected_member";
 	public static String key = "email";
 
@@ -22,16 +20,16 @@ public class ConnectedMember {
             add(new Member().setEmail("jeremy").setPassword(""));}};
 
 	public static void nullMember(){
-		instance = null;
+		theOneConnected = null;
 	}
 	public static Member initInstance(){
-		instance = new Member();
-		return instance;
+		theOneConnected = new Member();
+		return theOneConnected;
 	}
 	public static Member getMember(){
-		return instance;
+		return theOneConnected;
 	}
 	public static void setMember(Member member){
-		instance = member;
+		theOneConnected = member;
 	}
 }

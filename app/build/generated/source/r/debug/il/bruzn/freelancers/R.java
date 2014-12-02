@@ -1303,10 +1303,12 @@ containing a value of this type.
         public static final int abc_textfield_search_default_mtrl_alpha=0x7f020031;
         public static final int abc_textfield_search_material=0x7f020032;
         public static final int disconect_icon=0x7f020033;
-        public static final int home_icon=0x7f020034;
-        public static final int ic_launcher=0x7f020035;
-        public static final int profile_icon=0x7f020036;
-        public static final int settings_icon=0x7f020037;
+        public static final int disconnect_icon=0x7f020034;
+        public static final int home_icon=0x7f020035;
+        public static final int ic_launcher=0x7f020036;
+        public static final int inbox_icon=0x7f020037;
+        public static final int profile_icon=0x7f020038;
+        public static final int settings_icon=0x7f020039;
     }
     public static final class id {
         public static final int action_bar=0x7f080033;
@@ -1422,9 +1424,9 @@ containing a value of this type.
         public static final int activity_main=0x7f030018;
         public static final int activity_sign_in=0x7f030019;
         public static final int fragment_home=0x7f03001a;
-        public static final int fragment_menu=0x7f03001b;
-        public static final int fragment_profile=0x7f03001c;
-        public static final int fragment_settings=0x7f03001d;
+        public static final int fragment_inbox=0x7f03001b;
+        public static final int fragment_menu=0x7f03001c;
+        public static final int fragment_profile=0x7f03001d;
         public static final int item_menu=0x7f03001e;
         public static final int support_simple_spinner_dropdown_item=0x7f03001f;
     }

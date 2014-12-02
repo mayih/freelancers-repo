@@ -12,12 +12,12 @@ import il.bruzn.freelancers.R;
 /**
  * Created by Yair on 01/12/2014.
  */
-public class SettingsFragment  extends Fragment {
+public class InboxFragment extends Fragment {
 
 	@Nullable
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View layout = inflater.inflate(R.layout.fragment_settings, container, false);
+		View layout = inflater.inflate(R.layout.fragment_inbox, container, false);
 		return layout;
 	}
 }

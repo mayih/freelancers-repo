@@ -26,8 +26,8 @@ public class MenuFragment extends Fragment {
 	private ListView _listView;
 	static ItemMenu[] _menu = {	new ItemMenu(R.drawable.home_icon,		"Home",		new HomeFragment()),
 								new ItemMenu(R.drawable.profile_icon,	"Profile",	new ProfileFragment()),
-								new ItemMenu(R.drawable.settings_icon,	"Settings",	new SettingsFragment()),
-								new ItemMenu(R.drawable.disconect_icon,	"Disconnect"), };
+								new ItemMenu(R.drawable.inbox_icon,		"Inbox",	new InboxFragment()),
+								new ItemMenu(R.drawable.disconnect_icon,"Disconnect"), };
 
 	@Override
 	public void onAttach(Activity activity) {
@@ -46,7 +46,7 @@ public class MenuFragment extends Fragment {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 			_listView.setItemChecked(position, true);	// Show the button has been clicked
-			_activity.menuItemClicked(_menu[position].getFragment()); // Change the main activity
+			_activity.menuItemClicked(position); // Change the main activity
 			}
 		});
 
@@ -75,6 +75,6 @@ public class MenuFragment extends Fragment {
 	} // The listView adapter which will fill the view
 
 	public interface iMenulistener {
-		public void menuItemClicked(Fragment item);
+		public void menuItemClicked(int item);
 	}
 }
