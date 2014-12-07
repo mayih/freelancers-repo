@@ -14,7 +14,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="il.bruzn.freelancers.SignInActivity"
+            android:name="il.bruzn.freelancers.Controller.SignInActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
             <intent-filter>
@@ -24,12 +24,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="il.bruzn.freelancers.JoinInActivity"
+            android:name="il.bruzn.freelancers.Controller.JoinInActivity"
             android:label="@string/title_activity_join_in"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="il.bruzn.freelancers.MainActivity"
+            android:name="il.bruzn.freelancers.Controller.MainActivity"
             android:label="@string/title_activity_home" >
         </activity>
     </application>

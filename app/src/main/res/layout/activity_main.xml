@@ -16,7 +16,7 @@
 		android:id="@+id/menu_fragment"
 		android:layout_width="250dp"
 		android:layout_height="fill_parent"
-		android:name="il.bruzn.freelancers.fragments.MenuFragment"
+		android:name="il.bruzn.freelancers.Controller.fragments.MenuFragment"
 		android:layout_gravity="left"
 		tools:layout="@layout/fragment_menu"
 		>

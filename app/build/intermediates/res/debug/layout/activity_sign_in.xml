@@ -2,7 +2,7 @@
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                tools:context="il.bruzn.freelancers.SignInActivity"
+                tools:context="il.bruzn.freelancers.Controller.SignInActivity"
                 android:gravity="center">
         <EditText
             android:id="@+id/email"
