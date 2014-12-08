@@ -1343,13 +1343,19 @@ containing a value of this type.
         public static final int firstname_edtext=0x7f080043;
         public static final int home=0x7f080004;
         public static final int homeAsUp=0x7f08000d;
+        public static final int home_listview=0x7f08004d;
         public static final int icon=0x7f080028;
         public static final int ifRoom=0x7f080018;
         public static final int image=0x7f080025;
+        public static final int item_opinion_mark=0x7f080052;
+        public static final int item_opinion_name=0x7f080051;
+        public static final int item_profile_mark=0x7f080055;
+        public static final int item_profile_name=0x7f080054;
         public static final int joinin_button=0x7f080046;
         public static final int lastname_edtext=0x7f080042;
         public static final int listMode=0x7f080009;
         public static final int list_item=0x7f080027;
+        public static final int list_opinions=0x7f080056;
         public static final int main_container=0x7f080048;
         public static final int main_drawerlayout=0x7f080047;
         public static final int menu_fragment=0x7f080049;
@@ -1383,11 +1389,11 @@ containing a value of this type.
         public static final int split_action_bar=0x7f080007;
         public static final int submit_area=0x7f08003e;
         public static final int tabMode=0x7f08000b;
+        public static final int textView3=0x7f080053;
         public static final int title=0x7f080029;
         public static final int top=0x7f08001f;
         public static final int up=0x7f080008;
         public static final int useLogo=0x7f080012;
-        public static final int welcometext=0x7f08004d;
         public static final int withText=0x7f08001a;
         public static final int wrap_content=0x7f08001d;
     }
@@ -1426,7 +1432,9 @@ containing a value of this type.
         public static final int fragment_menu=0x7f03001c;
         public static final int fragment_profile=0x7f03001d;
         public static final int item_menu=0x7f03001e;
-        public static final int support_simple_spinner_dropdown_item=0x7f03001f;
+        public static final int item_opinion=0x7f03001f;
+        public static final int item_profile=0x7f030020;
+        public static final int support_simple_spinner_dropdown_item=0x7f030021;
     }
     public static final class string {
         public static final int Welcome=0x7f0a0000;

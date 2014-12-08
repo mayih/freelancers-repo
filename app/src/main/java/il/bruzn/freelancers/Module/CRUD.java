@@ -1,21 +1,23 @@
 package il.bruzn.freelancers.Module;
 
+import java.util.ArrayList;
+
 /**
  * Created by Yair on 02/12/2014.
  */
 public interface CRUD<T> {
 
 	// Create
-	public T	add(T entry);
+	public CRUD<T>	add(T entry);
 
 	// Read
-	public T[]	selectAll();
 	public T	selectById(int Id);
-	public T[]	selectBy(String field, String value);
+	public	ArrayList<T> selectAll();
+	public	ArrayList<T>	selectBy(String field, String value);
 
 	// Update
-	public void	update(T entry);
+	public CRUD<T>	update(T entry);
 
 	//Delete
-	public void delete(T entry);
+	public CRUD<T> delete(T entry);
 }

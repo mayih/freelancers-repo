@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import il.bruzn.freelancers.Module.Entities.Member;
 import il.bruzn.freelancers.Module.ConnectedMember;
+import il.bruzn.freelancers.Module.Module;
 import il.bruzn.freelancers.R;
 
 
@@ -93,8 +94,11 @@ public class JoinInActivity extends ActionBarActivity {
                             !_password.getText().toString().equals(_repeatPassword.getText().toString()) ) {
 
                     } else {
-                            Member member = new Member().setEmail(_email.getText().toString()).setPassword(_password.getText().toString());
-                            _coMember.MembersArray.add(member);
+                            Member member = new Member().setEmail(_email.getText().toString())
+														.setPassword(_password.getText().toString())
+														.setFirstName(_firstName.getText().toString())
+														.setLastName(_lastName.getText().toString());
+                            Module.get_memberRepo().add(member);
 
                             Intent i = new Intent(JoinInActivity.this, SignInActivity.class);
                             startActivity(i);
@@ -108,12 +112,7 @@ public class JoinInActivity extends ActionBarActivity {
 
     private boolean memberIsExist(String email)
     {
-        for (Member m : _coMember.MembersArray){
-            if(email.equals(m.getEmail())){
-                return true;
-            }
-        }
-        return false;
+        return Module.get_memberRepo().selectByEmail(email) != null;
     }
 
 

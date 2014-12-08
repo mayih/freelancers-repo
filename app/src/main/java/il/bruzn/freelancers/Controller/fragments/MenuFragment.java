@@ -15,6 +15,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import il.bruzn.freelancers.Controller.MainActivity;
 import il.bruzn.freelancers.R;
 
 /**
@@ -32,7 +33,7 @@ public class MenuFragment extends ListFragment {
 	@Override
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
-		_activity = (iMenulistener)activity;
+		iMenulistener a = new MainActivity();
 	}
 
 	@Nullable
@@ -51,8 +52,8 @@ public class MenuFragment extends ListFragment {
 		getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				getListView().setItemChecked(position, true);	// Show the button has been clicked
-				_activity.menuItemClicked(position); // Change the main activity
+				getListView().setItemChecked(position, true);    // Show the button has been clicked
+				((iMenulistener)getActivity()).menuItemClicked(position); // Change the main activity
 			}
 		});
 	}

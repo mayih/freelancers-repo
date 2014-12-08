@@ -20,22 +20,74 @@ public class Member {
 	private String _linkedIn;
 	private WayToPay _payment;
 
-	public String getEmail() {
-		return _email;
+	// Not in table
+	private ArrayList<Opinion> _opinionsOnMe = new ArrayList<Opinion>();
+
+	// Methods  ----
+	public double getAverage(){
+		double average = 0d;
+		if (_opinionsOnMe.size() != 0) {
+			for (Opinion op : _opinionsOnMe) {
+				average += op.getLevel().getValue();
+			}
+			average /= _opinionsOnMe.size();
+		}
+		return average;
+	}
+
+	// Getters & Setters ----
+	public Member setPassword(String password) {
+		_password = password;
+		return this;
 	}
 	public Member setEmail(String email) {
 		_email = email;
 		return this;
 	}
+	public Member setLastName(String lastName) {
+		_lastName = lastName;
+		return this;
+	}
+	public Member setFirstName(String firstName) {
+		_firstName = firstName;
+		return this;
+	}
+	public Member setOpinionsOnMe(ArrayList<Opinion> opinionsOnMe) {
+		_opinionsOnMe = opinionsOnMe;
+		return this;
+	}
+
 
 	public String getPassword() {
 		return _password;
 	}
-	public Member setPassword(String password) {
-		_password = password;
-		return this;
+	public String getEmail() {
+		return _email;
 	}
-
+	public int getId() {
+		return id;
+	}
+	public String getLastName() {
+		return _lastName;
+	}
+	public String getFirstName() {
+		return _firstName;
+	}
+	public Location getAddress() {
+		return _address;
+	}
+	public String getPhoneNumber() {
+		return _phoneNumber;
+	}
+	public ArrayList<Member> getFavorites() {
+		return _favorites;
+	}
+	public Picture getPicture() {
+		return _picture;
+	}
+	public ArrayList<Opinion> getOpinionsOnMe() {
+		return _opinionsOnMe;
+	}
 
 	public boolean authenticate(String email, String password){
 		return (_email.equals(email) && _password.equals(password));

@@ -13,6 +13,7 @@ import java.util.ArrayList;
 
 import il.bruzn.freelancers.Module.Entities.Member;
 import il.bruzn.freelancers.Module.ConnectedMember;
+import il.bruzn.freelancers.Module.Module;
 import il.bruzn.freelancers.R;
 
 
@@ -21,18 +22,21 @@ public class SignInActivity extends ActionBarActivity {
 	EditText	_email, _password;
 	Button		_connect, _joinin;
 
-	ConnectedMember _coMember;
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
+		if (Module.get_memberRepo() == null) // If the technologie hasn't been instanced
+			Module.create();
+
+		// Check if the user is already connected
 		String email = getSharedPreferences(ConnectedMember.filename, MODE_PRIVATE).getString(ConnectedMember.key, null);
-		Member member = selectByEmail(email, _coMember.MembersArray);
+		Member member = Module.get_memberRepo().selectByEmail(email);
 		if (member != null){ // Check if already connected
 			ConnectedMember.setMember(member);
 			startActivity(new Intent(this, MainActivity.class));
 			finish();
+			return;
 		}
 
 		setContentView(R.layout.activity_sign_in);
@@ -52,7 +56,7 @@ public class SignInActivity extends ActionBarActivity {
 			public void onClick(View v) {
 			// Check email and password
 			String email = _email.getText().toString(), password = _password.getText().toString();
-			Member member = selectByEmail(email, _coMember.MembersArray);
+			Member member = Module.get_memberRepo().selectByEmail(email);
 			if (member != null && member.authenticate(email, password)) {
 				ConnectedMember.setMember(member);
 				SharedPreferences.Editor edit = getSharedPreferences(ConnectedMember.filename, MODE_PRIVATE).edit();
@@ -65,13 +69,5 @@ public class SignInActivity extends ActionBarActivity {
 				Toast.makeText(getApplicationContext(), "The email or the password doesn't match with our datas", Toast.LENGTH_LONG).show();
 			}
 		});
-	}
-
-	private Member selectByEmail(String email, ArrayList<Member> members){
-		for (Member member:members){
-			if (member.getEmail().equals(email))
-				return member;
-		}
-		return null;
 	}
 }

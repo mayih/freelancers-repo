@@ -3,6 +3,7 @@ package il.bruzn.freelancers.Module;
 import java.util.ArrayList;
 
 import il.bruzn.freelancers.Module.Entities.Member;
+import il.bruzn.freelancers.Module.Entities.Opinion;
 
 /**
  * Created by Yair on 24/11/2014.
@@ -12,12 +13,7 @@ public class ConnectedMember {
 	public static String filename = "connected_member";
 	public static String key = "email";
 
-    public static ArrayList<Member> MembersArray = new ArrayList(){{
-            add(new Member().setEmail("yairopro").setPassword(""));
-            add(new Member().setEmail("mayih").setPassword(""));
-            add(new Member().setEmail("moshe").setPassword(""));
-            add(new Member().setEmail("ruben").setPassword(""));
-            add(new Member().setEmail("jeremy").setPassword(""));}};
+
 
 	public static void nullMember(){
 		theOneConnected = null;
