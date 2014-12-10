@@ -1,8 +1,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                tools:context="il.bruzn.freelancers.SignInActivity"
                 android:gravity="center">
         <EditText
             android:id="@+id/email"
@@ -45,4 +43,4 @@
             />
 
 </RelativeLayout>
-<!-- From: file:/C:/Users/yairo_000/Documents/Java-Projects/Freelancers/app/src/main/res/layout/activity_sign_in.xml -->
+<!-- From: file:/Users/Moshe/AndroidStudioProjects/Freelancers/app/src/main/res/layout/activity_sign_in.xml -->

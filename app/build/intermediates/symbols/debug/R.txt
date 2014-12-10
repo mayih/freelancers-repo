@@ -369,14 +369,14 @@ int id email_edtext 0x7f080041
 int id end 0x7f080014
 int id expand_activities_button 0x7f080024
 int id expanded_menu 0x7f08002a
-int id firstname_edtext 0x7f080043
+int id firstname_edtext 0x7f080042
 int id home 0x7f080004
 int id homeAsUp 0x7f08000d
 int id icon 0x7f080028
 int id ifRoom 0x7f080018
 int id image 0x7f080025
 int id joinin_button 0x7f080046
-int id lastname_edtext 0x7f080042
+int id lastname_edtext 0x7f080043
 int id listMode 0x7f080009
 int id list_item 0x7f080027
 int id main_container 0x7f080048

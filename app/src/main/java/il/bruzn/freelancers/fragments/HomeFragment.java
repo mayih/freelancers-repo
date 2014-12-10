@@ -28,6 +28,7 @@ public class HomeFragment extends Fragment {
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 
+
 		TextView welcome = (TextView)getActivity().findViewById(R.id.welcometext);
 		welcome.setText("Welcome " + ConnectedMember.getMember().getEmail());
 	}
