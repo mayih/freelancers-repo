@@ -1341,7 +1341,7 @@ containing a value of this type.
         public static final int end=0x7f090014;
         public static final int expand_activities_button=0x7f090024;
         public static final int expanded_menu=0x7f09002a;
-        public static final int firstname_edtext=0x7f090043;
+        public static final int firstname_edtext=0x7f090042;
         public static final int home=0x7f090004;
         public static final int homeAsUp=0x7f09000d;
         public static final int home_listview=0x7f09004d;
@@ -1354,7 +1354,7 @@ containing a value of this type.
         public static final int item_profile_mark=0x7f090059;
         public static final int item_profile_name=0x7f090058;
         public static final int joinin_button=0x7f090046;
-        public static final int lastname_edtext=0x7f090042;
+        public static final int lastname_edtext=0x7f090043;
         public static final int listMode=0x7f090009;
         public static final int list_item=0x7f090027;
         public static final int list_opinons_in_profile_item=0x7f09005a;
@@ -1435,12 +1435,13 @@ containing a value of this type.
         public static final int fragment_inbox=0x7f03001b;
         public static final int fragment_menu=0x7f03001c;
         public static final int fragment_profile=0x7f03001d;
-        public static final int item_menu=0x7f03001e;
-        public static final int item_message_other=0x7f03001f;
-        public static final int item_message_self=0x7f030020;
-        public static final int item_opinion=0x7f030021;
-        public static final int item_profile=0x7f030022;
-        public static final int support_simple_spinner_dropdown_item=0x7f030023;
+        public static final int item_discussion=0x7f03001e;
+        public static final int item_menu=0x7f03001f;
+        public static final int item_message_other=0x7f030020;
+        public static final int item_message_self=0x7f030021;
+        public static final int item_opinion=0x7f030022;
+        public static final int item_profile=0x7f030023;
+        public static final int support_simple_spinner_dropdown_item=0x7f030024;
     }
     public static final class string {
         public static final int Welcome=0x7f0b0000;

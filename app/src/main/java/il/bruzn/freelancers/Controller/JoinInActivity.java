@@ -27,68 +27,42 @@ public class JoinInActivity extends ActionBarActivity {
     private EditText _repeatPassword;
     private Button _joinIn;
 
-    private void editTextValid(final EditText e, final String Pattern){
-
-        e.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (!e.getText().toString().matches(Pattern) && e.getText().toString().length() != 0){
-                    e.setTextColor(Color.RED);
-
-                }
-                else  e.setTextColor(Color.BLACK);
-
-            }
-        });
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_join_in);
 
-        _email = (EditText)findViewById(R.id.email_edtext);
+        _email = (EditText)findViewById(R.id.email_edtext); //field email
         editTextValid(_email, _emailPattern);
 
-        _lastName = (EditText)findViewById(R.id.lastname_edtext);
-        editTextValid(_lastName, _namePattern);
-
-
-        _firstName = (EditText)findViewById(R.id.firstname_edtext);
+        _firstName = (EditText)findViewById(R.id.firstname_edtext); //field firstname
         editTextValid(_firstName, _namePattern);
 
-        _password = (EditText)findViewById(R.id.password_edtext);
-        _repeatPassword = (EditText)findViewById(R.id.repeatpass_edtext);
+        _lastName = (EditText)findViewById(R.id.lastname_edtext); //field lastName
+        editTextValid(_lastName, _namePattern);
 
-        _joinIn = (Button)findViewById(R.id.joinin_button);
+        _password = (EditText)findViewById(R.id.password_edtext); //field password
+        _repeatPassword = (EditText)findViewById(R.id.repeatpass_edtext);//field rpassword
+
+        _joinIn = (Button)findViewById(R.id.joinin_button);//Button Join-in
+
+        //#####-- Click Join-In --#####
         _joinIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 if (!memberIsExist(_email.getText().toString())) {
 
-                    if ((!_email.getText().toString().matches(_emailPattern)) ||
-                            (_email.getText().length() == 0)) {
-                        Toast.makeText(getApplicationContext(), "e", Toast.LENGTH_LONG).show();
+                    if ((!_email.getText().toString().matches(_emailPattern)) || //if is not a mail or
+                            (_email.getText().toString().isEmpty())) {
+                    }
+                    else if (_firstName.getText().toString().isEmpty()) {
 
-                    } else if (_lastName.getText().length() == 0) {
+                    }else if (_lastName.getText().toString().isEmpty()) {
 
-                        Toast.makeText(getApplicationContext(), "l", Toast.LENGTH_LONG).show();
-                    } else if (_firstName.getText().length() == 0) {
-                        Toast.makeText(getApplicationContext(), "f", Toast.LENGTH_LONG).show();
-
-                    } else if ((_password.getText().length() == 0) ||
-                            !_password.getText().toString().equals(_repeatPassword.getText().toString()) ) {
+                    } else if ((_password.getText().toString().isEmpty()) ||
+                    (!_password.getText().toString().equals(_repeatPassword.getText().toString()) )) {
 
                     } else {
                             Member member = new Member().setEmail(_email.getText().toString())
@@ -97,12 +71,29 @@ public class JoinInActivity extends ActionBarActivity {
 														.setLastName(_lastName.getText().toString());
                             Module.getMemberRepo().add(member);
 
+                             // go Sign In activity
                             Intent i = new Intent(JoinInActivity.this, SignInActivity.class);
                             startActivity(i);
                     }
-
                 }else
                     Toast.makeText(getApplicationContext(), "Existe déjà", Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    private void editTextValid(final EditText e, final String Pattern){
+
+        e.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (!e.getText().toString().matches(Pattern) && e.getText().toString().length() != 0){
+                    e.setTextColor(Color.RED);
+                }
+                else  e.setTextColor(Color.BLACK);
             }
         });
     }
@@ -111,6 +102,4 @@ public class JoinInActivity extends ActionBarActivity {
     {
         return Module.getMemberRepo().selectByEmail(email) != null;
     }
-
-
 }
