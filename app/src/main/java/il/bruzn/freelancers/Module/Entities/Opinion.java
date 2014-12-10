@@ -1,15 +1,19 @@
 package il.bruzn.freelancers.Module.Entities;
 
+
+import java.util.Date;
+
 /**
  * Created by Yair on 20/11/2014.
  */
 public class Opinion {
-	private int id;
-	private Level _level;
-	private boolean _done;
-	private String _text;
-	private Member _author;
-	private Member _subject;
+	private int	id;
+	private Level	_level;
+	private boolean	_done;
+	private String	_text;
+	private Member	_author;
+	private Member	_subject;
+	private Date _date = new Date();
 
 	public int getId() {
 		return id;
@@ -28,6 +32,9 @@ public class Opinion {
 	}
 	public Member getSubject() {
 		return _subject;
+	}
+	public Date getDate() {
+		return _date;
 	}
 
 	public Opinion setId(int id) {
@@ -52,6 +59,10 @@ public class Opinion {
 	}
 	public Opinion setSubject(Member subject) {
 		_subject = subject;
+		return this;
+	}
+	public Opinion setDate(Date date) {
+		_date = date;
 		return this;
 	}
 

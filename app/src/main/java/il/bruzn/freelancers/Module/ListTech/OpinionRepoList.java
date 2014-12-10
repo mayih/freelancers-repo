@@ -1,9 +1,7 @@
 package il.bruzn.freelancers.Module.ListTech;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import il.bruzn.freelancers.Module.CRUD;
 import il.bruzn.freelancers.Module.Entities.Member;
 import il.bruzn.freelancers.Module.Entities.Opinion;
 import il.bruzn.freelancers.Module.iRepositories.iOpinionRepo;
@@ -13,32 +11,38 @@ import il.bruzn.freelancers.Module.iRepositories.iOpinionRepo;
  */
 public class OpinionRepoList extends ListCRUD implements iOpinionRepo {
 	@Override
-	public CRUD<Opinion> add(Opinion entry) {
-		_opinionsArray.add(entry);
-		return this;
-	}
+	public void add(Opinion entry) {
+		_opinions.add(entry);
+		}
 
 	@Override
-	public List<Opinion> getBySubject(Member subject) {
+	public ArrayList<Opinion> getBySubject(Member subject) {
 		ArrayList<Opinion> selected = new ArrayList<Opinion>();
-		for (Opinion op:_opinionsArray)
+		for (Opinion op: _opinions)
 			if (op.getSubject() == subject)
 				selected.add(op);
 		return selected;
 	}
 
 	@Override
-	public List<Opinion> getByAuthor(Member subject) {
+	public ArrayList<Opinion> getByAuthor(Member subject) {
 		ArrayList<Opinion> selected = new ArrayList<Opinion>();
-		for (Opinion op:_opinionsArray)
+		for (Opinion op: _opinions)
 			if (op.getAuthor() == subject)
 				selected.add(op);
 		return selected;
 	}
 
 	@Override
+	public Member fillMember(Member member) {
+		if (member.getOpinionsOnMe().isEmpty())
+			member.setOpinionsOnMe(getBySubject(member));
+		return member;
+	}
+
+	@Override
 	public Opinion selectById(int Id) {
-		for (Opinion op:_opinionsArray)
+		for (Opinion op: _opinions)
 			if (op.getId() == Id)
 				return op;
 		return null;
@@ -46,7 +50,7 @@ public class OpinionRepoList extends ListCRUD implements iOpinionRepo {
 
 	@Override
 	public ArrayList<Opinion> selectAll() {
-		return _opinionsArray;
+		return _opinions;
 	}
 
 	@Override
@@ -56,14 +60,12 @@ public class OpinionRepoList extends ListCRUD implements iOpinionRepo {
 	}
 
 	@Override
-	public CRUD<Opinion> update(Opinion entry) {
+	public void update(Opinion entry) {
 		// In list technology, entities are already updated by reference.
-		return this;
-	}
+		}
 
 	@Override
-	public CRUD<Opinion> delete(Opinion entry) {
-		_opinionsArray.remove(entry);
-		return this;
+	public void delete(Opinion entry) {
+		_opinions.remove(entry);
 	}
 }

@@ -1,11 +1,10 @@
 package il.bruzn.freelancers.Module.ListTech;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 
-import il.bruzn.freelancers.Module.CRUD;
 import il.bruzn.freelancers.Module.Entities.Member;
 import il.bruzn.freelancers.Module.Entities.Opinion;
+import il.bruzn.freelancers.Module.Module;
 import il.bruzn.freelancers.Module.iRepositories.iMemberRepo;
 
 /**
@@ -13,14 +12,13 @@ import il.bruzn.freelancers.Module.iRepositories.iMemberRepo;
  */
 public class MemberRepoList extends ListCRUD implements iMemberRepo {
 	@Override
-	public CRUD<Member> add(Member entry) {
-		_membersArray.add(entry);
-		return this;
-	}
+	public void add(Member entry) {
+		_members.add(entry);
+			}
 
 	@Override
 	public Member selectByEmail(String email) {
-		for (Member m : _membersArray){
+		for (Member m : _members){
 			if (m.getEmail().equals(email))
 				return m;
 		}
@@ -30,8 +28,8 @@ public class MemberRepoList extends ListCRUD implements iMemberRepo {
 	@Override
 	public Member selectWithOpinions(String email) {
 		Member m = selectByEmail(email);
-		if (m!=null && !m.getOpinionsOnMe().isEmpty())
-			for (Opinion op : _opinionsArray){
+		if (m!=null && m.getOpinionsOnMe().isEmpty())
+			for (Opinion op : Module.getOpnionRepo().selectAll()){
 				if (op.getSubject() == m){
 					m.getOpinionsOnMe().add(op);
 				}
@@ -41,7 +39,7 @@ public class MemberRepoList extends ListCRUD implements iMemberRepo {
 
 	@Override
 	public Member selectById(int Id) {
-		for (Member m:_membersArray)
+		for (Member m: _members)
 			if (m.getId() == Id)
 				return m;
 		return null;
@@ -49,7 +47,7 @@ public class MemberRepoList extends ListCRUD implements iMemberRepo {
 
 	@Override
 	public ArrayList<Member> selectAll() {
-		return _membersArray;
+		return _members;
 	}
 
 	@Override
@@ -59,14 +57,12 @@ public class MemberRepoList extends ListCRUD implements iMemberRepo {
 	}
 
 	@Override
-	public CRUD<Member> update(Member entry) {
+	public void update(Member entry) {
 		// When the object changed the entry, the list is allready updated by reference.
-		return this;
-	}
+			}
 
 	@Override
-	public CRUD<Member> delete(Member entry) {
-		_membersArray.remove(entry);
-		return this;
+	public void delete(Member entry) {
+		_members.remove(entry);
 	}
 }

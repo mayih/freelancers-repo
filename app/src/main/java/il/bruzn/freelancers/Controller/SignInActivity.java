@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-import java.util.ArrayList;
 
 
 import il.bruzn.freelancers.Module.Entities.Member;
@@ -26,12 +25,12 @@ public class SignInActivity extends ActionBarActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		if (Module.get_memberRepo() == null) // If the technologie hasn't been instanced
+		if (Module.getMemberRepo() == null) // If the technologie hasn't been instanced
 			Module.create();
 
 		// Check if the user is already connected
 		String email = getSharedPreferences(ConnectedMember.filename, MODE_PRIVATE).getString(ConnectedMember.key, null);
-		Member member = Module.get_memberRepo().selectByEmail(email);
+		Member member = Module.getMemberRepo().selectByEmail(email);
 		if (member != null){ // Check if already connected
 			ConnectedMember.setMember(member);
 			startActivity(new Intent(this, MainActivity.class));
@@ -48,7 +47,7 @@ public class SignInActivity extends ActionBarActivity {
 		_joinin.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-			startActivity(new Intent(SignInActivity.this, JoinInActivity.class));
+			startActivity(new Intent(SignInActivity.this, JoinInActivity.class)/*, ActivityOptions.makeCustomAnimation(getApplicationContext(), R.transition.slide_right_to_left, R.transition.slide_left_to_right).toBundle()*/);
 			}
 		});
 		_connect.setOnClickListener(new View.OnClickListener() {
@@ -56,7 +55,7 @@ public class SignInActivity extends ActionBarActivity {
 			public void onClick(View v) {
 			// Check email and password
 			String email = _email.getText().toString(), password = _password.getText().toString();
-			Member member = Module.get_memberRepo().selectByEmail(email);
+			Member member = Module.getMemberRepo().selectByEmail(email);
 			if (member != null && member.authenticate(email, password)) {
 				ConnectedMember.setMember(member);
 				SharedPreferences.Editor edit = getSharedPreferences(ConnectedMember.filename, MODE_PRIVATE).edit();

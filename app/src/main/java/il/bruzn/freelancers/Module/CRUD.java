@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public interface CRUD<T> {
 
 	// Create
-	public CRUD<T>	add(T entry);
+	public void	add(T entry);
 
 	// Read
 	public T	selectById(int Id);
@@ -16,8 +16,8 @@ public interface CRUD<T> {
 	public	ArrayList<T>	selectBy(String field, String value);
 
 	// Update
-	public CRUD<T>	update(T entry);
+	public void	update(T entry);
 
 	//Delete
-	public CRUD<T> delete(T entry);
+	public void delete(T entry);
 }

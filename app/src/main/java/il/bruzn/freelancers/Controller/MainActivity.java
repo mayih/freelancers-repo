@@ -18,25 +18,25 @@ public class MainActivity extends ActionBarActivity implements MenuFragment.iMen
 
 	ActionBarDrawerToggle _toggle;
 	DrawerLayout _drawerLayout;
+	static ItemFrag _itemFrag;
 
 	// Save on wich fragment it is
-	int	_mainFramentId = 0;
-	static final String KEY_OF_MAIN_FRAGMENT = "main_fragment_id";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		if(savedInstanceState != null && savedInstanceState.containsKey(KEY_OF_MAIN_FRAGMENT))
-			_mainFramentId = savedInstanceState.getInt(KEY_OF_MAIN_FRAGMENT);
-
 		_drawerLayout = (DrawerLayout) findViewById(R.id.main_drawerlayout);
 		_toggle = new ActionBarDrawerToggle(this, _drawerLayout, R.string.menu_opened, R.string.menu_closed);
 		_drawerLayout.setDrawerListener(_toggle); // Calls onDrawerOpened() & OnDrawerClosed() functions
-
-		menuItemClicked(_mainFramentId);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true); // Make the menu icon appear at top left of the screen
+
+		if (_itemFrag == null) // first time instancied
+			menuItemClicked(MenuFragment.getMenu()[0]);
+		else {	// get the last fragment
+			setFragment(_itemFrag);
+		}
 	}
 
 	/* *
@@ -55,10 +55,13 @@ public class MainActivity extends ActionBarActivity implements MenuFragment.iMen
 		return  _toggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
 	}
 
-	@Override
-	protected void onSaveInstanceState(Bundle outState) {
-		super.onSaveInstanceState(outState);
-		outState.putInt(KEY_OF_MAIN_FRAGMENT ,_mainFramentId); // Save on which fragment it left
+	public void setFragment(ItemFrag itemFrag){
+		getSupportActionBar().setTitle(itemFrag.getTitle());// Change the Activity title
+
+		FragmentTransaction transaction = getFragmentManager().beginTransaction();
+		transaction .replace(R.id.main_container, itemFrag.getFragment())
+					.commit();
+		_itemFrag =itemFrag;
 	}
 
 	private void disconnection(){
@@ -69,20 +72,14 @@ public class MainActivity extends ActionBarActivity implements MenuFragment.iMen
 	}
 
 	@Override
-	public void menuItemClicked(int itemId) {
-		_mainFramentId = itemId;
-		Fragment fragment = MenuFragment.getMenu()[itemId].getFragment();
-		if (fragment == null){
+	public void menuItemClicked(MenuFragment.ItemMenu item) {
+		if (item.getItemFrag().getFragment() == null){
 			disconnection();
 			return;
 		}
 
-		// Change the Activity title
-		getSupportActionBar().setTitle(MenuFragment.getMenu()[itemId].getText());
 		// Change the main Fragment
-		FragmentTransaction transaction = getFragmentManager().beginTransaction();
-		transaction	.replace(R.id.main_container, fragment)
-					.commit();
+		setFragment(item.getItemFrag());
 		_drawerLayout.closeDrawers();
 	}
 }

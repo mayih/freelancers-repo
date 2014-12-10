@@ -15,6 +15,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import il.bruzn.freelancers.Controller.ItemFrag;
 import il.bruzn.freelancers.Controller.MainActivity;
 import il.bruzn.freelancers.R;
 
@@ -53,7 +54,7 @@ public class MenuFragment extends ListFragment {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				getListView().setItemChecked(position, true);    // Show the button has been clicked
-				((iMenulistener)getActivity()).menuItemClicked(position); // Change the main activity
+				((iMenulistener)getActivity()).menuItemClicked(_menu[position]); // Change the main activity
 			}
 		});
 	}
@@ -69,11 +70,11 @@ public class MenuFragment extends ListFragment {
 
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
-			ItemMenu item = _menu[position];
+			ItemMenu item = getItem(position);
 
 			View itemView = getActivity().getLayoutInflater().inflate(R.layout.item_menu, parent, false);
 			((ImageView)itemView.findViewById(R.id.menu_item_icon)).setImageResource(item.getImage());
-			((TextView)itemView.findViewById(R.id.menu_item_text)).setText(item.getText());
+			((TextView)itemView.findViewById(R.id.menu_item_text)).setText(item.getItemFrag().getTitle());
 
 			return itemView;
 		}
@@ -82,44 +83,34 @@ public class MenuFragment extends ListFragment {
 	// Other classes ---
 	public static class ItemMenu {
 		private int _image;
-		private String _text;
-		private Fragment _fragment = null;
+		private ItemFrag _itemFrag;
 
-		public ItemMenu(int image, String text){
+		public ItemMenu(int image, String title){
 			setImage(image);
-			setText(text);
+			setItemFrag(new ItemFrag().setTitle(title));
 		}
-		public ItemMenu(int image, String text, Fragment fragment){
+		public ItemMenu(int image, String title, Fragment fragment){
 			setImage(image);
-			setText(text);
-			setFragment(fragment);
+			setItemFrag(new ItemFrag().setTitle(title).setFragment(fragment));
 		}
 
 		public int getImage() {
 			return _image;
 		}
+		public ItemFrag getItemFrag() {
+			return _itemFrag;
+		}
 
-		public void setImage(int image) {
+		public ItemMenu setImage(int image) {
 			this._image = image;
+			return this;
 		}
-
-		public String getText() {
-			return _text;
-		}
-
-		public void setText(String text) {
-			this._text = text;
-		}
-
-		public Fragment getFragment() {
-			return _fragment;
-		}
-
-		public void setFragment(Fragment fragment) {
-			_fragment = fragment;
+		public ItemMenu setItemFrag(ItemFrag itemFrag) {
+			_itemFrag = itemFrag;
+			return this;
 		}
 	} // An item in the menu list
 	public interface iMenulistener {
-		public void menuItemClicked(int item);
+		public void menuItemClicked(ItemMenu item);
 	} //The activity which use this menu fragment has to implement this inerface
 }

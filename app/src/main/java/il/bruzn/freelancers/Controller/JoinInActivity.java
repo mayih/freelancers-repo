@@ -12,7 +12,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import il.bruzn.freelancers.Module.Entities.Member;
-import il.bruzn.freelancers.Module.ConnectedMember;
 import il.bruzn.freelancers.Module.Module;
 import il.bruzn.freelancers.R;
 
@@ -27,8 +26,6 @@ public class JoinInActivity extends ActionBarActivity {
     private EditText _password;
     private EditText _repeatPassword;
     private Button _joinIn;
-
-    private ConnectedMember _coMember;
 
     private void editTextValid(final EditText e, final String Pattern){
 
@@ -98,7 +95,7 @@ public class JoinInActivity extends ActionBarActivity {
 														.setPassword(_password.getText().toString())
 														.setFirstName(_firstName.getText().toString())
 														.setLastName(_lastName.getText().toString());
-                            Module.get_memberRepo().add(member);
+                            Module.getMemberRepo().add(member);
 
                             Intent i = new Intent(JoinInActivity.this, SignInActivity.class);
                             startActivity(i);
@@ -112,7 +109,7 @@ public class JoinInActivity extends ActionBarActivity {
 
     private boolean memberIsExist(String email)
     {
-        return Module.get_memberRepo().selectByEmail(email) != null;
+        return Module.getMemberRepo().selectByEmail(email) != null;
     }
 
 

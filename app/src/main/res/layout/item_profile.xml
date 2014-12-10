@@ -19,12 +19,14 @@
 		android:layout_alignParentRight="true"
 		android:textAppearance="?android:attr/textAppearanceMedium"/>
 
-	<ListView
-		android:id="@+id/list_opinions"
+	<LinearLayout
+		android:id="@+id/list_opinons_in_profile_item"
+		android:layout_below="@id/item_profile_name"
 		android:layout_width="fill_parent"
-		android:layout_height="fill_parent"
-		android:layout_below="@id/item_profile_name">
-	</ListView>
+		android:layout_height="wrap_content"
+		android:orientation="vertical"
+		android:padding="10dp">
+	</LinearLayout>
 
 
 </RelativeLayout>
