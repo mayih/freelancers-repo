@@ -3,17 +3,17 @@
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:padding="10dp">
-<TextView
-	android:id="@+id/text_message"
-	android:layout_width="wrap_content"
-	android:layout_height="wrap_content"
-	android:text="TEXT.."/>
+	<TextView
+		android:id="@+id/text_message"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="TEXT.."/>
 
-<TextView
-	android:id="@+id/time_message"
-	android:layout_width="wrap_content"
-	android:layout_height="wrap_content"
-	android:layout_alignParentRight="true"
-	android:layout_below="@id/text_message"
-	android:text="Time"/>
+	<TextView
+		android:id="@+id/time_message"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignLeft="@id/text_message"
+		android:layout_below="@id/text_message"
+		android:text="Time"/>
 </RelativeLayout>

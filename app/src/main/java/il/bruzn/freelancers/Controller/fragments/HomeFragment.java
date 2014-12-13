@@ -42,7 +42,6 @@ public class HomeFragment extends ListFragment {
 
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
-		super.onViewCreated(view, savedInstanceState);
 
 		getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override

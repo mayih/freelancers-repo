@@ -1,8 +1,10 @@
 package il.bruzn.freelancers.Controller;
 
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -18,7 +20,6 @@ public class MainActivity extends ActionBarActivity implements MenuFragment.iMen
 
 	ActionBarDrawerToggle _toggle;
 	DrawerLayout _drawerLayout;
-	static ItemFrag _itemFrag;
 
 	// Save on wich fragment it is
 
@@ -27,16 +28,15 @@ public class MainActivity extends ActionBarActivity implements MenuFragment.iMen
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
+		getFragmentManager().beginTransaction().add(R.id.menu_container, new MenuFragment()).commit();
 		_drawerLayout = (DrawerLayout) findViewById(R.id.main_drawerlayout);
 		_toggle = new ActionBarDrawerToggle(this, _drawerLayout, R.string.menu_opened, R.string.menu_closed);
 		_drawerLayout.setDrawerListener(_toggle); // Calls onDrawerOpened() & OnDrawerClosed() functions
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true); // Make the menu icon appear at top left of the screen
 
-		if (_itemFrag == null) // first time instancied
+		boolean backstackEmpty = getFragmentManager().getBackStackEntryCount() == 0;
+		if (backstackEmpty) // first time instancied
 			menuItemClicked(MenuFragment.getMenu()[0]);
-		else {	// get the last fragment
-			setFragment(_itemFrag);
-		}
 	}
 
 	/* *
@@ -56,18 +56,38 @@ public class MainActivity extends ActionBarActivity implements MenuFragment.iMen
 	}
 
 	public void setFragment(ItemFrag itemFrag){
+		setFragment(itemFrag, true);
+	}
+	public void setFragment(ItemFrag itemFrag, boolean keepTransactions){
 		getSupportActionBar().setTitle(itemFrag.getTitle());// Change the Activity title
 
 		FragmentTransaction transaction = getFragmentManager().beginTransaction();
-		transaction .replace(R.id.main_container, itemFrag.getFragment())
-					.commit();
-		_itemFrag =itemFrag;
+		transaction .replace(R.id.main_container, itemFrag.getFragment());
+
+		if (!keepTransactions)
+			getFragmentManager().popBackStackImmediate("", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+		else
+			transaction.addToBackStack("");
+		transaction.commit();
+//		_itemFrag =itemFrag;
+	}
+
+	@Override
+	public void onBackPressed() {
+		if (_drawerLayout.isDrawerOpen(GravityCompat.START))
+			_drawerLayout.closeDrawers();
+		else if (getFragmentManager().getBackStackEntryCount() > 0 ){
+			getFragmentManager().popBackStack();
+		} else {
+			super.onBackPressed();
+		}
 	}
 
 	private void disconnection(){
 		ConnectedMember.nullMember();
 		getSharedPreferences(ConnectedMember.filename, MODE_PRIVATE).edit().clear().commit();
 		startActivity(new Intent(getApplicationContext(), SignInActivity.class));
+//		_itemFrag = null;
 		finish();
 	}
 
@@ -79,7 +99,10 @@ public class MainActivity extends ActionBarActivity implements MenuFragment.iMen
 		}
 
 		// Change the main Fragment
-		setFragment(item.getItemFrag());
+		getFragmentManager().popBackStackImmediate()
+		if (item != MenuFragment.getMenu()[0])
+			setFragment(item.getItemFrag());
+
 		_drawerLayout.closeDrawers();
 	}
 }

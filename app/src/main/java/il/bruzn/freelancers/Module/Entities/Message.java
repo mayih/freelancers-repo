@@ -5,7 +5,7 @@ import java.util.Date;
 /**
  * Created by Yair on 20/11/2014.
  */
-public class Message {
+public class Message implements Comparable<Message>{
 
 	private int _id;
 	private Member _author, _receiver;
@@ -53,5 +53,10 @@ public class Message {
 	public Message setDate(Date date) {
 		_date = date;
 		return this;
+	}
+
+	@Override
+	public int compareTo(Message another) {
+		return getDate().compareTo(another.getDate());
 	}
 }

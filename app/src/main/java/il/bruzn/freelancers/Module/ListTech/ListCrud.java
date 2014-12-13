@@ -35,15 +35,15 @@ public class ListCRUD {
 		_messages = new ArrayList<Message>(){{
 			// Discussion yair & Jeremie
 			add(new Message(_members.get(0),_members.get(4), "Yo frero ca va?").setDate(new Date(new Date().getTime() - 5*60*1000)));
-			add(new Message(_members.get(4),_members.get(0), "Ca roule et toi?").setDate(new Date(new Date().getTime() - 5*30*1000)));
+			add(new Message(_members.get(4),_members.get(0), "Ca roule et toi?").setDate(new Date(new Date().getTime() - 4*60*1000)));
 			add(new Message(_members.get(0),_members.get(4), "b\"h, tu saurais comment faire des pates?").setDate(new Date(new Date().getTime() - 4*60*1000)));
-			add(new Message(_members.get(4),_members.get(0), "Tu sais pas faire des pates??").setDate(new Date(new Date().getTime() - 4*30*1000)));
+			add(new Message(_members.get(4),_members.get(0), "Tu sais pas faire des pates??").setDate(new Date(new Date().getTime() - 4*60*1000)));
 			add(new Message(_members.get(4),_members.get(0), "Nhiiiii!!!").setDate(new Date(new Date().getTime() - 3*60*1000)));
 			add(new Message(_members.get(0),_members.get(4), "mdrrr").setDate(new Date(new Date().getTime() - 2*60*1000)));
 
 			// Discussion Yair & Ruben
 			add(new Message(_members.get(3),_members.get(0), "file moi ton crane!").setDate(new Date(new Date().getTime() - 2*60*1000)));
-			add(new Message(_members.get(0),_members.get(3), "CHATIMENT").setDate(new Date(new Date().getTime() - 2*30*1000)));
+			add(new Message(_members.get(0),_members.get(3), "CHATIMENT").setDate(new Date(new Date().getTime() - 2*60*1000)));
 			add(new Message(_members.get(3),_members.get(0), "LOOL").setDate(new Date(new Date().getTime() - 1*60*1000)));
 		}};
 	}

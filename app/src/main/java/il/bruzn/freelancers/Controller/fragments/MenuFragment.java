@@ -34,7 +34,7 @@ public class MenuFragment extends ListFragment {
 	@Override
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
-		iMenulistener a = new MainActivity();
+		_activity = (iMenulistener)getActivity();
 	}
 
 	@Nullable
@@ -54,7 +54,7 @@ public class MenuFragment extends ListFragment {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				getListView().setItemChecked(position, true);    // Show the button has been clicked
-				((iMenulistener)getActivity()).menuItemClicked(_menu[position]); // Change the main activity
+				_activity.menuItemClicked(_menu[position]); // Change the main activity
 			}
 		});
 	}
@@ -65,7 +65,7 @@ public class MenuFragment extends ListFragment {
 
 	private class MenuAdapter extends ArrayAdapter<ItemMenu> {
 		public MenuAdapter() {
-			super(getActivity().getApplicationContext(), R.layout.item_menu, _menu);
+			super(getActivity(), R.layout.item_menu, _menu);
 		}
 
 		@Override

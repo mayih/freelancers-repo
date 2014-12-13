@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TextView
 	xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_margin="10dp"
+	android:padding="10dp"
 	android:layout_width="wrap_content"
 	android:layout_height="wrap_content"
 	android:layout_gravity="center"
 	android:textAppearance="?android:textAppearanceMedium"
-	android:text="Discussion"/><!-- From: file:/C:/Users/yairo_000/Documents/Java-Projects/Freelancers/app/src/main/res/layout/item_discussion.xml -->
+	android:text="Interlocutor's name"/><!-- From: file:/C:/Users/yairo_000/Documents/Java-Projects/Freelancers/app/src/main/res/layout/item_discussion.xml -->

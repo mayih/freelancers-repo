@@ -12,14 +12,13 @@
 		android:layout_height="match_parent">
 		</RelativeLayout>
 
-	<fragment
-		android:id="@+id/menu_fragment"
+	<RelativeLayout
+		android:id="@+id/menu_container"
 		android:layout_width="250dp"
 		android:layout_height="fill_parent"
-		android:name="il.bruzn.freelancers.Controller.fragments.MenuFragment"
 		android:layout_gravity="left"
 		tools:layout="@layout/fragment_menu"
 		>
-	</fragment>
+	</RelativeLayout>
 
 </android.support.v4.widget.DrawerLayout><!-- From: file:/C:/Users/yairo_000/Documents/Java-Projects/Freelancers/app/src/main/res/layout/activity_main.xml -->

@@ -3,6 +3,7 @@ package il.bruzn.freelancers.Module.Entities;
 import android.graphics.Picture;
 import java.util.ArrayList;
 
+import il.bruzn.freelancers.Module.Module;
 import il.bruzn.freelancers.basic.WayToPay;
 import il.bruzn.freelancers.basic.Location;
 
@@ -22,6 +23,7 @@ public class Member {
 
 	// Not in table
 	private ArrayList<Opinion> _opinionsOnMe = new ArrayList<Opinion>();
+	private ArrayList<ArrayList<Message>> discussions = new ArrayList<ArrayList<Message>>();
 
 	// Methods  ----
 	public double getAverage(){
@@ -56,7 +58,10 @@ public class Member {
 		_opinionsOnMe = opinionsOnMe;
 		return this;
 	}
-
+	public Member setDiscussions(ArrayList<ArrayList<Message>> discussions) {
+		this.discussions = discussions;
+		return this;
+	}
 
 	public String getPassword() {
 		return _password;
@@ -87,6 +92,9 @@ public class Member {
 	}
 	public ArrayList<Opinion> getOpinionsOnMe() {
 		return _opinionsOnMe;
+	}
+	public ArrayList<ArrayList<Message>> getDiscussions() {
+		return discussions;
 	}
 
 	public boolean authenticate(String email, String password){
