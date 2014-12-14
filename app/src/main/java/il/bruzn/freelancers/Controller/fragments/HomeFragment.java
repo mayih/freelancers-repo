@@ -1,6 +1,7 @@
 package il.bruzn.freelancers.Controller.fragments;
 
 import android.app.ListFragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -30,38 +31,32 @@ public class HomeFragment extends ListFragment {
 
 	public HomeFragment() {
 		_listToPrint = Module.getMemberRepo().selectAll();
-	}
+    }
 
-	@Nullable
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		ListView layout = (ListView)inflater.inflate(R.layout.fragment_home, container, false);
-		layout.setAdapter(new HomeAdapter());
-		return layout;
-	}
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-	@Override
-	public void onViewCreated(View view, Bundle savedInstanceState) {
-		super.onViewCreated(view, savedInstanceState);
+        HomeAdapter adapter = new HomeAdapter(_listToPrint);
+        setListAdapter(adapter);
+    }
 
-		getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				Member memberSelected = _listToPrint.get(position);
-				ProfileFragment fragment = new ProfileFragment();
-				Bundle bundle = new Bundle();
-				bundle.putString(ProfileFragment.EMAIL_MEMBER_KEY, memberSelected.getEmail());
-				fragment.setArguments(bundle);
-				((MainActivity)getActivity()).setFragment(new ItemFrag().setFragment(fragment).setTitle(memberSelected.getFirstName()));
-			}
-		});
-	}
+    @Override
+    public void onListItemClick(ListView l, View v, int position, long id) {
+        Member memberSelected = ((HomeAdapter)getListAdapter()).getItem(position);
+        ProfileFragment fragment = new ProfileFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString(ProfileFragment.EMAIL_MEMBER_KEY, memberSelected.getEmail());
+        fragment.setArguments(bundle);
+        ((MainActivity)getActivity()).setFragment(new ItemFrag().setFragment(fragment).setTitle(memberSelected.getFirstName()));
+    }
 
 	private class HomeAdapter extends ArrayAdapter<Member> {
 
-		public HomeAdapter() {
-			super(getActivity().getApplicationContext(), R.layout.item_profile, _listToPrint);
-		}
+        public HomeAdapter(ArrayList<Member> members)
+        {
+            super(getActivity(), 0, members);
+        }
 
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
