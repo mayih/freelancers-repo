@@ -13,10 +13,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import il.bruzn.freelancers.Controller.ItemFrag;
-import il.bruzn.freelancers.Controller.MainActivity;
 import il.bruzn.freelancers.R;
 
 /**
@@ -29,7 +25,8 @@ public class MenuFragment extends ListFragment {
 	static ItemMenu[] _menu = {	new ItemMenu(R.drawable.home_icon,		"Home",		new HomeFragment()),
 								new ItemMenu(R.drawable.profile_icon,	"Profile",	new ProfileFragment()),
 								new ItemMenu(R.drawable.inbox_icon,		"Inbox",	new InboxFragment()),
-								new ItemMenu(R.drawable.disconnect_icon,"Disconnect"), };
+								new ItemMenu(R.drawable.disconnect_icon,"Disconnect",	null),
+	};
 
 	@Override
 	public void onAttach(Activity activity) {
@@ -72,41 +69,47 @@ public class MenuFragment extends ListFragment {
 		public View getView(int position, View convertView, ViewGroup parent) {
 			ItemMenu item = getItem(position);
 
-			View itemView = getActivity().getLayoutInflater().inflate(R.layout.item_menu, parent, false);
-			((ImageView)itemView.findViewById(R.id.menu_item_icon)).setImageResource(item.getImage());
-			((TextView)itemView.findViewById(R.id.menu_item_text)).setText(item.getItemFrag().getTitle());
+			if (convertView==null)
+				convertView = getActivity().getLayoutInflater().inflate(R.layout.item_menu, parent, false);
+			((ImageView)convertView.findViewById(R.id.menu_item_icon)).setImageResource(item.getImage());
+			((TextView)convertView.findViewById(R.id.menu_item_text)).setText(item.getText());
 
-			return itemView;
+			return convertView;
 		}
 	} // The listView adapter which will fill the view
 
 	// Other classes ---
 	public static class ItemMenu {
 		private int _image;
-		private ItemFrag _itemFrag;
+		private String _text;
+		private Fragment _fragment;
 
-		public ItemMenu(int image, String title){
+		public ItemMenu(int image, String text, Fragment fragment){
 			setImage(image);
-			setItemFrag(new ItemFrag().setTitle(title));
-		}
-		public ItemMenu(int image, String title, Fragment fragment){
-			setImage(image);
-			setItemFrag(new ItemFrag().setTitle(title).setFragment(fragment));
+			setText(text);
+			setFragment(fragment);
 		}
 
 		public int getImage() {
 			return _image;
 		}
-		public ItemFrag getItemFrag() {
-			return _itemFrag;
+		public String getText() {
+			return _text;
+		}
+		public Fragment getFragment() {
+			return _fragment;
 		}
 
 		public ItemMenu setImage(int image) {
 			this._image = image;
 			return this;
 		}
-		public ItemMenu setItemFrag(ItemFrag itemFrag) {
-			_itemFrag = itemFrag;
+		public ItemMenu setText(String text) {
+			_text = text;
+			return this;
+		}
+		public ItemMenu setFragment(Fragment fragment) {
+			_fragment = fragment;
 			return this;
 		}
 	} // An item in the menu list

@@ -1,5 +1,8 @@
 package il.bruzn.freelancers.Module;
 
+import java.util.HashMap;
+import java.util.Objects;
+
 import il.bruzn.freelancers.Module.ListTech.MemberRepoList;
 import il.bruzn.freelancers.Module.ListTech.MessageRepoList;
 import il.bruzn.freelancers.Module.ListTech.OpinionRepoList;
@@ -13,6 +16,13 @@ import il.bruzn.freelancers.Module.iRepositories.iOpinionRepo;
 public class Module {
 	static final Technology tech = Technology.List;
 	enum Technology{ SqlLite, Server, List };
+
+	// Android FAQ: How do I pass data between Activities/Services within a single application?
+	// http://developer.android.com/guide/faq/framework.html
+	private static final HashMap<Long, Object> _hashMap = new HashMap<>();
+	public static HashMap<Long, Object> getHashMap() {
+		return _hashMap;
+	}
 
 	// Repositories
 	static iMemberRepo	_memberRepo;

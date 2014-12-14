@@ -14,7 +14,6 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import il.bruzn.freelancers.Controller.ItemFrag;
 import il.bruzn.freelancers.Controller.MainActivity;
 import il.bruzn.freelancers.Module.Entities.Member;
 import il.bruzn.freelancers.Module.Entities.Opinion;
@@ -24,20 +23,26 @@ import il.bruzn.freelancers.R;
 /**
  * Created by Yair on 30/11/2014.
  */
-public class HomeFragment extends ListFragment {
+public class HomeFragment extends ListFragment implements TitledFragment {
 
+	// Data
 	ArrayList<Member> _listToPrint;
 
 	public HomeFragment() {
 		_listToPrint = Module.getMemberRepo().selectAll();
 	}
 
+	@Override
+	public String getTitle() {
+		return "Home";
+	}
+
 	@Nullable
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		ListView layout = (ListView)inflater.inflate(R.layout.fragment_home, container, false);
-		layout.setAdapter(new HomeAdapter());
-		return layout;
+		ListView listView = (ListView)inflater.inflate(R.layout.fragment_home, container, false);
+		listView.setAdapter(new HomeAdapter());
+		return listView;
 	}
 
 	@Override
@@ -51,7 +56,7 @@ public class HomeFragment extends ListFragment {
 				Bundle bundle = new Bundle();
 				bundle.putString(ProfileFragment.EMAIL_MEMBER_KEY, memberSelected.getEmail());
 				fragment.setArguments(bundle);
-				((MainActivity)getActivity()).setFragment(new ItemFrag().setFragment(fragment).setTitle(memberSelected.getFirstName()));
+				((MainActivity) getActivity()).setFragment(fragment);
 			}
 		});
 	}
@@ -64,7 +69,8 @@ public class HomeFragment extends ListFragment {
 
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
-			convertView = getActivity().getLayoutInflater().inflate(R.layout.item_profile, parent, false);
+			if (convertView == null)
+				convertView = getActivity().getLayoutInflater().inflate(R.layout.item_profile, parent, false);
 
 			Member subject = Module.getOpnionRepo().fillMember(getItem(position));
 

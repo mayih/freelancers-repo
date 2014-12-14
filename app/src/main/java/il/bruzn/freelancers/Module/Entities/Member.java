@@ -1,6 +1,9 @@
 package il.bruzn.freelancers.Module.Entities;
 
 import android.graphics.Picture;
+import android.graphics.drawable.Drawable;
+import android.media.Image;
+
 import java.util.ArrayList;
 
 import il.bruzn.freelancers.Module.Module;
@@ -16,7 +19,7 @@ public class Member {
 	private Location _address;
 	private String _phoneNumber;
 	private ArrayList<Member> _favorites;
-	private Picture _picture;
+	private Drawable _picture;
 	private String _googlePlus;
 	private String _linkedIn;
 	private WayToPay _payment;
@@ -87,7 +90,7 @@ public class Member {
 	public ArrayList<Member> getFavorites() {
 		return _favorites;
 	}
-	public Picture getPicture() {
+	public Drawable getPicture() {
 		return _picture;
 	}
 	public ArrayList<Opinion> getOpinionsOnMe() {

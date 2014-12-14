@@ -1,5 +1,6 @@
 package il.bruzn.freelancers.Controller;
 
+import android.app.ActionBar;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -11,6 +12,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.MenuItem;
 
+import il.bruzn.freelancers.Controller.fragments.TitledFragment;
 import il.bruzn.freelancers.Module.ConnectedMember;
 import il.bruzn.freelancers.R;
 import il.bruzn.freelancers.Controller.fragments.MenuFragment;
@@ -20,8 +22,6 @@ public class MainActivity extends ActionBarActivity implements MenuFragment.iMen
 
 	ActionBarDrawerToggle _toggle;
 	DrawerLayout _drawerLayout;
-
-	// Save on wich fragment it is
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +37,16 @@ public class MainActivity extends ActionBarActivity implements MenuFragment.iMen
 		boolean backstackEmpty = getFragmentManager().getBackStackEntryCount() == 0;
 		if (backstackEmpty) // first time instancied
 			menuItemClicked(MenuFragment.getMenu()[0]);
+		else // Get back the last fragment & its title
+			getSupportActionBar().setTitle(((TitledFragment)getFragmentManager().findFragmentById(R.id.main_container)).getTitle());
+
+		getFragmentManager().addOnBackStackChangedListener( new FragmentManager.OnBackStackChangedListener() {
+			@Override
+			public void onBackStackChanged() {
+				Fragment frag = getFragmentManager().findFragmentById(R.id.main_container);
+				getSupportActionBar().setTitle(((TitledFragment)frag).getTitle());
+			}
+		});
 	}
 
 	/* *
@@ -55,21 +65,18 @@ public class MainActivity extends ActionBarActivity implements MenuFragment.iMen
 		return  _toggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
 	}
 
-	public void setFragment(ItemFrag itemFrag){
-		setFragment(itemFrag, true);
+	public void setFragment(Fragment frag){
+		setFragment(frag, true);
 	}
-	public void setFragment(ItemFrag itemFrag, boolean keepTransactions){
-		getSupportActionBar().setTitle(itemFrag.getTitle());// Change the Activity title
-
+	public void setFragment(Fragment frag, boolean keepTransactions){
 		FragmentTransaction transaction = getFragmentManager().beginTransaction();
-		transaction .replace(R.id.main_container, itemFrag.getFragment());
+		transaction .replace(R.id.main_container, frag);
 
 		if (!keepTransactions)
 			getFragmentManager().popBackStackImmediate("", FragmentManager.POP_BACK_STACK_INCLUSIVE);
 		else
 			transaction.addToBackStack("");
 		transaction.commit();
-//		_itemFrag =itemFrag;
 	}
 
 	@Override
@@ -87,21 +94,20 @@ public class MainActivity extends ActionBarActivity implements MenuFragment.iMen
 		ConnectedMember.nullMember();
 		getSharedPreferences(ConnectedMember.filename, MODE_PRIVATE).edit().clear().commit();
 		startActivity(new Intent(getApplicationContext(), SignInActivity.class));
-//		_itemFrag = null;
 		finish();
 	}
 
 	@Override
 	public void menuItemClicked(MenuFragment.ItemMenu item) {
-		if (item.getItemFrag().getFragment() == null){
+		if (item.getFragment() == null){
 			disconnection();
 			return;
 		}
 
 		// Change the main Fragment
-		getFragmentManager().popBackStackImmediate()
+		setFragment(MenuFragment.getMenu()[0].getFragment(), false);
 		if (item != MenuFragment.getMenu()[0])
-			setFragment(item.getItemFrag());
+			setFragment(item.getFragment());
 
 		_drawerLayout.closeDrawers();
 	}

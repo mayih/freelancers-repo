@@ -16,13 +16,18 @@ import il.bruzn.freelancers.R;
 /**
  * Created by Yair on 01/12/2014.
  */
-public class ProfileFragment  extends Fragment {
+public class ProfileFragment extends Fragment  implements TitledFragment {
 
 	private Member _member;
 	public static final String EMAIL_MEMBER_KEY ="member's email";
 
 	public ProfileFragment() {
 		_member = ConnectedMember.getMember();
+	}
+
+	@Override
+	public String getTitle() {
+		return _member.getFirstName()+" "+_member.getLastName();
 	}
 
 	@Override

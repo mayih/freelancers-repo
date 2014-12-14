@@ -10,11 +10,21 @@
 		android:layout_above="@+id/message_edittext">
 		</ListView>
 
+	<ImageView
+		android:id="@+id/send_icon"
+		android:layout_width="40dp"
+		android:layout_height="40dp"
+		android:layout_alignTop="@id/message_edittext"
+		android:layout_alignParentRight="true"
+		android:src="@drawable/plane_paper_icon"
+		android:paddingRight="1dp"
+		/>
 	<EditText
 		android:id="@+id/message_edittext"
 		android:layout_width="fill_parent"
 		android:layout_marginTop="2dp"
 		android:layout_height="wrap_content"
 		android:layout_alignParentBottom="true"
+		android:layout_toLeftOf="@id/send_icon"
 		android:hint="Write here.."/>
 </RelativeLayout>

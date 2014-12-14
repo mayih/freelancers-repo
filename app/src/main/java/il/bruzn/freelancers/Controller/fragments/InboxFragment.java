@@ -14,7 +14,6 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import il.bruzn.freelancers.Controller.ItemFrag;
 import il.bruzn.freelancers.Controller.MainActivity;
 import il.bruzn.freelancers.Module.ConnectedMember;
 import il.bruzn.freelancers.Module.Entities.Member;
@@ -25,7 +24,12 @@ import il.bruzn.freelancers.R;
 /**
  * Created by Yair on 01/12/2014.
  */
-public class InboxFragment extends Fragment {
+public class InboxFragment extends Fragment  implements TitledFragment {
+
+	@Override
+	public String getTitle() {
+		return "Inbox";
+	}
 
 	@Nullable
 	@Override
@@ -45,7 +49,7 @@ public class InboxFragment extends Fragment {
 				listView.setItemChecked(position, true);
 				DiscussionFragment fragment = new DiscussionFragment();
 				fragment.setMessages(listOfDiscussions.get(position));
-				((MainActivity) getActivity()).setFragment(new ItemFrag().setTitle("Discussion").setFragment(fragment));
+				((MainActivity) getActivity()).setFragment(fragment);
 			}
 		});
 	}
@@ -59,7 +63,12 @@ public class InboxFragment extends Fragment {
 
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
-			TextView discussionView = (TextView) getActivity().getLayoutInflater().inflate(R.layout.item_discussion, parent, false);
+			TextView discussionView;
+			if (convertView==null)
+				discussionView = (TextView) getActivity().getLayoutInflater().inflate(R.layout.item_discussion, parent, false);
+			else
+				discussionView = (TextView)convertView;
+
 			Member interlocutor;
 			if (getItem(position).get(0).getAuthor() == ConnectedMember.getMember())
 				interlocutor = getItem(position).get(0).getReceiver();
