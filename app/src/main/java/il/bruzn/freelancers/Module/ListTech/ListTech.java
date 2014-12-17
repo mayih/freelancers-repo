@@ -10,12 +10,12 @@ import il.bruzn.freelancers.Module.Entities.Opinion;
 /**
  * Created by Yair on 08/12/2014.
  */
-public class ListCRUD {
+public class ListTech {
 	protected static ArrayList<Member> _members;
 	protected static ArrayList<Opinion> _opinions;
 	protected static ArrayList<Message> _messages;
 
-	public ListCRUD() {
+	public ListTech() {
 		_members = new ArrayList<Member>(){{
 			add(new Member().setEmail("yairopro").setPassword("").setFirstName("yair").setLastName("Behar"));
 			add(new Member().setEmail("mayih").setPassword("").setFirstName("Moshe").setLastName("Uzan"));

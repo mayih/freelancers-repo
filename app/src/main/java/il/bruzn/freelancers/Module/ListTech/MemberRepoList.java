@@ -10,7 +10,7 @@ import il.bruzn.freelancers.Module.iRepositories.iMemberRepo;
 /**
  * Created by Yair on 08/12/2014.
  */
-public class MemberRepoList extends ListCRUD implements iMemberRepo {
+public class MemberRepoList extends ListTech implements iMemberRepo {
 	@Override
 	public void add(Member entry) {
 		_members.add(entry);

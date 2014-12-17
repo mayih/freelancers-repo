@@ -4,7 +4,6 @@ import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
-import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -19,7 +18,7 @@ import il.bruzn.freelancers.R;
  * Created by Yair on 01/12/2014.
  */
 public class ProfileFragment extends Fragment  implements TitledFragment {
-	public static final String EMAIL_MEMBER_KEY ="member's email";
+	public static final String MEMBER_KEY ="member's email";
 
 	private Member _member;
 
@@ -44,10 +43,9 @@ public class ProfileFragment extends Fragment  implements TitledFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		String memberEmail;
 		if (getArguments() != null) {
-			memberEmail = getArguments().getString(EMAIL_MEMBER_KEY);
-			_member = Module.getMemberRepo().selectByEmail(memberEmail);
+			_member = (Member)Module.getHashMap().get(getArguments().getLong(MEMBER_KEY));
+			Module.getHashMap().remove(MEMBER_KEY);
 		}
 	}
 

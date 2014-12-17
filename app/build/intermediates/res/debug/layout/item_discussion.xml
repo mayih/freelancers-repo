@@ -1,9 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	android:padding="10dp"
-	android:layout_width="wrap_content"
-	android:layout_height="wrap_content"
-	android:layout_gravity="center"
-	android:textAppearance="?android:textAppearanceMedium"
-	android:text="Interlocutor's name"/><!-- From: file:/C:/Users/yairo_000/Documents/Java-Projects/Freelancers/app/src/main/res/layout/item_discussion.xml -->
+<RelativeLayout	xmlns:android="http://schemas.android.com/apk/res/android"
+				   android:layout_width="match_parent"
+				   android:layout_height="match_parent"
+					android:padding="10dp">
+
+	<ImageView
+		android:id="@+id/picture_item_discussion"
+		android:layout_width="50dp"
+		android:layout_height="50dp"
+		android:src="@drawable/default_profile_pic"/>
+	<TextView
+		android:id="@+id/name_item_discussion"
+		android:padding="10dp"
+		android:layout_width="match_parent"
+		android:layout_height="50dp"
+		android:layout_toRightOf="@id/picture_item_discussion"
+		android:textAppearance="?android:textAppearanceMedium"
+		android:text="Interlocutor's name"/>
+
+</RelativeLayout><!-- From: file:/C:/Users/yairo_000/Documents/Java-Projects/Freelancers/app/src/main/res/layout/item_discussion.xml -->
