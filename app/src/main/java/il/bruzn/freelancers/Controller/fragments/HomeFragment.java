@@ -1,13 +1,9 @@
 package il.bruzn.freelancers.Controller.fragments;
 
 import android.app.ListFragment;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -46,11 +42,16 @@ public class HomeFragment extends ListFragment implements TitledFragment {
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
-        Member memberSelected = ((HomeAdapter)getListAdapter()).getItem(position);
+        // Save the member
+		Member memberSelected = ((HomeAdapter)getListAdapter()).getItem(position);
+		long hashMapKey = System.currentTimeMillis();
+		Module.getHashMap().put(hashMapKey, memberSelected);
+		// Transfer the key
         ProfileFragment fragment = new ProfileFragment();
         Bundle bundle = new Bundle();
-        bundle.putString(ProfileFragment.EMAIL_MEMBER_KEY, memberSelected.getEmail());
+        bundle.putLong(ProfileFragment.MEMBER_KEY, hashMapKey);
         fragment.setArguments(bundle);
+		// Launch fragment
         ((MainActivity)getActivity()).setFragment(fragment);
     }
 
@@ -79,6 +80,7 @@ public class HomeFragment extends ListFragment implements TitledFragment {
 
 			// set the inner listView
 			LinearLayout listviewofopinions = (LinearLayout) convertView.findViewById(R.id.list_opinons_in_profile_item);
+			listviewofopinions.removeAllViews();
 			for (Opinion op:subject.getOpinionsOnMe()){
 				View opinionItem = getActivity().getLayoutInflater().inflate(R.layout.item_opinion, null, false);
 				((TextView)opinionItem.findViewById(R.id.item_opinion_name)).setText(op.getAuthor().getFirstName()+" "+op.getAuthor().getLastName());

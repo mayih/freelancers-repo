@@ -11,7 +11,7 @@ import il.bruzn.freelancers.Module.iRepositories.iMessageRepo;
 /**
  * Created by Yair on 10/12/2014.
  */
-public class MessageRepoList extends ListCRUD implements iMessageRepo {
+public class MessageRepoList extends ListTech implements iMessageRepo {
 	@Override
 	public void add(Message entry) {
 		_messages.add(entry);

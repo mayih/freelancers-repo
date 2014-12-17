@@ -9,7 +9,7 @@ import il.bruzn.freelancers.Module.iRepositories.iOpinionRepo;
 /**
  * Created by Yair on 08/12/2014.
  */
-public class OpinionRepoList extends ListCRUD implements iOpinionRepo {
+public class OpinionRepoList extends ListTech implements iOpinionRepo {
 	@Override
 	public void add(Opinion entry) {
 		_opinions.add(entry);

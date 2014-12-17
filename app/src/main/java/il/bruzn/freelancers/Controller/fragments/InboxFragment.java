@@ -1,6 +1,9 @@
 package il.bruzn.freelancers.Controller.fragments;
 
 import android.app.Fragment;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -8,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -20,6 +24,7 @@ import il.bruzn.freelancers.Module.Entities.Member;
 import il.bruzn.freelancers.Module.Entities.Message;
 import il.bruzn.freelancers.Module.Module;
 import il.bruzn.freelancers.R;
+import il.bruzn.freelancers.basic.ImageHelper;
 
 /**
  * Created by Yair on 01/12/2014.
@@ -58,25 +63,35 @@ public class InboxFragment extends Fragment  implements TitledFragment {
 	private class InboxArrayAdapter extends ArrayAdapter<ArrayList<Message>>{
 
 		public InboxArrayAdapter(List<ArrayList<Message>> discussions) {
-			super(getActivity(), R.layout.item_discussion,discussions);
+			super(getActivity(), 0,discussions);
 		}
 
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
-			TextView discussionView;
 			if (convertView==null)
-				discussionView = (TextView) getActivity().getLayoutInflater().inflate(R.layout.item_discussion, parent, false);
-			else
-				discussionView = (TextView)convertView;
+				convertView = getActivity().getLayoutInflater().inflate(R.layout.item_discussion, parent, false);
 
+			// Identify the interlocutor
 			Member interlocutor;
 			if (getItem(position).get(0).getAuthor() == ConnectedMember.getMember())
 				interlocutor = getItem(position).get(0).getReceiver();
 			else
 				interlocutor = getItem(position).get(0).getAuthor();
 
-			discussionView.setText(interlocutor.getFirstName()+" "+interlocutor.getLastName());
-			return discussionView;
+			// Fill convertView
+			TextView nameView = (TextView) convertView.findViewById(R.id.name_item_discussion);
+			nameView.setText(interlocutor.getFirstName() + " " + interlocutor.getLastName());
+
+			ImageView pictureView = (ImageView) convertView.findViewById(R.id.picture_item_discussion);
+			Bitmap picture;
+			if (interlocutor.getPicture() != null)
+				picture = interlocutor.getPicture();
+			else
+				picture = BitmapFactory.decodeResource(getResources(), R.drawable.default_profile_pic);
+			picture = ImageHelper.getRoundedCornerBitmap(picture, 100);
+			pictureView.setImageBitmap(picture);
+
+			return convertView;
 		}
 	}
 }
