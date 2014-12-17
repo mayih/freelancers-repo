@@ -19,4 +19,4 @@
 		android:layout_alignLeft="@id/text_message"
 		android:layout_below="@id/text_message"
 		android:text="Time"/>
-</RelativeLayout><!-- From: file:/C:/Users/yairo_000/Documents/Java-Projects/Freelancers/app/src/main/res/layout/item_message_other.xml -->
+</RelativeLayout><!-- From: file:/Users/Moshe/AndroidStudioProjects/Freelancers/app/src/main/res/layout/item_message_other.xml -->

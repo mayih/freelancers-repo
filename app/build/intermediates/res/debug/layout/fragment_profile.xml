@@ -50,13 +50,14 @@
               android:text="21 havaad haleumi"/>
     </LinearLayout>
 
-<TextView
+<TextView android:id="@+id/profile_average_label"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_below="@id/profile_picture"
     android:text="5/5"
     android:layout_centerInParent="true"
+    android:visibility="gone"
     />
 
 
-</RelativeLayout><!-- From: file:/C:/Users/yairo_000/Documents/Java-Projects/Freelancers/app/src/main/res/layout/fragment_profile.xml -->
+</RelativeLayout><!-- From: file:/Users/Moshe/AndroidStudioProjects/Freelancers/app/src/main/res/layout/fragment_profile.xml -->

@@ -45,6 +45,7 @@ public class ProfileFragment extends Fragment  implements TitledFragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		String memberEmail;
+
 		if (getArguments() != null) {
 			memberEmail = getArguments().getString(EMAIL_MEMBER_KEY);
 			_member = Module.getMemberRepo().selectByEmail(memberEmail);
@@ -55,26 +56,32 @@ public class ProfileFragment extends Fragment  implements TitledFragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View layout = inflater.inflate(R.layout.fragment_profile, container, false);
-        _picture = (ImageView)layout.findViewById(R.id.profile_picture);
+        View v = inflater.inflate(R.layout.fragment_profile, container, false);
+        _picture = (ImageView)v.findViewById(R.id.profile_picture);
 
 
-        _firstName = (TextView)layout.findViewById(R.id.profile_firstName_label);
+        _firstName = (TextView)v.findViewById(R.id.profile_firstName_label);
         _firstName.setText(_member.getFirstName());
 
-        _lastName = (TextView)layout.findViewById(R.id.profile_lastName_label);
+        _lastName = (TextView)v.findViewById(R.id.profile_lastName_label);
         _lastName.setText(_member.getLastName());
 
-        _specialisation = (TextView)layout.findViewById(R.id.profile_specialisation_label);
+        _specialisation = (TextView)v.findViewById(R.id.profile_specialisation_label);
 
-        _email = (TextView)layout.findViewById(R.id.profile_email_label);
+        _email = (TextView)v.findViewById(R.id.profile_email_label);
         _email.setText(_member.getEmail());
 
-        _phoneNumber = (TextView)layout.findViewById(R.id.profile_phoneNumber_label);
+        _phoneNumber = (TextView)v.findViewById(R.id.profile_phoneNumber_label);
         _phoneNumber.setText(_member.getPhoneNumber());
 
-        _adress = (TextView)layout.findViewById(R.id.profile_adress_label);
+        _adress = (TextView)v.findViewById(R.id.profile_adress_label);
 
-		return layout;
+        _average = (TextView)v.findViewById(R.id.profile_average_label);
+        if(_member.getAverage() != 0) {
+            _average.setText(_member.getAverage() + " / 5");
+            _average.setVisibility(View.VISIBLE);
+        }
+
+		return v;
 	}
 }
