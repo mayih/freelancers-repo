@@ -3,8 +3,6 @@ package il.bruzn.freelancers.Module.SqLiteTech;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +13,7 @@ import il.bruzn.freelancers.Module.iRepositories.iMemberRepo;
 /**
  * Created by Yair on 17/12/2014.
  */
-public class MemberRepoSqLite implements iMemberRepo {
+public class MemberRepoSQLite implements iMemberRepo {
 
 	@Override
 	public void add(Member entry) {
@@ -57,7 +55,7 @@ public class MemberRepoSqLite implements iMemberRepo {
 
 	}
 
-	static class MemberTableManager extends SQLiteBase {
+	static class MemberTableManager extends SQLiteTech {
 		// Table's name
 		static final String NAME_TABLE = "Member";
 
@@ -118,12 +116,14 @@ public class MemberRepoSqLite implements iMemberRepo {
             // Copy each line of the cursor into a content and add it to the list
             while (cursor.moveToNext()){
                 content = new ContentValues();
-                for (FIELDS_NAME field : FIELDS_NAME.values()){
-                    index = cursor.getColumnIndex(field.getName());
-                    if(index >= 0) {
-                        content.put(field.getName(), cursor.getString(index));
-                    }
-                }
+                for (FIELDS_NAME field : FIELDS_NAME.values()) {
+					if (field != FIELDS_NAME.ID) {
+						index = cursor.getColumnIndex(field.getName());
+						if (index >= 0) {
+							content.put(field.getName(), cursor.getString(index));
+						}
+					}
+				}
                 listSaved.add(content); // Insert the content
             }
             return listSaved;

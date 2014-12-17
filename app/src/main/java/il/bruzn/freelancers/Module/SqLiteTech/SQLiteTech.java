@@ -11,13 +11,13 @@ import java.util.List;
 /**
  * Created by Moshe on 17/12/14.
  */
-public abstract class SQLiteBase extends SQLiteOpenHelper {
+public abstract class SQLiteTech extends SQLiteOpenHelper {
 
     public abstract String createReq();
     public abstract String getNameTable();
     public abstract List<ContentValues> tableCopied(Cursor cursor);
 
-    SQLiteBase(Context context, String name, int version) {
+    SQLiteTech(Context context, String name, int version) {
         super(context, name, null, version);
     }
 
