@@ -13,11 +13,11 @@ public interface CRUD<T> {
 	// Read
 	public T	selectById(int Id);
 	public	ArrayList<T> selectAll();
-	public	ArrayList<T>	selectBy(String field, String value);
+	public	ArrayList<T> selectBy(String field, String value);
 
 	// Update
-	public void	update(T entry);
+	public void	update(T entry, int id);
 
 	//Delete
-	public void delete(T entry);
+	public void delete(T entry, int id);
 }
