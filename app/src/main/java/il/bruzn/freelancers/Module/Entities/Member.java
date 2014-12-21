@@ -12,15 +12,14 @@ import il.bruzn.freelancers.basic.WayToPay;
 import il.bruzn.freelancers.basic.Location;
 
 public class Member {
-	private int id;
-	private String _lastName;
-	private String _firstName;
+	private int _id;
 	private String _email;
 	private String _password;
+	private String _lastName;
+	private String _firstName;
 	private Location _address;
 	private String _phoneNumber;
-	private ArrayList<Member> _favorites;
-	private Bitmap _picture;
+	private Bitmap _picture; // Ddownload from an link
 	private String _googlePlus;
 	private String _linkedIn;
 	private WayToPay _payment;
@@ -28,6 +27,7 @@ public class Member {
 	// Not in table
 	private ArrayList<Opinion> _opinionsOnMe = new ArrayList<Opinion>();
 	private ArrayList<ArrayList<Message>> discussions = new ArrayList<ArrayList<Message>>();
+	private ArrayList<Member> _favorites;
 
 	// Methods  ----
 	public double getAverage(){
@@ -42,6 +42,11 @@ public class Member {
 	}
 
 	// Getters & Setters ----
+
+	public Member setId(int id) {
+		this._id = id;
+		return this;
+	}
 	public Member setPassword(String password) {
 		_password = password;
 		return this;
@@ -66,6 +71,30 @@ public class Member {
 		this.discussions = discussions;
 		return this;
 	}
+	public Member setLinkedIn(String linkedIn) {
+		_linkedIn = linkedIn;
+		return this;
+	}
+	public Member setGooglePlus(String googlePlus) {
+		_googlePlus = googlePlus;
+		return this;
+	}
+	public Member setPicture(Bitmap picture) {
+		_picture = picture;
+		return this;
+	}
+	public Member setFavorites(ArrayList<Member> favorites) {
+		_favorites = favorites;
+		return this;
+	}
+	public Member setPhoneNumber(String phoneNumber) {
+		_phoneNumber = phoneNumber;
+		return this;
+	}
+	public Member setAddress(Location address) {
+		_address = address;
+		return this;
+	}
 
 	public String getPassword() {
 		return _password;
@@ -74,7 +103,7 @@ public class Member {
 		return _email;
 	}
 	public int getId() {
-		return id;
+		return _id;
 	}
 	public String getLastName() {
 		return _lastName;
@@ -88,6 +117,13 @@ public class Member {
 	public String getPhoneNumber() {
 		return _phoneNumber;
 	}
+	public String getGooglePlus() {
+		return _googlePlus;
+	}
+	public String getLinkedIn() {
+		return _linkedIn;
+	}
+
 	public ArrayList<Member> getFavorites() {
 		return _favorites;
 	}
