@@ -85,10 +85,10 @@ public class MessageRepoList extends ListTech implements iMessageRepo {
 	}
 	// useless in lists
 	@Override
-	public void update(Message entry) {	}
+	public void update(Message entry, int id) {	}
 
 	@Override
-	public void delete(Message entry) {
+	public void delete(Message entry, int id) {
 		_messages.remove(entry);
 	}
 }

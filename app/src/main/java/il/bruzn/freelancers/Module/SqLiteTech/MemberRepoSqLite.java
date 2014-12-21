@@ -105,7 +105,15 @@ public class MemberRepoSQLite extends  SQLiteTech<Member> implements iMemberRepo
 	@Override
 	public ContentValues toContentValues(Member member) {
 		ContentValues content = new ContentValues();
-
+		content.put(FIELDS_NAME.EMAIL.toString(), member.getEmail());
+		content.put(FIELDS_NAME.PASSWORD.toString(), member.getPassword());
+		content.put(FIELDS_NAME.FIRSTNAME.toString(), member.getFirstName());
+		content.put(FIELDS_NAME.LASTNAME.toString(), member.getLastName());
+		content.put(FIELDS_NAME.ADDRESS.toString(), member.getAddress().toString());
+		content.put(FIELDS_NAME.PHONENUMBER.toString(), member.getPhoneNumber());
+		// Get the picture link...
+		content.put(FIELDS_NAME.GOOGLE.toString(), member.getGooglePlus());
+		content.put(FIELDS_NAME.LINKEDIN.toString(), member.getLinkedIn());
 		return content;
 	}
 	@Override

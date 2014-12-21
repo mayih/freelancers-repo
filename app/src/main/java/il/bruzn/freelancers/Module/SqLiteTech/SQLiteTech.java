@@ -17,16 +17,14 @@ import il.bruzn.freelancers.Module.Entities.Member;
  */
 public abstract class SQLiteTech<T> extends SQLiteOpenHelper implements CRUD<T> {
 
-	protected abstract ContentValues		toContentValues(Member member);
-
-	// Methods to implemments
+	// Methods to implemments ---
 	public abstract String createReq();
     public abstract String getNameTable();
     public abstract List<ContentValues> tableCopied(Cursor cursor);
 	public abstract ArrayList<T> toEntity(Cursor cursor);
 	public abstract ContentValues toContentValues(T entity);
 
-
+	// Constructor ---
     SQLiteTech(Context context, String name, int version) {
         super(context, name, null, version);
     }
