@@ -15,7 +15,7 @@ import il.bruzn.freelancers.Module.iRepositories.iOpinionRepo;
 /**
  * Created by Yair on 17/12/2014.
  */
-public class MemberRepoSQLite extends  SQLiteTech<Member> implements iMemberRepo {
+public class MemberRepoSqLite extends  SQLiteTech<Member> implements iMemberRepo {
 
 	// Table's name
 	static final String NAME_TABLE = "Member";
@@ -54,7 +54,7 @@ public class MemberRepoSQLite extends  SQLiteTech<Member> implements iMemberRepo
 			FIELDS_NAME.LINKEDIN	+ " TEXT, " +
 			");";
 
-	public MemberRepoSQLite(Context context, String name, int version) {
+	public MemberRepoSqLite(Context context, String name, int version) {
 		super(context, name, version);
 	}
 

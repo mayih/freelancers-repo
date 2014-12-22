@@ -138,52 +138,16 @@ public class OpinionRepoSQLite extends SQLiteTech<Opinion> implements iOpinionRe
 	}
 	@Override
 	public ArrayList<Opinion> getBySubject(Member subject) {
-		return null;
+		return selectBy(FIELDS_NAME.SUBJECT.toString(), Integer.toString(subject.getId()));
 	}
 
 	@Override
-	public ArrayList<Opinion> getByAuthor(Member subject) {
-		return null;
+	public ArrayList<Opinion> getByAuthor(Member author) {
+		return selectBy(FIELDS_NAME.SUBJECT.toString(), Integer.toString(author.getId()));
 	}
 
 	@Override
 	public Member fillMember(Member member) {
 		return null;
 	}
-
-	@Override
-	public void add(Opinion entry) {
-
-	}
-
-	@Override
-	public Opinion selectById(int Id) {
-		return null;
-	}
-
-	@Override
-	public ArrayList<Opinion> selectAll() {
-		return null;
-	}
-
-	@Override
-	public ArrayList<Opinion> selectBy(String field, String value) {
-		return null;
-	}
-
-
-	@Override
-	public void update(Opinion entry) {
-
-	}
-
-	@Override
-	public void delete(Opinion entry) {
-
-	}
-
-
-
-
-
 }

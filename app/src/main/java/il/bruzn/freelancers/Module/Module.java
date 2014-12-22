@@ -7,7 +7,7 @@ import java.util.HashMap;
 import il.bruzn.freelancers.Module.ListTech.MemberRepoList;
 import il.bruzn.freelancers.Module.ListTech.MessageRepoList;
 import il.bruzn.freelancers.Module.ListTech.OpinionRepoList;
-import il.bruzn.freelancers.Module.SqLiteTech.MemberRepoSQLite;
+import il.bruzn.freelancers.Module.SqLiteTech.MemberRepoSqLite;
 import il.bruzn.freelancers.Module.SqLiteTech.MessageRepoSQLite;
 import il.bruzn.freelancers.Module.SqLiteTech.OpinionRepoSQLite;
 import il.bruzn.freelancers.Module.iRepositories.iMemberRepo;
@@ -46,7 +46,7 @@ public class Module {
 				// ...
 				break;
 			case SQLite:
-				_memberRepo = new MemberRepoSQLite(context, dbName, version);
+				_memberRepo = new MemberRepoSqLite(context, dbName, version);
 				_messageRepo = new MessageRepoSQLite(context, dbName, version);
 				_opnionRepo = new OpinionRepoSQLite(context, dbName, version);
 				// ...
