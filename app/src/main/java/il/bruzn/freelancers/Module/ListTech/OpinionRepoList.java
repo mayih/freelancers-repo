@@ -60,12 +60,12 @@ public class OpinionRepoList extends ListTech implements iOpinionRepo {
 	}
 
 	@Override
-	public void update(Opinion entry) {
+	public void update(Opinion entry, int id) {
 		// In list technology, entities are already updated by reference.
 		}
 
 	@Override
-	public void delete(Opinion entry) {
+	public void delete(Opinion entry, int id) {
 		_opinions.remove(entry);
 	}
 }

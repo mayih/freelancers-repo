@@ -1,11 +1,15 @@
 package il.bruzn.freelancers.Module;
 
+import android.content.Context;
+
 import java.util.HashMap;
-import java.util.Objects;
 
 import il.bruzn.freelancers.Module.ListTech.MemberRepoList;
 import il.bruzn.freelancers.Module.ListTech.MessageRepoList;
 import il.bruzn.freelancers.Module.ListTech.OpinionRepoList;
+import il.bruzn.freelancers.Module.SqLiteTech.MemberRepoSQLite;
+import il.bruzn.freelancers.Module.SqLiteTech.MessageRepoSQLite;
+import il.bruzn.freelancers.Module.SqLiteTech.OpinionRepoSQLite;
 import il.bruzn.freelancers.Module.iRepositories.iMemberRepo;
 import il.bruzn.freelancers.Module.iRepositories.iMessageRepo;
 import il.bruzn.freelancers.Module.iRepositories.iOpinionRepo;
@@ -14,8 +18,12 @@ import il.bruzn.freelancers.Module.iRepositories.iOpinionRepo;
  * Created by Yair on 08/12/2014.
  */
 public class Module {
-	static final Technology tech = Technology.List;
-	enum Technology{ SqlLite, Server, List };
+	static final Technology tech = Technology.SQLite;
+	enum Technology{SQLite, Server, List };
+
+	// DataBase Name
+	public final static String DB_NAME = "DB";
+	public final static int DB_VERSION = 1;
 
 	// Android FAQ: How do I pass data between Activities/Services within a single application?
 	// http://developer.android.com/guide/faq/framework.html
@@ -29,18 +37,23 @@ public class Module {
 	static iOpinionRepo _opnionRepo;
 	static iMessageRepo _messageRepo;
 
-	public static void create(){
+	public static void create(Context context, String dbName, int version){
 		switch (tech){
 			case List:
 				_memberRepo = new MemberRepoList();
 				_opnionRepo = new OpinionRepoList();
 				_messageRepo = new MessageRepoList();
 				// ...
+				break;
+			case SQLite:
+				_memberRepo = new MemberRepoSQLite(context, dbName, version);
+				_messageRepo = new MessageRepoSQLite(context, dbName, version);
+				_opnionRepo = new OpinionRepoSQLite(context, dbName, version);
+				// ...
+				break;
+			// ...
 		}
-		// ...
 	}
-
-
 
 	public static Technology getTech() {
 		return tech;

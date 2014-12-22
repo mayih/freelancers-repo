@@ -11,5 +11,4 @@ import il.bruzn.freelancers.Module.Entities.Message;
  */
 public interface iMessageRepo extends CRUD<Message> {
 	public ArrayList<ArrayList<Message>> selectAllDiscussions(Member self);
-	public ArrayList<Message> selectDiscussion(Member self, Member other);
 }

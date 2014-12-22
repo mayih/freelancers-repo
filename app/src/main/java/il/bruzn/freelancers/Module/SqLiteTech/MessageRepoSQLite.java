@@ -49,6 +49,10 @@ public class MessageRepoSQLite extends SQLiteTech<Message> implements iMessageRe
 			FIELDS_NAME.DATE	    + " INTEGER NOT NULL, " + // TimeStamp in seconds
 			");";
 
+	public MessageRepoSQLite(Context context, String name, int version) {
+		super(context, name, version);
+	}
+
 	// SQLiteTech IMPLEMENTATION ---
 	@Override
 	public String createReq() {
@@ -95,12 +99,10 @@ public class MessageRepoSQLite extends SQLiteTech<Message> implements iMessageRe
 		listOfIds += ")";
 
 		// requete
-
-
+		ArrayList<Member> listOfMember = Module.getMemberRepo().selectByIds(listOfIds);
 
 		ArrayList<Message> messageArrayList = new ArrayList<>();
 		Message message;
-
 		for (cursor.moveToFirst(); cursor.isAfterLast(); cursor.moveToNext()){
 
 			int id			= cursor.getInt(cursor.getColumnIndex(FIELDS_NAME.ID.toString()));
@@ -109,18 +111,26 @@ public class MessageRepoSQLite extends SQLiteTech<Message> implements iMessageRe
 			String messageTxt=cursor.getString(cursor.getColumnIndex(FIELDS_NAME.MESSAGE.toString()));
 			long timeStamp = cursor.getLong(cursor.getColumnIndex(FIELDS_NAME.DATE.toString()));
 
-			// Load the author and receiver
-			iMemberRepo memberRepo = Module.getMemberRepo();
-			Member author	= memberRepo.selectById(author_id);
-			Member receiver	= memberRepo.selectById(receiver_id);
+			// get the author and the receiver
+			Member author = null, receiver = null;
+			for (Member member : listOfMember) {
+				if (member.getId() == author_id)
+					author = member;
+				else if (member.getId() == receiver_id)
+					receiver = member;
+
+				if (author != null && receiver != null)
+					break;
+			}
 
 			// Convert the timestamp in date
 			Date dateOfMessage = new Date(timeStamp * 1000); // milliseconds to seconds
 
 			// Create the message
-			message = new Message(author, receiver, messageTxt).setId(id).setDate(dateOfMessage);
-
-			messageArrayList.add(message);
+			if (author != null && receiver != null) {
+				message = new Message(author, receiver, messageTxt).setId(id).setDate(dateOfMessage);
+				messageArrayList.add(message);
+			}
 		}
 		return messageArrayList;
 	}
@@ -177,10 +187,5 @@ public class MessageRepoSQLite extends SQLiteTech<Message> implements iMessageRe
 		for (ArrayList<Message> discussion:discussionsSelected)
 			Collections.sort(discussion);
 		return discussionsSelected;
-	}
-
-	@Override
-	public ArrayList<Message> selectDiscussion(Member self, Member other) {
-		return null;
 	}
 }

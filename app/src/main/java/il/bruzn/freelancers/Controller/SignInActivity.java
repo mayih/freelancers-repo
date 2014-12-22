@@ -26,7 +26,7 @@ public class SignInActivity extends ActionBarActivity {
 		super.onCreate(savedInstanceState);
 
 		if (Module.getMemberRepo() == null) // If the technologie hasn't been instanced
-			Module.create();
+			Module.create(this, Module.DB_NAME, Module.DB_VERSION);
 
 		// Check if the user is already connected
 		String email = getSharedPreferences(ConnectedMember.filename, MODE_PRIVATE).getString(ConnectedMember.key, null);

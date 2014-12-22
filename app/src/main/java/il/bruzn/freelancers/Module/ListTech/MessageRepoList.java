@@ -54,17 +54,6 @@ public class MessageRepoList extends ListTech implements iMessageRepo {
 	}
 
 	@Override
-	public ArrayList<Message> selectDiscussion(Member self, Member other) {
-		ArrayList<Message> selected = new ArrayList<Message>();
-
-		for (Message message:_messages)
-			if ((message.getReceiver() == self || message.getAuthor() == self) && (message.getReceiver() == other || message.getAuthor() == other))
-				selected.add(message);
-
-		return selected;
-	}
-
-	@Override
 	public Message selectById(int Id) {
 		for (Message message:_messages)
 			if (message.getId() == Id)
