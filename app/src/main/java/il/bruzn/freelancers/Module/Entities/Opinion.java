@@ -69,8 +69,26 @@ public class Opinion {
 	public static enum Level {
 		ONE(1), TWO(2) ,THREE(3), FOUR(4), FIVE(5);
 
-		private double _level;
-		Level(double level) { _level = level; }
-		public double getValue() { return _level; }
+		private int _level;
+		Level(int level) { _level = level; }
+		public int getValue() { return _level; }
+
+		public static Level fromInteger(int level){
+
+			switch (level){
+				case 1:
+					return ONE;
+				case 2:
+					return TWO;
+				case 3:
+					return THREE;
+				case 4:
+					return FOUR;
+				case 5:
+					return FIVE;
+			}
+			return null;
+
+		}
 	}
 }
