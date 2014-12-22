@@ -38,12 +38,17 @@ public class MemberRepoList extends ListTech implements iMemberRepo {
 	}
 
 	@Override
+	public ArrayList<Member> selectByIds(String listOfIds) {
+		return null;
+	} // NO USE
+
+	@Override
 	public Member selectById(int Id) {
 		for (Member m: _members)
 			if (m.getId() == Id)
 				return m;
 		return null;
-	}
+	} // NO USE
 
 	@Override
 	public ArrayList<Member> selectAll() {
@@ -57,12 +62,12 @@ public class MemberRepoList extends ListTech implements iMemberRepo {
 	}
 
 	@Override
-	public void update(Member entry) {
+	public void update(Member entry, int id) {
 		// When the object changed the entry, the list is allready updated by reference.
-			}
+			} // NO USE
 
 	@Override
-	public void delete(Member entry) {
+	public void delete(Member entry, int  id) {
 		_members.remove(entry);
 	}
 }
