@@ -336,10 +336,11 @@ int drawable abc_textfield_search_material 0x7f020032
 int drawable default_profile_pic 0x7f020033
 int drawable disconnect_icon 0x7f020034
 int drawable home_icon 0x7f020035
-int drawable ic_launcher 0x7f020036
-int drawable inbox_icon 0x7f020037
-int drawable plane_paper_icon 0x7f020038
-int drawable profile_icon 0x7f020039
+int drawable ic_action_new 0x7f020036
+int drawable ic_launcher 0x7f020037
+int drawable inbox_icon 0x7f020038
+int drawable plane_paper_icon 0x7f020039
+int drawable profile_icon 0x7f02003a
 int id action_bar 0x7f090033
 int id action_bar_activity_content 0x7f090000
 int id action_bar_container 0x7f090032
@@ -353,6 +354,7 @@ int id action_menu_presenter 0x7f090003
 int id action_mode_bar 0x7f090030
 int id action_mode_bar_stub 0x7f09002f
 int id action_mode_close_button 0x7f090022
+int id action_new_discussion 0x7f090067
 int id activity_chooser_view_content 0x7f090023
 int id always 0x7f090016
 int id beginning 0x7f090013
@@ -482,6 +484,7 @@ int layout item_message_self 0x7f030022
 int layout item_opinion 0x7f030023
 int layout item_profile 0x7f030024
 int layout support_simple_spinner_dropdown_item 0x7f030025
+int menu inbox_actionbar 0x7f0d0000
 int string Welcome 0x7f0b0000
 int string abc_action_bar_home_description 0x7f0b0001
 int string abc_action_bar_home_description_format 0x7f0b0002

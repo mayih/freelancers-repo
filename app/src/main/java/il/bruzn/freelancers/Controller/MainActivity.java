@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.MenuItem;
 
+import il.bruzn.freelancers.Controller.fragments.HomeFragment;
 import il.bruzn.freelancers.Controller.fragments.TitledFragment;
 import il.bruzn.freelancers.Module.ConnectedMember;
 import il.bruzn.freelancers.R;
@@ -44,7 +45,8 @@ public class MainActivity extends ActionBarActivity implements MenuFragment.iMen
 			@Override
 			public void onBackStackChanged() {
 				Fragment frag = getFragmentManager().findFragmentById(R.id.main_container);
-				getSupportActionBar().setTitle(((TitledFragment)frag).getTitle());
+				if (frag != null)
+					getSupportActionBar().setTitle(((TitledFragment)frag).getTitle());
 			}
 		});
 	}
@@ -66,17 +68,30 @@ public class MainActivity extends ActionBarActivity implements MenuFragment.iMen
 	}
 
 	public void setFragment(Fragment frag){
-		setFragment(frag, true);
+		setFragment(frag, true, false);
 	}
-	public void setFragment(Fragment frag, boolean keepTransactions){
-		FragmentTransaction transaction = getFragmentManager().beginTransaction();
-		transaction .replace(R.id.main_container, frag);
+	public void setFragment(Fragment frag, boolean keepThisTransaction, boolean clearTransactions){
+		FragmentManager fm = getFragmentManager();
+		Fragment oldFragment = fm.findFragmentById(R.id.main_container);
 
-		if (!keepTransactions)
-			getFragmentManager().popBackStackImmediate("", FragmentManager.POP_BACK_STACK_INCLUSIVE);
-		else
+		if (clearTransactions && fm.getBackStackEntryCount()>0) {// Clear the back stack
+			fm.popBackStackImmediate("", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+			oldFragment = fm.findFragmentById(R.id.main_container);
+		}
+
+		if (frag == oldFragment)
+			return;
+
+
+		FragmentTransaction transaction = fm.beginTransaction();
+		frag.setHasOptionsMenu(true);
+
+		if (keepThisTransaction)
 			transaction.addToBackStack("");
-		transaction.commit();
+
+		if (oldFragment != null)
+			transaction.remove(oldFragment);
+		transaction.replace(R.id.main_container, frag).commit();
 	}
 
 	@Override
@@ -104,10 +119,12 @@ public class MainActivity extends ActionBarActivity implements MenuFragment.iMen
 			return;
 		}
 
+		setFragment(item.getFragment(), item != MenuFragment.getMenu()[0], true);
+
 		// Change the main Fragment
-		setFragment(MenuFragment.getMenu()[0].getFragment(), false);
-		if (item != MenuFragment.getMenu()[0])
-			setFragment(item.getFragment());
+//		setFragment(MenuFragment.getMenu()[0].getFragment(), false);
+//		if (item != MenuFragment.getMenu()[0])
+//			setFragment(item.getFragment());
 
 		_drawerLayout.closeDrawers();
 	}

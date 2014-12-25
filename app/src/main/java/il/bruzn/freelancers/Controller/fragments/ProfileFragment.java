@@ -31,10 +31,6 @@ public class ProfileFragment extends Fragment  implements TitledFragment {
     private TextView _adress;
     private TextView _average;
 
-	public ProfileFragment() {
-		_member = ConnectedMember.getMember();
-	}
-
 	@Override
 	public String getTitle() {
 		return _member.getFirstName()+" "+_member.getLastName();
@@ -47,6 +43,8 @@ public class ProfileFragment extends Fragment  implements TitledFragment {
 			_member = (Member)Module.getHashMap().get(getArguments().getLong(MEMBER_KEY));
 			Module.getHashMap().remove(MEMBER_KEY);
 		}
+		else
+			_member = ConnectedMember.getMember();
 	}
 
 	@Nullable
@@ -55,6 +53,8 @@ public class ProfileFragment extends Fragment  implements TitledFragment {
 
         View v = inflater.inflate(R.layout.fragment_profile, container, false);
         _picture = (ImageView)v.findViewById(R.id.profile_picture);
+		if (_member.getPicture() != null)
+			_picture.setImageBitmap(_member.getPicture());
 
 
         _firstName = (TextView)v.findViewById(R.id.profile_firstName_label);

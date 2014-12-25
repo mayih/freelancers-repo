@@ -32,16 +32,25 @@ public class DiscussionFragment extends Fragment  implements TitledFragment {
 
 	private ListView _listView;
 	private SimpleDateFormat _dateForm;
+
 	private Member _interlocutor;
+	public DiscussionFragment setInterlocutor(Member interlocutor) {
+		_interlocutor = interlocutor;
+		return this;
+	}
 
 	private ArrayList<Message> _messages;
-	private static final String KEY_FOR_MESSAGES = "keyForMessagesInHashMap";
-	public void setMessages(ArrayList<Message> messages) {
+	public DiscussionFragment setMessages(ArrayList<Message> messages) {
 		_messages = messages;
+		return this;
 	}
+
+	private static final String KEY_FOR_MESSAGES = "keyForMessagesInHashMap";
+	private static final String KEY_FOR_INTERLOCUTOR = "keyForInterlocutorInHashMap";
 
 	public DiscussionFragment() {
 		_dateForm =  new SimpleDateFormat("HH:mm", Locale.US);
+		_messages = new ArrayList<>();
 	}
 
 	@Override
@@ -52,16 +61,26 @@ public class DiscussionFragment extends Fragment  implements TitledFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		if (savedInstanceState!=null && savedInstanceState.containsKey(KEY_FOR_MESSAGES)){
-			long hashMapKey = savedInstanceState.getLong(KEY_FOR_MESSAGES);
-			_messages = (ArrayList<Message>) Module.getHashMap().get(hashMapKey);
-			Module.getHashMap().remove(hashMapKey);
+		if (savedInstanceState!=null) {
+			if (savedInstanceState.containsKey(KEY_FOR_MESSAGES)) {
+				long hashMapKey = savedInstanceState.getLong(KEY_FOR_MESSAGES);
+				_messages = (ArrayList<Message>) Module.getHashMap().get(hashMapKey);
+				Module.getHashMap().remove(hashMapKey);
+			}
+			else if (savedInstanceState.containsKey(KEY_FOR_INTERLOCUTOR)) {
+				long hashMapKey = savedInstanceState.getLong(KEY_FOR_MESSAGES);
+				_interlocutor = (Member) Module.getHashMap().get(hashMapKey);
+				Module.getHashMap().remove(hashMapKey);
+			}
 		}
+
 		// Get the interlocutor
-		if (_messages.get(0).getAuthor() != ConnectedMember.getMember())
-			_interlocutor = _messages.get(0).getAuthor();
-		else
-			_interlocutor = _messages.get(0).getReceiver();
+		if (!_messages.isEmpty()) {
+			if (_messages.get(0).getAuthor().getId() != ConnectedMember.getMember().getId())
+				_interlocutor = _messages.get(0).getAuthor();
+			else
+				_interlocutor = _messages.get(0).getReceiver();
+		}
 	}
 
 	@Nullable
@@ -104,8 +123,13 @@ public class DiscussionFragment extends Fragment  implements TitledFragment {
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		long hashMapKey = System.currentTimeMillis(); // Key for the list to store
-		Module.getHashMap().put(hashMapKey, _messages); // Store the list
-		outState.putLong(KEY_FOR_MESSAGES, hashMapKey); // Save the key
+		if (!_messages.isEmpty()) {
+			Module.getHashMap().put(hashMapKey, _messages); // Store the list
+			outState.putLong(KEY_FOR_MESSAGES, hashMapKey); // Save the key
+		}
+		Module.getHashMap().put(hashMapKey, _messages); // Store the interlocutor
+		outState.putLong(KEY_FOR_INTERLOCUTOR, hashMapKey); // Save the key
+
 		super.onSaveInstanceState(outState);
 	}
 
@@ -118,7 +142,7 @@ public class DiscussionFragment extends Fragment  implements TitledFragment {
 		public View getView(int position, View convertView, ViewGroup parent) {
 			Message message = getItem(position);
 			int layoutId;
-			if (message.getAuthor() == ConnectedMember.getMember())
+			if (message.getAuthor().getId() == ConnectedMember.getMember().getId())
 				layoutId = R.layout.item_message_self;
 			else
 				layoutId = R.layout.item_message_other;

@@ -41,7 +41,7 @@ public class MemberRepoSqLite extends  SQLiteTech<Member> implements iMemberRepo
 		}
 	};
 	// Request to create the table
-	static final String CREATE_REQ = "CREATE TABLE " + NAME_TABLE + " (" +
+	static final String CREATE_REQ = "CREATE TABLE IF NOT EXISTS " + NAME_TABLE + " (" +
 			FIELDS_NAME.ID			+ " INTEGER PRIMARY KEY AUTOINCREMENT, " +
 			FIELDS_NAME.EMAIL		+ " TEXT NOT NULL, " +
 			FIELDS_NAME.PASSWORD	+ " TEXT NOT NULL, " +
@@ -51,7 +51,7 @@ public class MemberRepoSqLite extends  SQLiteTech<Member> implements iMemberRepo
 			FIELDS_NAME.PHONENUMBER	+ " TEXT, " +
 			FIELDS_NAME.PICTURE		+ " TEXT, " +
 			FIELDS_NAME.GOOGLE		+ " TEXT, " +
-			FIELDS_NAME.LINKEDIN	+ " TEXT, " +
+			FIELDS_NAME.LINKEDIN	+ " TEXT " +
 			");";
 
 	public MemberRepoSqLite(Context context, String name, int version) {
@@ -62,7 +62,10 @@ public class MemberRepoSqLite extends  SQLiteTech<Member> implements iMemberRepo
 	// iMemberRepo IMPLEMENTATION ---
 	@Override
 	public Member selectByEmail(String email) {
-		return selectBy(FIELDS_NAME.EMAIL.toString(), email).get(0);
+		List<Member> selectedMember = selectBy(FIELDS_NAME.EMAIL.toString(), email);
+		if (selectedMember.size() > 0)
+			return selectedMember.get(0);
+		return null;
 	}
 	@Override
 	public Member selectWithOpinions(String email) {
@@ -70,7 +73,8 @@ public class MemberRepoSqLite extends  SQLiteTech<Member> implements iMemberRepo
 	}
 	@Override
 	public ArrayList<Member> selectByIds(String listOfIds) {
-		Cursor cursor = getReadableDatabase().rawQuery("SELECT FROM " + getNameTable() + " WHERE _id IN " + listOfIds, null);
+		String request = "SELECT * FROM " + getNameTable() + " WHERE _id IN " + listOfIds;
+		Cursor cursor = getReadableDatabase().rawQuery(request, null);
 		return toEntity(cursor);
 	}
 
@@ -79,7 +83,7 @@ public class MemberRepoSqLite extends  SQLiteTech<Member> implements iMemberRepo
 	public ArrayList<Member> toEntity(Cursor cursor){
 		ArrayList<Member> memberArrayList = new ArrayList<>();
 		Member member;
-		for (cursor.moveToFirst(); cursor.isAfterLast(); cursor.moveToNext()){
+		for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()){
 			member = new Member();
 
 			int id				= cursor.getInt(cursor.getColumnIndex(FIELDS_NAME.ID.toString()));
@@ -113,7 +117,8 @@ public class MemberRepoSqLite extends  SQLiteTech<Member> implements iMemberRepo
 		content.put(FIELDS_NAME.PASSWORD.toString(), member.getPassword());
 		content.put(FIELDS_NAME.FIRSTNAME.toString(), member.getFirstName());
 		content.put(FIELDS_NAME.LASTNAME.toString(), member.getLastName());
-		content.put(FIELDS_NAME.ADDRESS.toString(), member.getAddress().toString());
+		if (member.getAddress() != null)
+			content.put(FIELDS_NAME.ADDRESS.toString(), member.getAddress().toString());
 		content.put(FIELDS_NAME.PHONENUMBER.toString(), member.getPhoneNumber());
 		// Get the picture link...
 		content.put(FIELDS_NAME.GOOGLE.toString(), member.getGooglePlus());

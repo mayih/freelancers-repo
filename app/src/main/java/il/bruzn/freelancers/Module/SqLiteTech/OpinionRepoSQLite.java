@@ -40,14 +40,14 @@ public class OpinionRepoSQLite extends SQLiteTech<Opinion> implements iOpinionRe
 		}
 	};
 	// Request to create the table
-	static final String CREATE_REQ = "CREATE TABLE " + NAME_TABLE + " (" +
+	static final String CREATE_REQ = "CREATE TABLE IF NOT EXISTS " + NAME_TABLE + " (" +
 			FIELDS_NAME.ID				+ " INTEGER PRIMARY KEY AUTOINCREMENT, " +
 			FIELDS_NAME.LEVEL			+ " INTEGER NOT NULL, " +
 			FIELDS_NAME.IS_DONE			+ " INTEGER, " +
 			FIELDS_NAME.OPINION_MESSAGE	+ " TEXT, " 			+
 			FIELDS_NAME.AUTHORS			+ " INTEGER NOT NULL, " +
 			FIELDS_NAME.SUBJECT			+ " INTEGER NOT NULL, " +
-			FIELDS_NAME.DATE			+ " INTEGER NOT NULL, " +
+			FIELDS_NAME.DATE			+ " INTEGER NOT NULL " +
 			");";
 
 	public OpinionRepoSQLite(Context context, String name, int version) {
@@ -95,7 +95,7 @@ public class OpinionRepoSQLite extends SQLiteTech<Opinion> implements iOpinionRe
 		ArrayList<Opinion> opinionArrayList = new ArrayList<>();
 		Opinion opinion;
 
-		for (cursor.moveToFirst(); cursor.isAfterLast(); cursor.moveToNext()){
+		for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()){
 			opinion = new Opinion();
 
 			int id			= cursor.getInt(cursor.getColumnIndex(FIELDS_NAME.ID.toString()));
@@ -148,6 +148,6 @@ public class OpinionRepoSQLite extends SQLiteTech<Opinion> implements iOpinionRe
 
 	@Override
 	public Member fillMember(Member member) {
-		return null;
+		return member;
 	}
 }

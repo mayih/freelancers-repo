@@ -26,27 +26,27 @@ public class MessageRepoSQLite extends SQLiteTech<Message> implements iMessageRe
 
 	// Fields' name
 	enum FIELDS_NAME {  ID("_id"),
-		AUTHOR("author_id"),
-		RECEIVER("receiver_id"),
-		MESSAGE("message"),
-		DATE("date_of_message");
+						AUTHOR("author_id"),
+						RECEIVER("receiver_id"),
+						MESSAGE("message"),
+						DATE("date_of_message");
 
 		private String _name;
 		FIELDS_NAME(String name) {
 			_name = name;
 		}
-		public String getName() {
+		public String toString() {
 			return _name;
 		}
 	};
 
 	// Request to create the table
-	static final String CREATE_REQ = "CREATE TABLE " + NAME_TABLE + " (" +
+	static final String CREATE_REQ = "CREATE TABLE IF NOT EXISTS " + NAME_TABLE + " (" +
 			FIELDS_NAME.ID			+ " INTEGER PRIMARY KEY AUTOINCREMENT, " +
 			FIELDS_NAME.AUTHOR	    + " INTEGER NOT NULL, " +
 			FIELDS_NAME.RECEIVER	+ " INTEGER NOT NULL, " +
 			FIELDS_NAME.MESSAGE	    + " TEXT NOT NULL, "    +
-			FIELDS_NAME.DATE	    + " INTEGER NOT NULL, " + // TimeStamp in seconds
+			FIELDS_NAME.DATE	    + " INTEGER NOT NULL "	+ // TimeStamp in seconds
 			");";
 
 	public MessageRepoSQLite(Context context, String name, int version) {
@@ -88,22 +88,26 @@ public class MessageRepoSQLite extends SQLiteTech<Message> implements iMessageRe
 	}
 	@Override
 	public ArrayList<Message> toEntity(Cursor cursor) {
+		ArrayList<Message> messageArrayList = new ArrayList<>();
+		if (cursor.getCount() == 0)
+			return messageArrayList;
+
 		// recup les ids
 		String listOfIds = "(";
 		int author_id, receiver_id;
 		while (cursor.moveToNext()){
 			author_id	= cursor.getInt( cursor.getColumnIndex(FIELDS_NAME.AUTHOR.toString()));
 			receiver_id	= cursor.getInt( cursor.getColumnIndex(FIELDS_NAME.RECEIVER.toString()));
-			listOfIds += author_id + ", " + receiver_id + ", ";
+			listOfIds += author_id + ", " + receiver_id;
+			if (!cursor.isLast())
+				listOfIds += ", ";
 		}
 		listOfIds += ")";
 
 		// requete
 		ArrayList<Member> listOfMember = Module.getMemberRepo().selectByIds(listOfIds);
-
-		ArrayList<Message> messageArrayList = new ArrayList<>();
 		Message message;
-		for (cursor.moveToFirst(); cursor.isAfterLast(); cursor.moveToNext()){
+		for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()){
 
 			int id			= cursor.getInt(cursor.getColumnIndex(FIELDS_NAME.ID.toString()));
 			author_id	= cursor.getInt(cursor.getColumnIndex(FIELDS_NAME.AUTHOR.toString()));
@@ -149,10 +153,10 @@ public class MessageRepoSQLite extends SQLiteTech<Message> implements iMessageRe
 	// iMessageRepo IMPLEMENTATION ---
 	@Override
 	public ArrayList<ArrayList<Message>> selectAllDiscussions(Member self) {
-		Cursor cursor = getReadableDatabase().rawQuery("SELECT * FROM " + getNameTable() + " WHERE "
-			+ FIELDS_NAME.AUTHOR.toString() + 	" = ? OR "
-			+ FIELDS_NAME.RECEIVER.toString() +	" = ? ",
-			new String[]{self.getId()+"", self.getId()+""});
+		String request = "SELECT * FROM " + getNameTable() + " WHERE "
+				+ FIELDS_NAME.AUTHOR.toString() + 	" = ? OR "
+				+ FIELDS_NAME.RECEIVER.toString() +	" = ?";
+		Cursor cursor = getReadableDatabase().rawQuery(request, new String[]{self.getId()+"", self.getId()+""});
 
 		ArrayList<Message> arrayListMessages = toEntity(cursor);
 		ArrayList<ArrayList<Message>> discussionsSelected = new ArrayList<>();
@@ -162,9 +166,9 @@ public class MessageRepoSQLite extends SQLiteTech<Message> implements iMessageRe
 		for (final Message message:arrayListMessages){
 			// Check if one of the two persons is our member, if so, the oposite one is the interlocutor
 			interlocutor = null;
-			if (message.getAuthor() == ConnectedMember.getMember())
+			if (message.getAuthor().getId() == ConnectedMember.getMember().getId())
 				interlocutor = message.getReceiver();
-			else if (message.getReceiver() == ConnectedMember.getMember())
+			else if (message.getReceiver().getId() == ConnectedMember.getMember().getId())
 				interlocutor = message.getAuthor();
 
 			// If the message is indeed linked to our member, it will pass on every discussion already created to check if the interlocutor is in one of them.
