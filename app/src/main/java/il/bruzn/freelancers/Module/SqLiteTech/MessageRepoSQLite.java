@@ -151,6 +151,27 @@ public class MessageRepoSQLite extends SQLiteTech<Message> implements iMessageRe
 	}
 
 	// iMessageRepo IMPLEMENTATION ---
+
+	@Override
+	public ArrayList<Message> selectDiscussion(Member self, Member interlocutor) {
+		ArrayList<Message> discussion = new ArrayList<>();
+
+		String query = "SELECT * FROM " + getNameTable() + " WHERE " +
+				"(" +
+				FIELDS_NAME.AUTHOR		+ " = ? AND " +
+				FIELDS_NAME.RECEIVER	+ " = ? " +
+				") OR (" +
+				FIELDS_NAME.AUTHOR		+ " = ? AND " +
+				FIELDS_NAME.RECEIVER	+ " = ?" +
+				")";
+		String[] selectionArg = {	self.getId()+"", interlocutor.getId()+"",
+				interlocutor.getId()+"", self.getId()+""};
+		Cursor cursor = getReadableDatabase().rawQuery(query, selectionArg);
+
+		discussion = toEntity(cursor);
+		Collections.sort(discussion);
+		return discussion;
+	}
 	@Override
 	public ArrayList<ArrayList<Message>> selectAllDiscussions(Member self) {
 		String request = "SELECT * FROM " + getNameTable() + " WHERE "

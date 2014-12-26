@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+	  xmlns:freelance-it="http://schemas.android.com/apk/res-auto">
 	<item android:id="@+id/action_new_discussion"
 		  android:icon="@drawable/ic_action_new"
-		  android:title="New"
-		  android:showAsAction="ifRoom"/>
+		  android:title="@string/new_button"
+		  freelance-it:showAsAction="ifRoom"/>
 </menu>

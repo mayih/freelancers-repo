@@ -1491,11 +1491,13 @@ containing a value of this type.
         public static final int menu_closed=0x7f0b0018;
         public static final int menu_opened=0x7f0b0019;
         public static final int name_allowed_digits=0x7f0b001a;
-        public static final int password_edtext=0x7f0b001b;
-        public static final int repeatpass_edtext=0x7f0b001c;
-        public static final int title_activity_home=0x7f0b001d;
-        public static final int title_activity_join_in=0x7f0b001e;
-        public static final int title_activity_sign_in=0x7f0b001f;
+        public static final int new_button=0x7f0b001b;
+        public static final int password_edtext=0x7f0b001c;
+        public static final int repeatpass_edtext=0x7f0b001d;
+        public static final int title_activity_home=0x7f0b001e;
+        public static final int title_activity_join_in=0x7f0b001f;
+        public static final int title_activity_sign_in=0x7f0b0020;
+        public static final int title_new_discussion=0x7f0b0021;
     }
     public static final class style {
         /**  Customize your theme here. 

@@ -36,6 +36,8 @@ public class DiscussionFragment extends Fragment  implements TitledFragment {
 	private Member _interlocutor;
 	public DiscussionFragment setInterlocutor(Member interlocutor) {
 		_interlocutor = interlocutor;
+		if (_messages == null)
+			_messages = Module.getMessageRepo().selectDiscussion(ConnectedMember.getMember(), interlocutor);
 		return this;
 	}
 
@@ -50,7 +52,7 @@ public class DiscussionFragment extends Fragment  implements TitledFragment {
 
 	public DiscussionFragment() {
 		_dateForm =  new SimpleDateFormat("HH:mm", Locale.US);
-		_messages = new ArrayList<>();
+		_messages = null;
 	}
 
 	@Override

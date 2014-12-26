@@ -25,4 +25,9 @@
 	<string name="Welcome">Welcome home!</string>
 	<string name="disconnect_button">Disconnect</string>
 
+	<!--Inbox Fragment-->
+	<string name="new_button">New</string>
+
+	<!--New discussion fragment-->
+	<string name="title_new_discussion">New discussion</string>
 </resources>
