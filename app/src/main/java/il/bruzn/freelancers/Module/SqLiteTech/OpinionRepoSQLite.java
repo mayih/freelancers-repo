@@ -136,18 +136,20 @@ public class OpinionRepoSQLite extends SQLiteTech<Opinion> implements iOpinionRe
 
 		return content;
 	}
+
 	@Override
-	public ArrayList<Opinion> getBySubject(Member subject) {
+	public ArrayList<Opinion> selectBySubject(Member subject) {
 		return selectBy(FIELDS_NAME.SUBJECT.toString(), Integer.toString(subject.getId()));
 	}
 
 	@Override
-	public ArrayList<Opinion> getByAuthor(Member author) {
+	public ArrayList<Opinion> selectByAuthor(Member author) {
 		return selectBy(FIELDS_NAME.SUBJECT.toString(), Integer.toString(author.getId()));
 	}
 
 	@Override
 	public Member fillMember(Member member) {
-		return null;
+		member.setOpinionsOnMe(selectBySubject(member));
+		return member;
 	}
 }

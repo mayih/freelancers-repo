@@ -16,7 +16,7 @@ public class OpinionRepoList extends ListTech implements iOpinionRepo {
 		}
 
 	@Override
-	public ArrayList<Opinion> getBySubject(Member subject) {
+	public ArrayList<Opinion> selectBySubject(Member subject) {
 		ArrayList<Opinion> selected = new ArrayList<Opinion>();
 		for (Opinion op: _opinions)
 			if (op.getSubject() == subject)
@@ -25,7 +25,7 @@ public class OpinionRepoList extends ListTech implements iOpinionRepo {
 	}
 
 	@Override
-	public ArrayList<Opinion> getByAuthor(Member subject) {
+	public ArrayList<Opinion> selectByAuthor(Member subject) {
 		ArrayList<Opinion> selected = new ArrayList<Opinion>();
 		for (Opinion op: _opinions)
 			if (op.getAuthor() == subject)
@@ -36,7 +36,7 @@ public class OpinionRepoList extends ListTech implements iOpinionRepo {
 	@Override
 	public Member fillMember(Member member) {
 		if (member.getOpinionsOnMe().isEmpty())
-			member.setOpinionsOnMe(getBySubject(member));
+			member.setOpinionsOnMe(selectBySubject(member));
 		return member;
 	}
 
