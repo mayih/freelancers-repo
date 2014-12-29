@@ -1305,10 +1305,11 @@ containing a value of this type.
         public static final int default_profile_pic=0x7f020033;
         public static final int disconnect_icon=0x7f020034;
         public static final int home_icon=0x7f020035;
-        public static final int ic_launcher=0x7f020036;
-        public static final int inbox_icon=0x7f020037;
-        public static final int plane_paper_icon=0x7f020038;
-        public static final int profile_icon=0x7f020039;
+        public static final int ic_action_new=0x7f020036;
+        public static final int ic_launcher=0x7f020037;
+        public static final int inbox_icon=0x7f020038;
+        public static final int plane_paper_icon=0x7f020039;
+        public static final int profile_icon=0x7f02003a;
     }
     public static final class id {
         public static final int action_bar=0x7f090033;
@@ -1324,6 +1325,7 @@ containing a value of this type.
         public static final int action_mode_bar=0x7f090030;
         public static final int action_mode_bar_stub=0x7f09002f;
         public static final int action_mode_close_button=0x7f090022;
+        public static final int action_new_discussion=0x7f090067;
         public static final int activity_chooser_view_content=0x7f090023;
         public static final int always=0x7f090016;
         public static final int beginning=0x7f090013;
@@ -1458,6 +1460,9 @@ containing a value of this type.
         public static final int item_profile=0x7f030024;
         public static final int support_simple_spinner_dropdown_item=0x7f030025;
     }
+    public static final class menu {
+        public static final int inbox_actionbar=0x7f0d0000;
+    }
     public static final class string {
         public static final int Welcome=0x7f0b0000;
         public static final int abc_action_bar_home_description=0x7f0b0001;
@@ -1486,11 +1491,13 @@ containing a value of this type.
         public static final int menu_closed=0x7f0b0018;
         public static final int menu_opened=0x7f0b0019;
         public static final int name_allowed_digits=0x7f0b001a;
-        public static final int password_edtext=0x7f0b001b;
-        public static final int repeatpass_edtext=0x7f0b001c;
-        public static final int title_activity_home=0x7f0b001d;
-        public static final int title_activity_join_in=0x7f0b001e;
-        public static final int title_activity_sign_in=0x7f0b001f;
+        public static final int new_button=0x7f0b001b;
+        public static final int password_edtext=0x7f0b001c;
+        public static final int repeatpass_edtext=0x7f0b001d;
+        public static final int title_activity_home=0x7f0b001e;
+        public static final int title_activity_join_in=0x7f0b001f;
+        public static final int title_activity_sign_in=0x7f0b0020;
+        public static final int title_new_discussion=0x7f0b0021;
     }
     public static final class style {
         /**  Customize your theme here. 

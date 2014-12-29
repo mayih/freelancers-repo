@@ -17,11 +17,11 @@ public class ListTech {
 
 	public ListTech() {
 		_members = new ArrayList<Member>(){{
-			add(new Member().setEmail("yairopro").setPassword("").setFirstName("yair").setLastName("Behar"));
-			add(new Member().setEmail("mayih").setPassword("").setFirstName("Moshe").setLastName("Uzan"));
-			add(new Member().setEmail("moshe").setPassword("").setFirstName("Moshe").setLastName("Lubliner"));
-			add(new Member().setEmail("ruben").setPassword("").setFirstName("Ruben").setLastName("Dardour"));
-			add(new Member().setEmail("jeremie").setPassword("").setFirstName("Jeremie").setLastName("Berrebi"));
+			add(new Member().setId(0).setEmail("yairopro").setPassword("").setFirstName("yair").setLastName("Behar"));
+			add(new Member().setId(1).setEmail("mayih").setPassword("").setFirstName("Moshe").setLastName("Uzan"));
+			add(new Member().setId(2).setEmail("moshe").setPassword("").setFirstName("Moshe").setLastName("Lubliner"));
+			add(new Member().setId(3).setEmail("ruben").setPassword("").setFirstName("Ruben").setLastName("Dardour"));
+			add(new Member().setId(4).setEmail("jeremie").setPassword("").setFirstName("Jeremie").setLastName("Berrebi"));
 		}};
 
 		_opinions = new ArrayList<Opinion>(){{

@@ -23,7 +23,7 @@ public class Module {
 
 	// DataBase Name
 	public final static String DB_NAME = "DB";
-	public final static int DB_VERSION = 1;
+	public final static int DB_VERSION = 4;
 
 	// Android FAQ: How do I pass data between Activities/Services within a single application?
 	// http://developer.android.com/guide/faq/framework.html

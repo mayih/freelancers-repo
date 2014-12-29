@@ -29,7 +29,7 @@ public class SignInActivity extends ActionBarActivity {
 			Module.create(this, Module.DB_NAME, Module.DB_VERSION);
 
 		// Check if the user is already connected
-		String email = getSharedPreferences(ConnectedMember.filename, MODE_PRIVATE).getString(ConnectedMember.key, null);
+		String email = getSharedPreferences(ConnectedMember.filename, MODE_PRIVATE).getString(ConnectedMember.key, "");
 		Member member = Module.getMemberRepo().selectByEmail(email);
 		if (member != null){ // Check if already connected
 			ConnectedMember.setMember(member);

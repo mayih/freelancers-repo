@@ -1,12 +1,12 @@
 package il.bruzn.freelancers.Controller.fragments;
 
-import android.app.Fragment;
+import android.app.ListFragment;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.Image;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,38 +30,77 @@ import il.bruzn.freelancers.basic.ImageHelper;
 /**
  * Created by Yair on 01/12/2014.
  */
-public class InboxFragment extends Fragment  implements TitledFragment {
+public class InboxFragment extends ListFragment implements TitledFragment {
+
+	ArrayList<ArrayList<Message>> _listOfDiscussion;
+	private final static String KEY_LISTOFDISCUSSION = "key list of discussion in hashmap";
 
 	@Override
 	public String getTitle() {
 		return "Inbox";
 	}
 
-	@Nullable
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View layout = inflater.inflate(R.layout.fragment_inbox, container, false);
-		return layout;
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+//		if (savedInstanceState != null && savedInstanceState.containsKey(KEY_LISTOFDISCUSSION)) {
+//			long hashMapKey = savedInstanceState.getLong(KEY_LISTOFDISCUSSION);
+//			_listOfDiscussion = (ArrayList<ArrayList<Message>>) Module.getHashMap().get(hashMapKey);
+//			Module.getHashMap().remove(KEY_LISTOFDISCUSSION);
+//		}
 	}
 
 	@Override
-	public void onViewCreated(View view, Bundle savedInstanceState) {
-		final ListView listView = (ListView)getActivity().findViewById(R.id.discussions_listview);
-		final ArrayList<ArrayList<Message>> listOfDiscussions = Module.getMessageRepo().selectAllDiscussions(ConnectedMember.getMember());
-		listView.setAdapter(new InboxArrayAdapter(listOfDiscussions));
-		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+	public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+//		setListAdapter(new InboxArrayAdapter(_listOfDiscussion));
+		getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				listView.setItemChecked(position, true);
+				getListView().setItemChecked(position, true);
 				DiscussionFragment fragment = new DiscussionFragment();
-				fragment.setMessages(listOfDiscussions.get(position));
+				fragment.setMessages(_listOfDiscussion.get(position));
 				((MainActivity) getActivity()).setFragment(fragment);
 			}
 		});
 	}
 
+	@Override
+	public void onResume() {
+		super.onResume();
+		_listOfDiscussion = Module.getMessageRepo().selectAllDiscussions(ConnectedMember.getMember());
+		setListAdapter(new InboxArrayAdapter(_listOfDiscussion));
+	}
+
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		inflater.inflate(R.menu.inbox_actionbar, menu);
+		super.onCreateOptionsMenu(menu, inflater);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		    case R.id.action_new_discussion:
+				NewDiscussionFragment NewDiscussion = new NewDiscussionFragment();
+				((MainActivity)getActivity()).setFragment(NewDiscussion);
+		        return true;
+		    default:
+				return super.onOptionsItemSelected(item);
+		}
+	}
+
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		long hashMapKey = System.currentTimeMillis();
+		Module.getHashMap().put(hashMapKey, _listOfDiscussion);
+		outState.putLong(KEY_LISTOFDISCUSSION, hashMapKey);
+
+		super.onSaveInstanceState(outState);
+	}
+
 	// The arrayList passed to the constructor contains the discussions. A discussion is a list of messages sorted by dates.
-	private class InboxArrayAdapter extends ArrayAdapter<ArrayList<Message>>{
+	private class InboxArrayAdapter extends ArrayAdapter<ArrayList<Message>> {
 
 		public InboxArrayAdapter(List<ArrayList<Message>> discussions) {
 			super(getActivity(), 0,discussions);
@@ -73,10 +113,10 @@ public class InboxFragment extends Fragment  implements TitledFragment {
 
 			// Identify the interlocutor
 			Member interlocutor;
-			if (getItem(position).get(0).getAuthor() == ConnectedMember.getMember())
-				interlocutor = getItem(position).get(0).getReceiver();
-			else
+			if (getItem(position).get(0).getAuthor().getId() != ConnectedMember.getMember().getId())
 				interlocutor = getItem(position).get(0).getAuthor();
+			else
+				interlocutor = getItem(position).get(0).getReceiver();
 
 			// Fill convertView
 			TextView nameView = (TextView) convertView.findViewById(R.id.name_item_discussion);

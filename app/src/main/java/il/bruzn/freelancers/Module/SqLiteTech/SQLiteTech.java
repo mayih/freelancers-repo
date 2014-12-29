@@ -27,7 +27,8 @@ public abstract class SQLiteTech<T> extends SQLiteOpenHelper implements CRUD<T> 
 	// Constructor ---
     SQLiteTech(Context context, String name, int version) {
         super(context, name, null, version);
-    }
+		getWritableDatabase().execSQL(createReq());
+	}
 
     @Override
     public void onCreate(SQLiteDatabase db) {
@@ -36,17 +37,17 @@ public abstract class SQLiteTech<T> extends SQLiteOpenHelper implements CRUD<T> 
 
     public void create(SQLiteDatabase db, List<ContentValues> list){
         db.execSQL(createReq());
-        for (ContentValues content: list)
-            db.insert(getNameTable(), null, content);
+		if (list != null)
+			for (ContentValues content: list)
+				db.insert(getNameTable(), null, content);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+		List<ContentValues> listSaved = tableCopied(db.rawQuery("SELECT * FROM " + getNameTable(), null));
 
-        List<ContentValues> listSaved = tableCopied(db.rawQuery("SELECT * FROM " + getNameTable(), null));
-
-        db.execSQL("DROP TABLE IF EXIST " + getNameTable());
-        create(db, listSaved);
+		db.execSQL("DROP TABLE IF EXISTS " + getNameTable());
+		create(db, null);
     }
 
 	@Override
@@ -67,7 +68,9 @@ public abstract class SQLiteTech<T> extends SQLiteOpenHelper implements CRUD<T> 
 
 	@Override
 	public ArrayList<T> selectBy(String field, String value) {
-		return toEntity(getReadableDatabase().rawQuery("SELECT * FROM " + getNameTable() + " WHERE " + field + " = ?", new String[]{value}));
+		SQLiteDatabase db = getReadableDatabase();
+		Cursor cursor = db.rawQuery("SELECT * FROM " + getNameTable() + " WHERE " + field + " = ?", new String[]{value});
+		return toEntity(cursor);
 	}
 
 	@Override

@@ -176,11 +176,13 @@
     <string name="menu_closed">Menu closed</string>
     <string name="menu_opened">Menu opened</string>
     <string name="name_allowed_digits">azeéèrtyuiopqsdfghjklmwxcçvbnAZERTYUIOPQSDFGHJKLMWXCVBN</string>
+    <string name="new_button">New</string>
     <string name="password_edtext">Password</string>
     <string name="repeatpass_edtext">Repeat password</string>
     <string name="title_activity_home">Home</string>
     <string name="title_activity_join_in">Join-In</string>
     <string name="title_activity_sign_in">Sign In</string>
+    <string name="title_new_discussion">New discussion</string>
     <!-- From: file:/Users/Moshe/AndroidStudioProjects/Freelancers/app/src/main/res/values/styles.xml -->
     <eat-comment/>
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
