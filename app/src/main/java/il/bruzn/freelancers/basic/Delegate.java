@@ -34,6 +34,7 @@ public class Delegate<typeReturn> {
 		return (typeReturn) _method.invoke(_instance, _arguments);
 	}
 
+
 	// Getters & setters ---
 	public Object getInstance() {
 		return _instance;

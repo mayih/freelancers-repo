@@ -34,7 +34,6 @@ public abstract class SQLiteTech<T> extends SQLiteOpenHelper implements CRUD<T> 
     public void onCreate(SQLiteDatabase db) {
         create(db, null);
     }
-
     public void create(SQLiteDatabase db, List<ContentValues> list){
         db.execSQL(createReq());
 		if (list != null)
@@ -50,6 +49,7 @@ public abstract class SQLiteTech<T> extends SQLiteOpenHelper implements CRUD<T> 
 		create(db, null);
     }
 
+   // CRUD IMPLEMENTATION ----
 	@Override
 	public void add(T entry) {
 		getWritableDatabase().insert(getNameTable(), null, toContentValues(entry));
