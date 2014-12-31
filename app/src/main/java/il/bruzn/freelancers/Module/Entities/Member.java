@@ -17,7 +17,7 @@ public class Member {
 	private String _password;
 	private String _lastName;
 	private String _firstName;
-	private Location _address;
+	private Location _address = new Location();
 	private String _phoneNumber;
 	private Bitmap _picture; // Ddownload from an link
 	private String _googlePlus;

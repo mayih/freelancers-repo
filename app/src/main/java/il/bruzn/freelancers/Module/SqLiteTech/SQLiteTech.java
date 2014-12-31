@@ -47,7 +47,7 @@ public abstract class SQLiteTech<T> extends SQLiteOpenHelper implements CRUD<T> 
 		List<ContentValues> listSaved = tableCopied(db.rawQuery("SELECT * FROM " + getNameTable(), null));
 
 		db.execSQL("DROP TABLE IF EXISTS " + getNameTable());
-		create(db, null);
+		create(db, listSaved);
     }
 
 	@Override

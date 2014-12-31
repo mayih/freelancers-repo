@@ -40,14 +40,14 @@ public class OpinionRepoSQLite extends SQLiteTech<Opinion> implements iOpinionRe
 		}
 	};
 	// Request to create the table
-	static final String CREATE_REQ = "CREATE TABLE " + NAME_TABLE + " (" +
+	static final String CREATE_REQ = "CREATE TABLE IF NOT EXISTS " + NAME_TABLE + " (" +
 			FIELDS_NAME.ID				+ " INTEGER PRIMARY KEY AUTOINCREMENT, " +
 			FIELDS_NAME.LEVEL			+ " INTEGER NOT NULL, " +
 			FIELDS_NAME.IS_DONE			+ " INTEGER, " +
 			FIELDS_NAME.OPINION_MESSAGE	+ " TEXT, " 			+
 			FIELDS_NAME.AUTHORS			+ " INTEGER NOT NULL, " +
 			FIELDS_NAME.SUBJECT			+ " INTEGER NOT NULL, " +
-			FIELDS_NAME.DATE			+ " INTEGER NOT NULL, " +
+			FIELDS_NAME.DATE			+ " INTEGER NOT NULL" +
 			");";
 
 	public OpinionRepoSQLite(Context context, String name, int version) {
@@ -95,32 +95,33 @@ public class OpinionRepoSQLite extends SQLiteTech<Opinion> implements iOpinionRe
 		ArrayList<Opinion> opinionArrayList = new ArrayList<>();
 		Opinion opinion;
 
-		for (cursor.moveToFirst(); cursor.isAfterLast(); cursor.moveToNext()){
-			opinion = new Opinion();
+			for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+				opinion = new Opinion();
 
-			int id			= cursor.getInt(cursor.getColumnIndex(FIELDS_NAME.ID.toString()));
-			int levelInteger		= cursor.getInt( cursor.getColumnIndex(FIELDS_NAME.LEVEL.toString()));
-			int done		= cursor.getInt( cursor.getColumnIndex(FIELDS_NAME.IS_DONE.toString()) );
-			String message	= cursor.getString( cursor.getColumnIndex(FIELDS_NAME.OPINION_MESSAGE.toString()) );
-			int authors_id	= cursor.getInt( cursor.getColumnIndex(FIELDS_NAME.AUTHORS.toString()) );
-			int subject_id	= cursor.getInt( cursor.getColumnIndex(FIELDS_NAME.SUBJECT.toString()) );
-			Date date		= new Date(cursor.getLong(cursor.getColumnIndex(FIELDS_NAME.DATE.toString())) * 1000);
+				int id = cursor.getInt(cursor.getColumnIndex(FIELDS_NAME.ID.toString()));
+				int levelInteger = cursor.getInt(cursor.getColumnIndex(FIELDS_NAME.LEVEL.toString()));
+				int done = cursor.getInt(cursor.getColumnIndex(FIELDS_NAME.IS_DONE.toString()));
+				String message = cursor.getString(cursor.getColumnIndex(FIELDS_NAME.OPINION_MESSAGE.toString()));
+				int authors_id = cursor.getInt(cursor.getColumnIndex(FIELDS_NAME.AUTHORS.toString()));
+				int subject_id = cursor.getInt(cursor.getColumnIndex(FIELDS_NAME.SUBJECT.toString()));
+				Date date = new Date(cursor.getLong(cursor.getColumnIndex(FIELDS_NAME.DATE.toString())) * 1000);
 
-			Member authors = Module.getMemberRepo().selectById(authors_id);
-			Member subject = Module.getMemberRepo().selectById(subject_id);
-			Opinion.Level level = Opinion.Level.fromInteger(levelInteger);;
+				Member authors = Module.getMemberRepo().selectById(authors_id);
+				Member subject = Module.getMemberRepo().selectById(subject_id);
+				Opinion.Level level = Opinion.Level.fromInteger(levelInteger);
 
-			opinion	.setId(id)
-					.setLevel(level)
-					.setDone(done != 0)
-					.setText(message)
-					.setAuthor(authors)
-					.setSubject(subject)
-					.setDate(date);
 
-			opinionArrayList.add(opinion);
-		}
-		return opinionArrayList;
+				opinion.setId(id)
+						.setLevel(level)
+						.setDone(done != 0)
+						.setText(message)
+						.setAuthor(authors)
+						.setSubject(subject)
+						.setDate(date);
+
+				opinionArrayList.add(opinion);
+			}
+			return opinionArrayList;
 	}
 
 	@Override
@@ -149,7 +150,7 @@ public class OpinionRepoSQLite extends SQLiteTech<Opinion> implements iOpinionRe
 
 	@Override
 	public Member fillMember(Member member) {
-		member.setOpinionsOnMe(selectBySubject(member));
+			member.setOpinionsOnMe(selectBySubject(member));
 		return member;
 	}
 }

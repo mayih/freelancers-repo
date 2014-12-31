@@ -30,4 +30,7 @@
 
 	<!--New discussion fragment-->
 	<string name="title_new_discussion">New discussion</string>
+
+   <!-- Profile fragment-->
+    <string name="request_button">Request</string>
 </resources>

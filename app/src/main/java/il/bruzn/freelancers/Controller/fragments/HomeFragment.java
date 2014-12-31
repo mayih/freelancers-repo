@@ -81,14 +81,13 @@ public class HomeFragment extends ListFragment implements TitledFragment {
 			// set the inner listView
 			LinearLayout listviewofopinions = (LinearLayout) convertView.findViewById(R.id.list_opinons_in_profile_item);
 			listviewofopinions.removeAllViews();
-			for (Opinion op:subject.getOpinionsOnMe()){
+			for (Opinion op : subject.getOpinionsOnMe()){
 				View opinionItem = getActivity().getLayoutInflater().inflate(R.layout.item_opinion, null, false);
 				((TextView)opinionItem.findViewById(R.id.item_opinion_name)).setText(op.getAuthor().getFirstName()+" "+op.getAuthor().getLastName());
 				((TextView)opinionItem.findViewById(R.id.item_opinion_mark)).setText(op.getLevel().getValue()+"");
 				((TextView)opinionItem.findViewById(R.id.item_opinion_text)).setText(op.getText());
 				listviewofopinions.addView(opinionItem);
 			}
-
 			return convertView;
 		}
 
