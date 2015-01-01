@@ -10,10 +10,14 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 
+import java.lang.reflect.Method;
+
 import il.bruzn.freelancers.Module.Entities.Member;
 import il.bruzn.freelancers.Module.ConnectedMember;
 import il.bruzn.freelancers.Module.Module;
 import il.bruzn.freelancers.R;
+import il.bruzn.freelancers.basic.AsyncDelegate;
+import il.bruzn.freelancers.basic.Delegate;
 
 
 public class SignInActivity extends ActionBarActivity {
@@ -29,13 +33,10 @@ public class SignInActivity extends ActionBarActivity {
 			Module.create(this, Module.DB_NAME, Module.DB_VERSION);
 
 		// Check if the user is already connected
-		String email = getSharedPreferences(ConnectedMember.filename, MODE_PRIVATE).getString(ConnectedMember.key, "");
-		Member member = Module.getMemberRepo().selectByEmail(email);
-		if (member != null){ // Check if already connected
-			ConnectedMember.setMember(member);
-			startActivity(new Intent(this, MainActivity.class));
-			finish();
-			return;
+		try {
+			new AsyncDelegate().execute(new Delegate(this, "getStoredMember"));
+		} catch (NoSuchMethodException e) {
+			e.printStackTrace();
 		}
 
 		setContentView(R.layout.activity_sign_in);
@@ -51,22 +52,51 @@ public class SignInActivity extends ActionBarActivity {
 			}
 		});
 		_connect.setOnClickListener(new View.OnClickListener() {
+			Member memberOnClick = null;
+			String emailOnClick, passwordOnClick;
 			@Override
 			public void onClick(View v) {
-			// Check email and password
-			String email = _email.getText().toString(), password = _password.getText().toString();
-			Member member = Module.getMemberRepo().selectByEmail(email);
-			if (member != null && member.authenticate(email, password)) {
-				ConnectedMember.setMember(member);
-				SharedPreferences.Editor edit = getSharedPreferences(ConnectedMember.filename, MODE_PRIVATE).edit();
-				edit.putString(ConnectedMember.key, member.getEmail()).commit();
+				// Check email and password
+				emailOnClick	= _email.getText().toString();
+				passwordOnClick	= _password.getText().toString();
+				
+				// Get the member by thread:
+				try {
+					Delegate<Member> getMemberToConnect = new Delegate<Member>(this, "getMemberToConnect", emailOnClick);
+					AsyncDelegate thread = new AsyncDelegate();
+					thread.execute(getMemberToConnect);
+				} catch (NoSuchMethodException e) {
+					e.printStackTrace();
+				}
+			}
 
-				startActivity(new Intent(SignInActivity.this, MainActivity.class));
-				finish();
+			// Function for thread
+			public void getMemberToConnect(String email){
+				memberOnClick = Module.getMemberRepo().selectByEmail(email);
+				if (memberOnClick != null && memberOnClick.authenticate(emailOnClick, passwordOnClick)) {
+					ConnectedMember.setMember(memberOnClick);
+					SharedPreferences.Editor edit = getSharedPreferences(ConnectedMember.filename, MODE_PRIVATE).edit();
+					edit.putString(ConnectedMember.key, memberOnClick.getEmail()).commit();
+
+					startActivity(new Intent(SignInActivity.this, MainActivity.class));
+					finish();
+				}
+				else
+					Toast.makeText(getApplicationContext(), "The email or the password doesn't match with our datas", Toast.LENGTH_LONG).show();
 			}
-			else
-				Toast.makeText(getApplicationContext(), "The email or the password doesn't match with our datas", Toast.LENGTH_LONG).show();
-			}
+
 		});
+	}
+
+	// Function for thread
+	public void getStoredMember() {
+		String email = getSharedPreferences(ConnectedMember.filename, MODE_PRIVATE).getString(ConnectedMember.key, "");
+		Member member = Module.getMemberRepo().selectByEmail(email);
+		if (member != null){ // Check if already connected
+			ConnectedMember.setMember(member);
+			startActivity(new Intent(this, MainActivity.class));
+			finish();
+			return;
+		}
 	}
 }

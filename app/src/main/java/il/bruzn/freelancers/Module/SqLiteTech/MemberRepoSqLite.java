@@ -11,6 +11,7 @@ import il.bruzn.freelancers.Module.Entities.Member;
 import il.bruzn.freelancers.Module.ListTech.OpinionRepoList;
 import il.bruzn.freelancers.Module.iRepositories.iMemberRepo;
 import il.bruzn.freelancers.Module.iRepositories.iOpinionRepo;
+import il.bruzn.freelancers.basic.Delegate;
 
 /**
  * Created by Yair on 17/12/2014.
