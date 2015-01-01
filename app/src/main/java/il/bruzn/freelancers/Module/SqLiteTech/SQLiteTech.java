@@ -20,9 +20,13 @@ public abstract class SQLiteTech<T> extends SQLiteOpenHelper implements CRUD<T> 
 	// Methods to implemments ---
 	public abstract String createReq();
     public abstract String getNameTable();
-    public abstract List<ContentValues> tableCopied(Cursor cursor);
 	public abstract ArrayList<T> toEntity(Cursor cursor);
 	public abstract ContentValues toContentValues(T entity);
+	String[][] allRepo = {
+			{MemberRepoSqLite.NAME_TABLE, MemberRepoSqLite.CREATE_REQ},
+			{MessageRepoSQLite.NAME_TABLE, MessageRepoSQLite.CREATE_REQ},
+			{OpinionRepoSQLite.NAME_TABLE, OpinionRepoSQLite.CREATE_REQ},
+	};
 
 	// Constructor ---
     SQLiteTech(Context context, String name, int version) {
@@ -30,23 +34,58 @@ public abstract class SQLiteTech<T> extends SQLiteOpenHelper implements CRUD<T> 
 		getWritableDatabase().execSQL(createReq());
 	}
 
-    @Override
-    public void onCreate(SQLiteDatabase db) {
-        create(db, null);
-    }
-    public void create(SQLiteDatabase db, List<ContentValues> list){
-        db.execSQL(createReq());
+	// SQLiteTech IMPLEMENTATION ---
+	public void create(SQLiteDatabase db, String createReuest){
+		create(db, createReuest, null);
+	}
+	public void create(SQLiteDatabase db, String createRequest, List<ContentValues> list) {
+		db.execSQL(createRequest);
 		if (list != null)
 			for (ContentValues content: list)
 				db.insert(getNameTable(), null, content);
-    }
+	}
+	public List<ContentValues> tableCopied(Cursor cursor) {
+		ArrayList<ContentValues> listCopied = new ArrayList<>();
+		ContentValues oneRow;
+		int index;
+
+		while (cursor.moveToNext()){ // Moves row to row in the cursor, convert it to a ContentValues, and at last add it to listCopied
+			oneRow = new ContentValues();
+			for (String columnName : cursor.getColumnNames()){ // Moves collumn to collumn on the row, get the type of the collumn and copy it to the ContentValues
+				index = cursor.getColumnIndex(columnName);
+
+				switch (cursor.getType(index)){
+					case Cursor.FIELD_TYPE_INTEGER:
+						oneRow.put(columnName, cursor.getInt(index));
+						break;
+					case Cursor.FIELD_TYPE_FLOAT:
+						oneRow.put(columnName, cursor.getFloat(index));
+						break;
+					case Cursor.FIELD_TYPE_STRING:
+						oneRow.put(columnName, cursor.getString(index));
+						break;
+					case Cursor.FIELD_TYPE_BLOB:
+						oneRow.put(columnName, cursor.getBlob(index));
+						break;
+				}
+			}
+			listCopied.add(oneRow);
+		}
+		return listCopied;
+	}
 
     @Override
+    public void onCreate(SQLiteDatabase db) {
+		for (String[] repo : allRepo)
+			create(db, repo[0]);
+    }
+    @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-		List<ContentValues> listSaved = tableCopied(db.rawQuery("SELECT * FROM " + getNameTable(), null));
-
-		db.execSQL("DROP TABLE IF EXISTS " + getNameTable());
-		create(db, null);
+		for (String[] repo : allRepo) {
+			List<ContentValues> listSaved = (tableCopied(db.rawQuery("SELECT * FROM " + repo[0], null)));
+			db.execSQL("DROP TABLE IF EXISTS " + repo[0]);
+			create(db, repo[1],listSaved);
+		}
     }
 
    // CRUD IMPLEMENTATION ----

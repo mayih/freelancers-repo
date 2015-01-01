@@ -134,25 +134,26 @@ public class MemberRepoSqLite extends  SQLiteTech<Member> implements iMemberRepo
 	public String getNameTable() {
 		return NAME_TABLE;
 	}
-	@Override
-	public List<ContentValues> tableCopied(Cursor cursor) {
-		ArrayList<ContentValues> listSaved = new ArrayList<>();
-		ContentValues content;
-		int index;
 
-		// Copy each line of the cursor into a content and add it to the list
-		while (cursor.moveToNext()){
-			content = new ContentValues();
-			for (FIELDS_NAME field : FIELDS_NAME.values()) {
-				if (field != FIELDS_NAME.ID) {
-					index = cursor.getColumnIndex(field.toString());
-					if (index >= 0) {
-						content.put(field.toString(), cursor.getString(index));
-					}
-				}
-			}
-			listSaved.add(content); // Insert the content
-		}
-		return listSaved;
-	}
+//	@Override
+//	public List<ContentValues> tableCopied(Cursor cursor) {
+//		ArrayList<ContentValues> listSaved = new ArrayList<>();
+//		ContentValues content;
+//		int index;
+//
+//		// Copy each line of the cursor into a content and add it to the list
+//		while (cursor.moveToNext()){
+//			content = new ContentValues();
+//			for (FIELDS_NAME field : FIELDS_NAME.values()) {
+//				if (field != FIELDS_NAME.ID) {
+//					index = cursor.getColumnIndex(field.toString());
+//					if (index >= 0) {
+//						content.put(field.toString(), cursor.getString(index));
+//					}
+//				}
+//			}
+//			listSaved.add(content); // Insert the content
+//		}
+//		return listSaved;
+//	}
 }

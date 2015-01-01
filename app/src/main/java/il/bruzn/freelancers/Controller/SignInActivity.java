@@ -1,5 +1,6 @@
 package il.bruzn.freelancers.Controller;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.ActionBarActivity;
@@ -17,29 +18,49 @@ import il.bruzn.freelancers.Module.ConnectedMember;
 import il.bruzn.freelancers.Module.Module;
 import il.bruzn.freelancers.R;
 import il.bruzn.freelancers.basic.AsyncDelegate;
+import il.bruzn.freelancers.basic.AsyncToRun;
 import il.bruzn.freelancers.basic.Delegate;
+import il.bruzn.freelancers.basic.ToRun;
 
 
 public class SignInActivity extends ActionBarActivity {
 
 	EditText	_email, _password;
 	Button		_connect, _joinin;
+	ProgressDialog _progressDialog;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
+		setContentView(R.layout.activity_sign_in);
 		if (Module.getMemberRepo() == null) // If the technologie hasn't been instanced
 			Module.create(this, Module.DB_NAME, Module.DB_VERSION);
 
 		// Check if the user is already connected
+		_progressDialog = ProgressDialog.show(this, "Authenticating", "Loading..");
 		try {
-			new AsyncDelegate().execute(new Delegate(this, "getStoredMember"));
+			new AsyncDelegate().execute(new Delegate<Delegate>(this, "getStoredMember"));
 		} catch (NoSuchMethodException e) {
 			e.printStackTrace();
 		}
 
-		setContentView(R.layout.activity_sign_in);
+		/*new AsyncToRun().execute(new ToRun<ToRun>() {
+			@Override
+			public ToRun run(Object... parameters) {
+				// on thread..
+				String email = getSharedPreferences(ConnectedMember.filename, MODE_PRIVATE).getString(ConnectedMember.key, "");
+				Member member = Module.getMemberRepo().selectByEmail(email);
+				if (member != null){ // Check if already connected
+					ConnectedMember.setMember(member);
+					startActivity(new Intent(SignInActivity.this, MainActivity.class));
+					finish();
+				}
+
+				// post thread..
+				return closeProgressDialog;
+			}
+		});*/
+
 		_email		= (EditText)findViewById(R.id.email);
 		_password	= (EditText)findViewById(R.id.password);
 		_connect	= (Button)	findViewById(R.id.connect_button);
@@ -59,19 +80,41 @@ public class SignInActivity extends ActionBarActivity {
 				// Check email and password
 				emailOnClick	= _email.getText().toString();
 				passwordOnClick	= _password.getText().toString();
-				
+
+				// Put some design
+				_progressDialog = ProgressDialog.show(SignInActivity.this, "Authenticating", "Loading..");
+
 				// Get the member by thread:
 				try {
-					Delegate<Member> getMemberToConnect = new Delegate<Member>(this, "getMemberToConnect", emailOnClick);
-					AsyncDelegate thread = new AsyncDelegate();
-					thread.execute(getMemberToConnect);
+					new AsyncDelegate().execute(new Delegate<Delegate>(this, "getMemberToConnect", emailOnClick));
 				} catch (NoSuchMethodException e) {
 					e.printStackTrace();
 				}
+				/*new AsyncToRun().execute(new ToRun<ToRun>() {
+					@Override
+					public ToRun run(Object... parameters) {
+						// on thread..
+						memberOnClick = Module.getMemberRepo().selectByEmail(emailOnClick);
+						if (memberOnClick != null && memberOnClick.authenticate(emailOnClick, passwordOnClick)) {
+							ConnectedMember.setMember(memberOnClick);
+							SharedPreferences.Editor edit = getSharedPreferences(ConnectedMember.filename, MODE_PRIVATE).edit();
+							edit.putString(ConnectedMember.key, memberOnClick.getEmail()).commit();
+
+							startActivity(new Intent(SignInActivity.this, MainActivity.class));
+							finish();
+						}
+						else
+							Toast.makeText(getApplicationContext(), "The email or the password doesn't match with our datas", Toast.LENGTH_LONG).show();
+
+						// post thread..
+						return closeProgressDialog;
+					}
+				});*/
 			}
 
 			// Function for thread
-			public void getMemberToConnect(String email){
+			public Delegate getMemberToConnect(String email) throws NoSuchMethodException {
+
 				memberOnClick = Module.getMemberRepo().selectByEmail(email);
 				if (memberOnClick != null && memberOnClick.authenticate(emailOnClick, passwordOnClick)) {
 					ConnectedMember.setMember(memberOnClick);
@@ -83,20 +126,38 @@ public class SignInActivity extends ActionBarActivity {
 				}
 				else
 					Toast.makeText(getApplicationContext(), "The email or the password doesn't match with our datas", Toast.LENGTH_LONG).show();
+
+				return new Delegate(SignInActivity.this, "closeProgressDialog");
 			}
 
 		});
 	}
 
-	// Function for thread
-	public void getStoredMember() {
+	// Functions for thread
+	public Delegate getStoredMember() throws NoSuchMethodException {
+
+		Delegate closeProgressDialog = new Delegate(this, "closeProgressDialog");
 		String email = getSharedPreferences(ConnectedMember.filename, MODE_PRIVATE).getString(ConnectedMember.key, "");
 		Member member = Module.getMemberRepo().selectByEmail(email);
 		if (member != null){ // Check if already connected
 			ConnectedMember.setMember(member);
 			startActivity(new Intent(this, MainActivity.class));
 			finish();
-			return;
 		}
+		return closeProgressDialog;
+	}
+
+	private ToRun closeProgressDialog = new ToRun<Void>() {
+		@Override
+		public Void run(Object... parameters) {
+			if (_progressDialog.isShowing())
+				_progressDialog.dismiss();
+			return null;
+		}
+	};
+
+	public void closeProgressDialog(){
+		if (_progressDialog.isShowing())
+			_progressDialog.dismiss();
 	}
 }

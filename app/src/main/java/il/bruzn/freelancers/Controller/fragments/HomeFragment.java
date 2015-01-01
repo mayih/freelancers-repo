@@ -25,9 +25,6 @@ public class HomeFragment extends ListFragment implements TitledFragment {
 	// Data
 	ArrayList<Member> _listToPrint;
 
-	public HomeFragment() {
-		_listToPrint = Module.getMemberRepo().selectAll();
-    }
 	@Override
 	public String getTitle() {
 		return "Home";
@@ -35,6 +32,7 @@ public class HomeFragment extends ListFragment implements TitledFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+		_listToPrint = Module.getMemberRepo().selectAll();
 
         HomeAdapter adapter = new HomeAdapter(_listToPrint);
         setListAdapter(adapter);

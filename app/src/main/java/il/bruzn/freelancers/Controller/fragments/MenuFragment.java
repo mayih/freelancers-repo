@@ -27,6 +27,9 @@ public class MenuFragment extends ListFragment {
 								new ItemMenu(R.drawable.inbox_icon,		"Inbox",	new InboxFragment()),
 								new ItemMenu(R.drawable.disconnect_icon,"Disconnect",	null),
 	};
+	public static ItemMenu[] getMenu(){
+		return _menu;
+	}
 
 	@Override
 	public void onAttach(Activity activity) {
@@ -44,21 +47,16 @@ public class MenuFragment extends ListFragment {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-
 		setListAdapter(new MenuAdapter()); // Fills the menu
-
-		getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				getListView().setItemChecked(position, true);    // Show the button has been clicked
-				_activity.menuItemClicked(_menu[position]); // Change the main activity
-			}
-		});
 	}
 
-	public static ItemMenu[] getMenu(){
-		return _menu;
+	@Override
+	public void onListItemClick(ListView l, View v, int position, long id) {
+		super.onListItemClick(l, v, position, id);
+		getListView().setItemChecked(position, true);    // Show the button has been clicked
+		_activity.menuItemClicked(_menu[position]); // Change the main activity
 	}
+
 
 	private class MenuAdapter extends ArrayAdapter<ItemMenu> {
 		public MenuAdapter() {
