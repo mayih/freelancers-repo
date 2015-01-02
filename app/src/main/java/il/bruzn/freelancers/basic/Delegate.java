@@ -31,7 +31,8 @@ public class Delegate<typeReturn> {
 
 	// Execute method ---
 	public typeReturn execute() throws InvocationTargetException, IllegalAccessException {
-		return (typeReturn) _method.invoke(_instance, _arguments);
+		Object returnValue = _method.invoke(_instance, _arguments);
+		return (typeReturn)returnValue;
 	}
 
 

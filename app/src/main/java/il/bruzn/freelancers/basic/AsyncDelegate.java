@@ -7,17 +7,31 @@ import java.lang.reflect.InvocationTargetException;
 /**
  * Created by Yair on 29/12/2014.
  */
-public class AsyncDelegate extends AsyncTask<Delegate, Void, Void> {
+public class AsyncDelegate extends AsyncTask<Delegate<Delegate>, Void, Delegate> {
 
 	@Override
-	protected Void doInBackground(Delegate... params) {
+	protected Delegate doInBackground(Delegate<Delegate>... params) {
+		Delegate postExecute = null;
 		try {
-			params[0].execute();
+			postExecute = params[0].execute();
 		} catch (InvocationTargetException e) {
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
 			e.printStackTrace();
 		}
-		return null;
+		return postExecute;
+	}
+
+	@Override
+	protected void onPostExecute(Delegate delegate) {
+		super.onPostExecute(delegate);
+
+		try {
+			delegate.execute();
+		} catch (InvocationTargetException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		}
 	}
 }
