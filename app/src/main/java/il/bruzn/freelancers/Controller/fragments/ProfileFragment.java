@@ -29,7 +29,7 @@ public class ProfileFragment extends Fragment  implements TitledFragment {
     private ImageView _picture;
 	private EditText _firstName;
     private EditText _lastName;
-    private EditText _specialisation;
+    private EditText _speciality;
     private EditText _email;
     private EditText _phoneNumber;
     private EditText _adress;
@@ -68,7 +68,8 @@ public class ProfileFragment extends Fragment  implements TitledFragment {
         _lastName = (EditText)v.findViewById(R.id.profile_lastName_label);
         _lastName.setText(_member.getLastName());
 
-        _specialisation = (EditText)v.findViewById(R.id.profile_specialisation_label);
+        _speciality = (EditText)v.findViewById(R.id.profile_specialisation_label);
+		_speciality.setText(_member.getSpeciality());
 
         _email = (EditText)v.findViewById(R.id.profile_email_label);
         _email.setText(_member.getEmail());

@@ -34,8 +34,8 @@ public abstract class SQLiteTech<T> extends SQLiteOpenHelper implements CRUD<T> 
 	}
 
 	// SQLiteTech IMPLEMENTATION ---
-	public void create(SQLiteDatabase db, String createReuest){
-		create(db, createReuest, null);
+	public void create(SQLiteDatabase db, String createRequest){
+		create(db, createRequest, null);
 	}
 	public void create(SQLiteDatabase db, String createRequest, List<ContentValues> list) {
 		db.execSQL(createRequest);

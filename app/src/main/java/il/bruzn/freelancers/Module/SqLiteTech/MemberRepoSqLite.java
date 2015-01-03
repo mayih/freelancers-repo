@@ -25,6 +25,7 @@ public class MemberRepoSqLite extends  SQLiteTech<Member> implements iMemberRepo
 	enum FIELDS_NAME {  ID("_id"),
 		LASTNAME("lastName"),
 		FIRSTNAME("firstName"),
+		SPECIALITY("speciality"),
 		EMAIL("email"),
 		PASSWORD("password"),
 		ADDRESS("adsress"),
@@ -48,6 +49,7 @@ public class MemberRepoSqLite extends  SQLiteTech<Member> implements iMemberRepo
 			FIELDS_NAME.PASSWORD	+ " TEXT NOT NULL, " +
 			FIELDS_NAME.FIRSTNAME	+ " TEXT, " +
 			FIELDS_NAME.LASTNAME	+ " TEXT, " +
+			FIELDS_NAME.SPECIALITY	+ " TEXT, "	+
 			FIELDS_NAME.ADDRESS		+ " TEXT, " +
 			FIELDS_NAME.PHONENUMBER	+ " TEXT, " +
 			FIELDS_NAME.PICTURE		+ " TEXT, " +
@@ -92,6 +94,7 @@ public class MemberRepoSqLite extends  SQLiteTech<Member> implements iMemberRepo
 			String password		= cursor.getString( cursor.getColumnIndex(FIELDS_NAME.PASSWORD.toString()) );
 			String firstname	= cursor.getString( cursor.getColumnIndex(FIELDS_NAME.FIRSTNAME.toString()) );
 			String lastname		= cursor.getString( cursor.getColumnIndex(FIELDS_NAME.LASTNAME.toString()) );
+			String speciality	= cursor.getString( cursor.getColumnIndex(FIELDS_NAME.SPECIALITY.toString()) );
 			String phonenumber	= cursor.getString( cursor.getColumnIndex(FIELDS_NAME.PHONENUMBER.toString()) );
 			String google		= cursor.getString( cursor.getColumnIndex(FIELDS_NAME.GOOGLE.toString()) );
 			String linkedin		= cursor.getString( cursor.getColumnIndex(FIELDS_NAME.LINKEDIN.toString()) );
@@ -102,6 +105,7 @@ public class MemberRepoSqLite extends  SQLiteTech<Member> implements iMemberRepo
 					.setPassword(password)
 					.setFirstName(firstname)
 					.setLastName(lastname)
+					.setSpeciality(speciality)
 					.setPhoneNumber(phonenumber)
 					.setGooglePlus(google)
 					.setLinkedIn(linkedin);
@@ -118,6 +122,7 @@ public class MemberRepoSqLite extends  SQLiteTech<Member> implements iMemberRepo
 		content.put(FIELDS_NAME.PASSWORD.toString(), member.getPassword());
 		content.put(FIELDS_NAME.FIRSTNAME.toString(), member.getFirstName());
 		content.put(FIELDS_NAME.LASTNAME.toString(), member.getLastName());
+		content.put(FIELDS_NAME.SPECIALITY.toString(), member.getSpeciality());
 		if (member.getAddress() != null)
 			content.put(FIELDS_NAME.ADDRESS.toString(), member.getAddress().toString());
 		content.put(FIELDS_NAME.PHONENUMBER.toString(), member.getPhoneNumber());

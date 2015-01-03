@@ -1,22 +1,21 @@
 package il.bruzn.freelancers.Module.Entities;
 
+import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
-import android.graphics.Picture;
-import android.graphics.drawable.Drawable;
-import android.media.Image;
 
 import java.util.ArrayList;
-
-import il.bruzn.freelancers.Module.Module;
 import il.bruzn.freelancers.basic.WayToPay;
 import il.bruzn.freelancers.basic.Location;
 
 public class Member {
+
 	private int _id;
 	private String _email;
 	private String _password;
-	private String _lastName;
 	private String _firstName;
+	private String _lastName;
+	private String _speciality;
 	private Location _address = new Location();
 	private String _phoneNumber;
 	private Bitmap _picture; // Ddownload from an link
@@ -55,14 +54,19 @@ public class Member {
 		_email = email;
 		return this;
 	}
-	public Member setLastName(String lastName) {
-		_lastName = lastName;
-		return this;
-	}
 	public Member setFirstName(String firstName) {
 		_firstName = firstName;
 		return this;
 	}
+	public Member setLastName(String lastName) {
+		_lastName = lastName;
+		return this;
+	}
+	public Member setSpeciality(String speciality) {
+		_speciality = speciality;
+		return this;
+	}
+
 	public Member setOpinionsOnMe(ArrayList<Opinion> opinionsOnMe) {
 		_opinionsOnMe = opinionsOnMe;
 		return this;
@@ -105,12 +109,13 @@ public class Member {
 	public int getId() {
 		return _id;
 	}
-	public String getLastName() {
-		return _lastName;
-	}
 	public String getFirstName() {
 		return _firstName;
 	}
+	public String getLastName() {
+		return _lastName;
+	}
+	public String getSpeciality() {return _speciality;}
 	public Location getAddress() {
 		return _address;
 	}

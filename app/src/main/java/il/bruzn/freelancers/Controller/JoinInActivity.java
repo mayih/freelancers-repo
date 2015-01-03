@@ -7,10 +7,13 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
+import il.bruzn.freelancers.Module.Entities.Freelancer;
 import il.bruzn.freelancers.Module.Entities.Member;
 import il.bruzn.freelancers.Module.Module;
 import il.bruzn.freelancers.R;
@@ -22,6 +25,7 @@ public class JoinInActivity extends ActionBarActivity {
     private final String _emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
     private EditText _lastName;
     private EditText _firstName;
+	private Spinner _specialities;
     private final String _namePattern = "[a-zA-Z]+";
     private EditText _password;
     private EditText _repeatPassword;
@@ -42,6 +46,8 @@ public class JoinInActivity extends ActionBarActivity {
         _lastName = (EditText)findViewById(R.id.lastname_edtext); //field lastName
         editTextValid(_lastName, _namePattern);
 
+		_specialities = (Spinner)findViewById(R.id.speciality_spinner);
+
         _password = (EditText)findViewById(R.id.password_edtext); //field password
         _repeatPassword = (EditText)findViewById(R.id.repeatpass_edtext);//field rpassword
 
@@ -61,14 +67,19 @@ public class JoinInActivity extends ActionBarActivity {
 
                     }else if (_lastName.getText().toString().isEmpty()) {
 
-                    } else if ((_password.getText().toString().isEmpty()) ||
+                    }else if(_specialities.getSelectedItem().toString() == "N/S"){
+
+					}
+					else if ((_password.getText().toString().isEmpty()) ||
                     (!_password.getText().toString().equals(_repeatPassword.getText().toString()) )) {
 
                     } else {
                             Member member = new Member().setEmail(_email.getText().toString())
 														.setPassword(_password.getText().toString())
 														.setFirstName(_firstName.getText().toString())
-														.setLastName(_lastName.getText().toString());
+														.setLastName(_lastName.getText().toString())
+														.setSpeciality(_specialities.getSelectedItem().toString());
+
                             Module.getMemberRepo().add(member);
 
                              // go Sign In activity

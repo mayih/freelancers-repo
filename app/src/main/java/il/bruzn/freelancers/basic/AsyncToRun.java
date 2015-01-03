@@ -5,16 +5,28 @@ import android.os.AsyncTask;
 /**
  * Created by Yair on 31/12/2014.
  */
-public class AsyncToRun extends AsyncTask<ToRun<ToRun>, Void, ToRun> {
+public class AsyncToRun<typeToReturn> extends AsyncTask<Object, Void, typeToReturn> {
+	private ToRun<typeToReturn> _main;
+	private ToRun _post;
+
 	@Override
-	protected ToRun doInBackground(ToRun<ToRun>... params)
-	{
-		return params[0].run();
+	protected typeToReturn doInBackground(Object... params) {
+		return _main.run(params);
 	}
 
 	@Override
-	protected void onPostExecute(ToRun toRun) {
-		super.onPostExecute(toRun);
-		toRun.run();
+	protected void onPostExecute(typeToReturn returnedValue) {
+		super.onPostExecute(returnedValue);
+		_post.run(returnedValue);
+	}
+
+	// Setters  ----
+	public AsyncToRun<typeToReturn> setMain(ToRun<typeToReturn> main) {
+		_main = main;
+		return this;
+	}
+	public AsyncToRun<typeToReturn> setPost(ToRun post) {
+		_post = post;
+		return this;
 	}
 }
