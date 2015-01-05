@@ -17,6 +17,7 @@ public class AsyncToRun<typeToReturn> extends AsyncTask<Object, Void, typeToRetu
 	@Override
 	protected void onPostExecute(typeToReturn returnedValue) {
 		super.onPostExecute(returnedValue);
+		if(_post != null)
 		_post.run(returnedValue);
 	}
 

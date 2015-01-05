@@ -23,7 +23,8 @@ import il.bruzn.freelancers.R;
 public class HomeFragment extends ListFragment implements TitledFragment {
 
 	// Data
-	ArrayList<Member> _listToPrint;
+	private ArrayList<Member> _listToPrint;
+	private boolean _isUpToDate;
 
 	@Override
 	public String getTitle() {
@@ -32,13 +33,23 @@ public class HomeFragment extends ListFragment implements TitledFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-		_listToPrint = Module.getMemberRepo().selectAll();
-
-        HomeAdapter adapter = new HomeAdapter(_listToPrint);
-        setListAdapter(adapter);
+		_isUpToDate = false;
     }
 
-    @Override
+	@Override
+	public void onResume() {
+		super.onResume();
+		if (!_isUpToDate){
+			_listToPrint = Module.getMemberRepo().selectAll();
+
+			HomeAdapter adapter = new HomeAdapter(_listToPrint);
+			setListAdapter(adapter);
+			_isUpToDate = true;
+		}
+
+	}
+
+	@Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         // Save the member
 		Member memberSelected = ((HomeAdapter)getListAdapter()).getItem(position);
@@ -52,6 +63,11 @@ public class HomeFragment extends ListFragment implements TitledFragment {
 		// Launch fragment
         ((MainActivity)getActivity()).setFragment(fragment);
     }
+
+	public HomeFragment isToUpdate() {
+		_isUpToDate = false;
+		return this;
+	}
 
 	private class HomeAdapter extends ArrayAdapter<Member> {
 

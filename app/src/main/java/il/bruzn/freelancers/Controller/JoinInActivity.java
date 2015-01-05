@@ -1,5 +1,6 @@
 package il.bruzn.freelancers.Controller;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.ActionBarActivity;
@@ -7,20 +8,20 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import il.bruzn.freelancers.Module.Entities.Freelancer;
 import il.bruzn.freelancers.Module.Entities.Member;
 import il.bruzn.freelancers.Module.Module;
 import il.bruzn.freelancers.R;
+import il.bruzn.freelancers.basic.AsyncToRun;
+import il.bruzn.freelancers.basic.ToRun;
 
 
 public class JoinInActivity extends ActionBarActivity {
-
+	ProgressDialog _progressDialog;
     private EditText _email;
     private final String _emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
     private EditText _lastName;
@@ -53,41 +54,17 @@ public class JoinInActivity extends ActionBarActivity {
 
         _joinIn = (Button)findViewById(R.id.joinin_button);//Button Join-in
 
+
         //#####-- Click Join-In --#####
         _joinIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+				_progressDialog = ProgressDialog.show(JoinInActivity.this, "Checking", "Loading.."); // Show progress dialog
 
-                if (!memberIsExist(_email.getText().toString())) {
+			new AsyncToRun<Member>()
+					.setMain(addMember)
+					.setPost(printIsMemberExist).execute();
 
-                    if ((!_email.getText().toString().matches(_emailPattern)) || //if is not a mail or
-                            (_email.getText().toString().isEmpty())) {
-                    }
-                    else if (_firstName.getText().toString().isEmpty()) {
-
-                    }else if (_lastName.getText().toString().isEmpty()) {
-
-                    }else if(_specialities.getSelectedItem().toString() == "N/S"){
-
-					}
-					else if ((_password.getText().toString().isEmpty()) ||
-                    (!_password.getText().toString().equals(_repeatPassword.getText().toString()) )) {
-
-                    } else {
-                            Member member = new Member().setEmail(_email.getText().toString())
-														.setPassword(_password.getText().toString())
-														.setFirstName(_firstName.getText().toString())
-														.setLastName(_lastName.getText().toString())
-														.setSpeciality(_specialities.getSelectedItem().toString());
-
-                            Module.getMemberRepo().add(member);
-
-                             // go Sign In activity
-                            Intent i = new Intent(JoinInActivity.this, SignInActivity.class);
-                            startActivity(i);
-                    }
-                }else
-                    Toast.makeText(getApplicationContext(), "Existe déjà", Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -109,8 +86,58 @@ public class JoinInActivity extends ActionBarActivity {
         });
     }
 
-    private boolean memberIsExist(String email)
-    {
-        return Module.getMemberRepo().selectByEmail(email) != null;
-    }
+	ToRun<Member> addMember = new ToRun<Member>() {
+		@Override
+		public Member run(Object... parameters) {
+			Member IsMemberExist = Module.getMemberRepo().selectByEmail(_email.getText().toString());
+
+			if (IsMemberExist == null) {
+				if ((!_email.getText().toString().matches(_emailPattern)) || //if is not a mail or
+						(_email.getText().toString().isEmpty())) {
+				} else if (_firstName.getText().toString().isEmpty()) {
+
+				} else if (_lastName.getText().toString().isEmpty()) {
+
+				} else if (_specialities.getSelectedItem().toString() == "N/S") {
+
+				} else if ((_password.getText().toString().isEmpty()) ||
+						(!_password.getText().toString().equals(_repeatPassword.getText().toString()))) {
+
+				} else {
+					Member member = new Member().setEmail(_email.getText().toString())
+							.setPassword(_password.getText().toString())
+							.setFirstName(_firstName.getText().toString())
+							.setLastName(_lastName.getText().toString())
+							.setSpeciality(_specialities.getSelectedItem().toString());
+
+					Module.getMemberRepo().add(member);
+				}
+			}
+			return IsMemberExist;
+		}
+	};
+
+	ToRun printIsMemberExist = new ToRun<Void>() {
+		@Override
+		public Void run(Object... parameters) {
+
+			if (_progressDialog.isShowing())
+				_progressDialog.dismiss();
+
+			if (	(parameters.length > 0) &&
+					(parameters[0] != null) &&
+					(parameters[0].getClass() == Member.class)) {
+				Toast.makeText(JoinInActivity.this,"Existe Déjà", Toast.LENGTH_LONG).show();
+			}
+			else
+			{
+				// go Sign In activity
+				startActivity(new Intent(JoinInActivity.this, SignInActivity.class));
+				finish();
+			}
+
+			return null;
+		}
+	};
+
 }

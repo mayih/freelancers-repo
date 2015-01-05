@@ -76,7 +76,7 @@ public abstract class SQLiteTech<T> extends SQLiteOpenHelper implements CRUD<T> 
     @Override
     public void onCreate(SQLiteDatabase db) {
 		for (String[] repo : _allRepo)
-			create(db, repo[0]);
+			create(db, repo[1]);
     }
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {

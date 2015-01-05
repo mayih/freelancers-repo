@@ -11,53 +11,47 @@
                android:layout_height="160dp"
                android:src="@drawable/default_profile_pic"/>
 
-    <EditText android:id="@+id/profile_firstName_label"
+    <TextView android:id="@+id/profile_firstName_label"
               android:layout_marginTop="4dp"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:layout_toRightOf="@id/profile_picture"
-              android:text="Moshe"
-              android:editable="false"/>
+              android:text="Moshe"/>
 
-    <EditText android:id="@+id/profile_lastName_label"
+    <TextView android:id="@+id/profile_lastName_label"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:layout_below="@id/profile_firstName_label"
               android:layout_toRightOf="@id/profile_picture"
-              android:text="Uzan"
-              android:editable="false"/>
+              android:text="Uzan"/>
 
-    <EditText android:id="@+id/profile_specialisation_label"
+    <TextView android:id="@+id/profile_specialisation_label"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:layout_below="@id/profile_lastName_label"
               android:layout_toRightOf="@id/profile_picture"
-              android:text="Spe"
-              android:editable="false"/>
+              android:text="Spe"/>
 
-    <EditText android:id="@+id/profile_email_label"
+    <TextView android:id="@+id/profile_email_label"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:layout_below="@id/profile_specialisation_label"
               android:layout_toRightOf="@id/profile_picture"
-              android:text="edze@gmail.com"
-              android:editable="false"/>
+              android:text="edze@gmail.com"/>
 
-    <EditText android:id="@+id/profile_phoneNumber_label"
+    <TextView android:id="@+id/profile_phoneNumber_label"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:layout_below="@id/profile_email_label"
               android:layout_toRightOf="@id/profile_picture"
-              android:text="0543839498"
-              android:editable="false"/>
+              android:text="0543839498"/>
 
-    <EditText android:id="@+id/profile_adress_label"
+    <TextView android:id="@+id/profile_adress_label"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:layout_below="@id/profile_phoneNumber_label"
               android:layout_toRightOf="@id/profile_picture"
-              android:text="21 havaad haleumi"
-              android:editable="false"/>
+              android:text="21 havaad haleumi"/>
 
     <TextView android:id="@+id/profile_average_label"
               android:layout_width="wrap_content"
@@ -69,7 +63,6 @@
     <Button android:id="@+id/request_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/request_button"
-            android:layout_below="@id/profile_adress_label"/>
+            android:layout_below="@id/profile_average_label"/>
 
 </RelativeLayout><!-- From: file:/Users/Moshe/AndroidStudioProjects/Freelancers/app/src/main/res/layout/fragment_profile.xml -->

@@ -39,4 +39,5 @@
 
    <!-- Profile fragment-->
     <string name="request_button">Request</string>
+    <string name="modify_button">Modify</string>
 </resources>

@@ -1,7 +1,6 @@
 package il.bruzn.freelancers.Controller.fragments;
 
 import android.app.Fragment;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -12,7 +11,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import il.bruzn.freelancers.Controller.SignInActivity;
+import il.bruzn.freelancers.Controller.MainActivity;
 import il.bruzn.freelancers.Module.ConnectedMember;
 import il.bruzn.freelancers.Module.Entities.Member;
 import il.bruzn.freelancers.Module.Module;
@@ -25,16 +24,17 @@ public class ProfileFragment extends Fragment  implements TitledFragment {
 	public static final String MEMBER_KEY ="member's email";
 
 	private Member _member;
+	private boolean _IsMyProfile;
 
     private ImageView _picture;
-	private EditText _firstName;
-    private EditText _lastName;
-    private EditText _speciality;
-    private EditText _email;
-    private EditText _phoneNumber;
-    private EditText _adress;
+	private TextView _firstName;
+    private TextView _lastName;
+    private TextView _speciality;
+    private TextView _email;
+    private TextView _phoneNumber;
+    private TextView _adress;
     private TextView _average;
-	private Button _requestButton;
+	private Button _reqButton;
 
 	@Override
 	public String getTitle() {
@@ -47,9 +47,12 @@ public class ProfileFragment extends Fragment  implements TitledFragment {
 		if (getArguments() != null) {
 			_member = (Member)Module.getHashMap().get(getArguments().getLong(MEMBER_KEY));
 			Module.getHashMap().remove(MEMBER_KEY);
+			_IsMyProfile = false;
 		}
-		else
+		else {
 			_member = ConnectedMember.getMember();
+			_IsMyProfile = true;
+		}
 
 	}
 
@@ -62,22 +65,22 @@ public class ProfileFragment extends Fragment  implements TitledFragment {
 		if (_member.getPicture() != null)
 			_picture.setImageBitmap(_member.getPicture());
 
-        _firstName = (EditText)v.findViewById(R.id.profile_firstName_label);
+        _firstName = (TextView)v.findViewById(R.id.profile_firstName_label);
         _firstName.setText(_member.getFirstName());
 
-        _lastName = (EditText)v.findViewById(R.id.profile_lastName_label);
+        _lastName = (TextView)v.findViewById(R.id.profile_lastName_label);
         _lastName.setText(_member.getLastName());
 
-        _speciality = (EditText)v.findViewById(R.id.profile_specialisation_label);
+        _speciality = (TextView)v.findViewById(R.id.profile_specialisation_label);
 		_speciality.setText(_member.getSpeciality());
 
-        _email = (EditText)v.findViewById(R.id.profile_email_label);
+        _email = (TextView)v.findViewById(R.id.profile_email_label);
         _email.setText(_member.getEmail());
 
-        _phoneNumber = (EditText)v.findViewById(R.id.profile_phoneNumber_label);
+        _phoneNumber = (TextView)v.findViewById(R.id.profile_phoneNumber_label);
         _phoneNumber.setText(_member.getPhoneNumber());
 
-        _adress = (EditText)v.findViewById(R.id.profile_adress_label);
+        _adress = (TextView)v.findViewById(R.id.profile_adress_label);
 		_adress.setText(_member.getAddress().toString());
 
         _average = (TextView)v.findViewById(R.id.profile_average_label);
@@ -86,15 +89,26 @@ public class ProfileFragment extends Fragment  implements TitledFragment {
             _average.setVisibility(View.VISIBLE);
         }
 
-		_requestButton = (Button)v.findViewById(R.id.request_button);
-		_requestButton.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				//Intent i = new Intent(getActivity(), );
-				//startActivity(i);
-			}
-		});
+		_reqButton = (Button)v.findViewById(R.id.request_button);
 
+		if(_IsMyProfile) {
+			_reqButton.setText(R.string.modify_button);
+			_reqButton.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					((MainActivity)getActivity()).setFragment(new EditMyProfileFragment());
+				}
+			});
+		}else{
+			_reqButton.setText(R.string.request_button);
+			_reqButton.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					//Intent i = new Intent(getActivity(), );
+					//startActivity(i);
+				}
+			});
+		}
 		return v;
 	}
 }

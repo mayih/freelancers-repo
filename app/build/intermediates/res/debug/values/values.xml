@@ -182,6 +182,7 @@
     <string name="lastname_edtext">Last name</string>
     <string name="menu_closed">Menu closed</string>
     <string name="menu_opened">Menu opened</string>
+    <string name="modify_button">Modify</string>
     <string name="name_allowed_digits">azeéèrtyuiopqsdfghjklmwxcçvbnAZERTYUIOPQSDFGHJKLMWXCVBN</string>
     <string name="new_button">New</string>
     <string name="password_edtext">Password</string>
