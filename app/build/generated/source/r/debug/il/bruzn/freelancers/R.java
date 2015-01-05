@@ -1328,7 +1328,7 @@ containing a value of this type.
         public static final int action_mode_bar=0x7f0a0030;
         public static final int action_mode_bar_stub=0x7f0a002f;
         public static final int action_mode_close_button=0x7f0a0022;
-        public static final int action_new_discussion=0x7f0a0070;
+        public static final int action_new_discussion=0x7f0a0071;
         public static final int activity_chooser_view_content=0x7f0a0023;
         public static final int always=0x7f0a0016;
         public static final int beginning=0x7f0a0013;
@@ -1426,6 +1426,7 @@ containing a value of this type.
         public static final int top=0x7f0a001f;
         public static final int up=0x7f0a0008;
         public static final int useLogo=0x7f0a0012;
+        public static final int view_pager=0x7f0a0070;
         public static final int withText=0x7f0a001a;
         public static final int wrap_content=0x7f0a001d;
     }
@@ -1471,6 +1472,7 @@ containing a value of this type.
         public static final int item_opinion=0x7f030023;
         public static final int item_profile=0x7f030024;
         public static final int support_simple_spinner_dropdown_item=0x7f030025;
+        public static final int view_pager=0x7f030026;
     }
     public static final class menu {
         public static final int inbox_actionbar=0x7f0e0000;
@@ -1498,20 +1500,23 @@ containing a value of this type.
         public static final int disconnect_button=0x7f0c0013;
         public static final int email_edtext=0x7f0c0014;
         public static final int firstname_edtext=0x7f0c0015;
-        public static final int joinin_button=0x7f0c0016;
-        public static final int lastname_edtext=0x7f0c0017;
-        public static final int menu_closed=0x7f0c0018;
-        public static final int menu_opened=0x7f0c0019;
-        public static final int modify_button=0x7f0c001a;
-        public static final int name_allowed_digits=0x7f0c001b;
-        public static final int new_button=0x7f0c001c;
-        public static final int password_edtext=0x7f0c001d;
-        public static final int repeatpass_edtext=0x7f0c001e;
-        public static final int request_button=0x7f0c001f;
-        public static final int title_activity_home=0x7f0c0020;
-        public static final int title_activity_join_in=0x7f0c0021;
-        public static final int title_activity_sign_in=0x7f0c0022;
-        public static final int title_new_discussion=0x7f0c0023;
+        public static final int inbox_actionbar_title=0x7f0c0016;
+        public static final int joinin_button=0x7f0c0017;
+        public static final int lastname_edtext=0x7f0c0018;
+        public static final int menu_closed=0x7f0c0019;
+        public static final int menu_opened=0x7f0c001a;
+        public static final int messages_title=0x7f0c001b;
+        public static final int modify_button=0x7f0c001c;
+        public static final int name_allowed_digits=0x7f0c001d;
+        public static final int new_button=0x7f0c001e;
+        public static final int password_edtext=0x7f0c001f;
+        public static final int repeatpass_edtext=0x7f0c0020;
+        public static final int request_button=0x7f0c0021;
+        public static final int title_activity_home=0x7f0c0022;
+        public static final int title_activity_join_in=0x7f0c0023;
+        public static final int title_activity_sign_in=0x7f0c0024;
+        public static final int title_new_discussion=0x7f0c0025;
+        public static final int wrong_login_message=0x7f0c0026;
     }
     public static final class style {
         /**  Customize your theme here. 
@@ -1573,18 +1578,18 @@ containing a value of this type.
         public static final int Base_ThemeOverlay_AppCompat_Dark=0x7f0d0036;
         public static final int Base_ThemeOverlay_AppCompat_Dark_ActionBar=0x7f0d0037;
         public static final int Base_ThemeOverlay_AppCompat_Light=0x7f0d0038;
-        public static final int Base_V11_Theme_AppCompat=0x7f0d00e0;
-        public static final int Base_V11_Theme_AppCompat_Dialog=0x7f0d00e1;
-        public static final int Base_V11_Theme_AppCompat_Light=0x7f0d00e2;
-        public static final int Base_V11_Theme_AppCompat_Light_Dialog=0x7f0d00e3;
-        public static final int Base_V14_Theme_AppCompat=0x7f0d00e4;
-        public static final int Base_V14_Theme_AppCompat_Dialog=0x7f0d00e5;
-        public static final int Base_V14_Theme_AppCompat_Light=0x7f0d00e6;
-        public static final int Base_V14_Theme_AppCompat_Light_Dialog=0x7f0d00e7;
-        public static final int Base_V21_Theme_AppCompat=0x7f0d00e8;
-        public static final int Base_V21_Theme_AppCompat_Dialog=0x7f0d00e9;
-        public static final int Base_V21_Theme_AppCompat_Light=0x7f0d00ea;
-        public static final int Base_V21_Theme_AppCompat_Light_Dialog=0x7f0d00eb;
+        public static final int Base_V11_Theme_AppCompat=0x7f0d00e1;
+        public static final int Base_V11_Theme_AppCompat_Dialog=0x7f0d00e2;
+        public static final int Base_V11_Theme_AppCompat_Light=0x7f0d00e3;
+        public static final int Base_V11_Theme_AppCompat_Light_Dialog=0x7f0d00e4;
+        public static final int Base_V14_Theme_AppCompat=0x7f0d00e5;
+        public static final int Base_V14_Theme_AppCompat_Dialog=0x7f0d00e6;
+        public static final int Base_V14_Theme_AppCompat_Light=0x7f0d00e7;
+        public static final int Base_V14_Theme_AppCompat_Light_Dialog=0x7f0d00e8;
+        public static final int Base_V21_Theme_AppCompat=0x7f0d00e9;
+        public static final int Base_V21_Theme_AppCompat_Dialog=0x7f0d00ea;
+        public static final int Base_V21_Theme_AppCompat_Light=0x7f0d00eb;
+        public static final int Base_V21_Theme_AppCompat_Light_Dialog=0x7f0d00ec;
         public static final int Base_V7_Theme_AppCompat=0x7f0d0039;
         public static final int Base_V7_Theme_AppCompat_Dialog=0x7f0d003a;
         public static final int Base_V7_Theme_AppCompat_Light=0x7f0d003b;
@@ -1752,6 +1757,7 @@ containing a value of this type.
         public static final int Widget_AppCompat_Spinner_DropDown_ActionBar=0x7f0d00dd;
         public static final int Widget_AppCompat_Toolbar=0x7f0d00de;
         public static final int Widget_AppCompat_Toolbar_Button_Navigation=0x7f0d00df;
+        public static final int pager_title_strip=0x7f0d00e0;
     }
     public static final class transition {
         public static final int slide_left_to_right=0x7f050000;

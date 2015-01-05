@@ -5,4 +5,9 @@
         <!-- Customize your theme here. -->
     </style>
 
+	<style name="pager_title_strip">
+		<item name="android:padding">10dp</item>
+		<item name="android:background">#99000000</item>
+		<item name="android:textColor">#ffffff</item>
+	</style>
 </resources>

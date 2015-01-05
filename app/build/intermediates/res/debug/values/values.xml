@@ -178,10 +178,12 @@
     <string name="disconnect_button">Disconnect</string>
     <string name="email_edtext">Email</string>
     <string name="firstname_edtext">First name</string>
+    <string name="inbox_actionbar_title">Inbox</string>
     <string name="joinin_button">Join in</string>
     <string name="lastname_edtext">Last name</string>
     <string name="menu_closed">Menu closed</string>
     <string name="menu_opened">Menu opened</string>
+    <string name="messages_title">Messages</string>
     <string name="modify_button">Modify</string>
     <string name="name_allowed_digits">azeéèrtyuiopqsdfghjklmwxcçvbnAZERTYUIOPQSDFGHJKLMWXCVBN</string>
     <string name="new_button">New</string>
@@ -192,6 +194,7 @@
     <string name="title_activity_join_in">Join-In</string>
     <string name="title_activity_sign_in">Sign In</string>
     <string name="title_new_discussion">New discussion</string>
+    <string name="wrong_login_message">Wrong login or password</string>
     <!-- From: file:/C:/Users/yairo_000/Documents/Java-Projects/Freelancers/app/src/main/res/values/styles.xml -->
     <eat-comment/>
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -1241,4 +1244,11 @@ m>        <item name="android:textColorLink">@color/link_text_material_dark</ite
     <style name="Widget.AppCompat.Spinner.DropDown.ActionBar" parent="Base.Widget.AppCompat.Spinner.DropDown.ActionBar"/>
     <style name="Widget.AppCompat.Toolbar" parent="Base.Widget.AppCompat.Toolbar"/>
     <style name="Widget.AppCompat.Toolbar.Button.Navigation" parent="Base.Widget.AppCompat.Toolbar.Button.Navigation"/>
+    <!-- From: file:/C:/Users/yairo_000/Documents/Java-Projects/Freelancers/app/src/main/res/values/styles.xml -->
+    <eat-comment/>
+    <style name="pager_title_strip">
+		<item name="android:padding">10dp</item>
+		<item name="android:background">#99000000</item>
+		<item name="android:textColor">#ffffff</item>
+	</style>
 </resources>

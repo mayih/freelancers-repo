@@ -34,7 +34,7 @@ public class MessagesFragment extends ListFragment implements TitledFragment {
 
 	@Override
 	public String getTitle() {
-		return "Inbox";
+		return "Messages";
 	}
 
 	@Override

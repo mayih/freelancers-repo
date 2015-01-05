@@ -104,7 +104,7 @@ public class SignInActivity extends ActionBarActivity {
 				finish();
 			}
 			else
-				Toast.makeText(SignInActivity.this, "Wrong login or password", Toast.LENGTH_SHORT).show();
+				Toast.makeText(SignInActivity.this, getResources().getText(R.string.wrong_login_message), Toast.LENGTH_SHORT).show();
 			return null;
 		}
 	};

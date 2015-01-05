@@ -21,7 +21,7 @@ public class MenuFragment extends ListFragment {
 	private iMenulistener _activity;
 	static ItemMenu[] _menu = {	new ItemMenu(R.drawable.home_icon,		"Home",		new HomeFragment()),
 								new ItemMenu(R.drawable.profile_icon,	"Profile",	new ProfileFragment()),
-								new ItemMenu(R.drawable.inbox_icon,		"Inbox",	new MessagesFragment()),
+								new ItemMenu(R.drawable.inbox_icon,		"Inbox",	new InboxPagerFragment()),
 								new ItemMenu(R.drawable.disconnect_icon,"Disconnect",	null),
 	};
 	public static ItemMenu[] getMenu(){
