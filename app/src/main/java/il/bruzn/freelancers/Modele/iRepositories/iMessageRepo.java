@@ -1,10 +1,10 @@
-package il.bruzn.freelancers.Module.iRepositories;
+package il.bruzn.freelancers.Modele.iRepositories;
 
 import java.util.ArrayList;
 
-import il.bruzn.freelancers.Module.CRUD;
-import il.bruzn.freelancers.Module.Entities.Member;
-import il.bruzn.freelancers.Module.Entities.Message;
+import il.bruzn.freelancers.Modele.CRUD;
+import il.bruzn.freelancers.Modele.Entities.Member;
+import il.bruzn.freelancers.Modele.Entities.Message;
 
 /**
  * Created by Yair on 10/12/2014.

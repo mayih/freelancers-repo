@@ -1,7 +1,5 @@
-package il.bruzn.freelancers.Module.Entities;
+package il.bruzn.freelancers.Modele.Entities;
 
-import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 
 import java.util.ArrayList;

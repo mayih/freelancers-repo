@@ -1,4 +1,4 @@
-package il.bruzn.freelancers.Module.Entities;
+package il.bruzn.freelancers.Modele.Entities;
 
 import java.util.Date;
 

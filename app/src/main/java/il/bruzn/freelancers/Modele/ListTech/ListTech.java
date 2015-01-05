@@ -1,11 +1,11 @@
-package il.bruzn.freelancers.Module.ListTech;
+package il.bruzn.freelancers.Modele.ListTech;
 
 import java.util.ArrayList;
 import java.util.Date;
 
-import il.bruzn.freelancers.Module.Entities.Member;
-import il.bruzn.freelancers.Module.Entities.Message;
-import il.bruzn.freelancers.Module.Entities.Opinion;
+import il.bruzn.freelancers.Modele.Entities.Member;
+import il.bruzn.freelancers.Modele.Entities.Message;
+import il.bruzn.freelancers.Modele.Entities.Opinion;
 
 /**
  * Created by Yair on 08/12/2014.

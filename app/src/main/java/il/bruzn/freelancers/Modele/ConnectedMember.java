@@ -1,9 +1,6 @@
-package il.bruzn.freelancers.Module;
+package il.bruzn.freelancers.Modele;
 
-import java.util.ArrayList;
-
-import il.bruzn.freelancers.Module.Entities.Member;
-import il.bruzn.freelancers.Module.Entities.Opinion;
+import il.bruzn.freelancers.Modele.Entities.Member;
 
 /**
  * Created by Yair on 24/11/2014.

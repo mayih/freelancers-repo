@@ -27,4 +27,4 @@
 		android:layout_alignParentBottom="true"
 		android:layout_toLeftOf="@id/send_icon"
 		android:hint="Write here.."/>
-</RelativeLayout><!-- From: file:/Users/Moshe/AndroidStudioProjects/Freelancers/app/src/main/res/layout/fragment_discussion.xml -->
+</RelativeLayout><!-- From: file:/C:/Users/yairo_000/Documents/Java-Projects/Freelancers/app/src/main/res/layout/fragment_discussion.xml -->

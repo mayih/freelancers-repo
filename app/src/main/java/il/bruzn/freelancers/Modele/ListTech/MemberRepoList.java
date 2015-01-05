@@ -1,11 +1,11 @@
-package il.bruzn.freelancers.Module.ListTech;
+package il.bruzn.freelancers.Modele.ListTech;
 
 import java.util.ArrayList;
 
-import il.bruzn.freelancers.Module.Entities.Member;
-import il.bruzn.freelancers.Module.Entities.Opinion;
-import il.bruzn.freelancers.Module.Module;
-import il.bruzn.freelancers.Module.iRepositories.iMemberRepo;
+import il.bruzn.freelancers.Modele.Entities.Member;
+import il.bruzn.freelancers.Modele.Entities.Opinion;
+import il.bruzn.freelancers.Modele.Modele;
+import il.bruzn.freelancers.Modele.iRepositories.iMemberRepo;
 
 /**
  * Created by Yair on 08/12/2014.
@@ -26,10 +26,19 @@ public class MemberRepoList extends ListTech implements iMemberRepo {
 	}
 
 	@Override
+	public Member selectByEmailAndPassword(String email, String password) {
+		Member member = selectByEmail(email);
+		if (member!= null && member.authenticate(email, password))
+			return member;
+		else
+			return null;
+	}
+
+	@Override
 	public Member selectWithOpinions(String email) {
 		Member m = selectByEmail(email);
 		if (m!=null && m.getOpinionsOnMe().isEmpty())
-			for (Opinion op : Module.getOpnionRepo().selectAll()){
+			for (Opinion op : Modele.getOpnionRepo().selectAll()){
 				if (op.getSubject() == m){
 					m.getOpinionsOnMe().add(op);
 				}

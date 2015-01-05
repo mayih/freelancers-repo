@@ -1,6 +1,4 @@
-package il.bruzn.freelancers.Module.Entities;
-
-import java.util.Date;
+package il.bruzn.freelancers.Modele.Entities;
 
 /**
  * Created by Yair on 20/11/2014.

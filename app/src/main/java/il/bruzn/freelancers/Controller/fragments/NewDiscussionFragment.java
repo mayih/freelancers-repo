@@ -1,6 +1,6 @@
 package il.bruzn.freelancers.Controller.fragments;
 
-import android.app.ListFragment;
+import android.support.v4.app.ListFragment;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -15,10 +15,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import il.bruzn.freelancers.Controller.MainActivity;
-import il.bruzn.freelancers.Module.ConnectedMember;
-import il.bruzn.freelancers.Module.Entities.Member;
-import il.bruzn.freelancers.Module.Entities.Message;
-import il.bruzn.freelancers.Module.Module;
+import il.bruzn.freelancers.Modele.ConnectedMember;
+import il.bruzn.freelancers.Modele.Entities.Member;
+import il.bruzn.freelancers.Modele.Modele;
 import il.bruzn.freelancers.R;
 import il.bruzn.freelancers.basic.ImageHelper;
 
@@ -40,11 +39,11 @@ public class NewDiscussionFragment extends ListFragment implements TitledFragmen
 		super.onCreate(savedInstanceState);
 		if (savedInstanceState != null && savedInstanceState.containsKey(KEY_LISTOFMEMBER)) {
 			long hashMapKey = savedInstanceState.getLong(KEY_LISTOFMEMBER);
-			_listOfMember = (ArrayList<Member>) Module.getHashMap().get(hashMapKey);
-			Module.getHashMap().remove(KEY_LISTOFMEMBER);
+			_listOfMember = (ArrayList<Member>) Modele.getHashMap().get(hashMapKey);
+			Modele.getHashMap().remove(KEY_LISTOFMEMBER);
 		}
 		else {
-			_listOfMember = Module.getMemberRepo().selectAll();
+			_listOfMember = Modele.getMemberRepo().selectAll();
 			for (Member member: _listOfMember)
 				if (member.getId() == ConnectedMember.getMember().getId()) {
 					_listOfMember.remove(member);
@@ -73,7 +72,7 @@ public class NewDiscussionFragment extends ListFragment implements TitledFragmen
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
 		long hashMapKey = System.currentTimeMillis();
-		Module.getHashMap().put(hashMapKey, _listOfMember);
+		Modele.getHashMap().put(hashMapKey, _listOfMember);
 		outState.putLong(KEY_LISTOFMEMBER, hashMapKey);
 	}
 

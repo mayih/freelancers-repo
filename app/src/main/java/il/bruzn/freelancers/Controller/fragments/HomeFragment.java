@@ -1,6 +1,6 @@
 package il.bruzn.freelancers.Controller.fragments;
 
-import android.app.ListFragment;
+import android.support.v4.app.ListFragment;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,9 +12,9 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import il.bruzn.freelancers.Controller.MainActivity;
-import il.bruzn.freelancers.Module.Entities.Member;
-import il.bruzn.freelancers.Module.Entities.Opinion;
-import il.bruzn.freelancers.Module.Module;
+import il.bruzn.freelancers.Modele.Entities.Member;
+import il.bruzn.freelancers.Modele.Entities.Opinion;
+import il.bruzn.freelancers.Modele.Modele;
 import il.bruzn.freelancers.R;
 
 /**
@@ -40,7 +40,7 @@ public class HomeFragment extends ListFragment implements TitledFragment {
 	public void onResume() {
 		super.onResume();
 		if (!_isUpToDate){
-			_listToPrint = Module.getMemberRepo().selectAll();
+			_listToPrint = Modele.getMemberRepo().selectAll();
 
 			HomeAdapter adapter = new HomeAdapter(_listToPrint);
 			setListAdapter(adapter);
@@ -54,7 +54,7 @@ public class HomeFragment extends ListFragment implements TitledFragment {
         // Save the member
 		Member memberSelected = ((HomeAdapter)getListAdapter()).getItem(position);
 		long hashMapKey = System.currentTimeMillis();
-		Module.getHashMap().put(hashMapKey, memberSelected);
+		Modele.getHashMap().put(hashMapKey, memberSelected);
 		// Transfer the key
         ProfileFragment fragment = new ProfileFragment();
         Bundle bundle = new Bundle();
@@ -81,7 +81,7 @@ public class HomeFragment extends ListFragment implements TitledFragment {
 			if (convertView == null)
 				convertView = getActivity().getLayoutInflater().inflate(R.layout.item_profile, parent, false);
 
-			Member subject = Module.getOpnionRepo().fillMember(getItem(position));
+			Member subject = Modele.getOpnionRepo().fillMember(getItem(position));
 
 			// Set the header of the view (name + average mark)
 			TextView text = (TextView) convertView.findViewById(R.id.item_profile_name);

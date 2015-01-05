@@ -1,4 +1,4 @@
-package il.bruzn.freelancers.Module.SqLiteTech;
+package il.bruzn.freelancers.Modele.SqLiteTech;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -7,14 +7,12 @@ import android.database.Cursor;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
-import il.bruzn.freelancers.Module.ConnectedMember;
-import il.bruzn.freelancers.Module.Entities.Member;
-import il.bruzn.freelancers.Module.Entities.Message;
-import il.bruzn.freelancers.Module.Module;
-import il.bruzn.freelancers.Module.iRepositories.iMemberRepo;
-import il.bruzn.freelancers.Module.iRepositories.iMessageRepo;
+import il.bruzn.freelancers.Modele.ConnectedMember;
+import il.bruzn.freelancers.Modele.Entities.Member;
+import il.bruzn.freelancers.Modele.Entities.Message;
+import il.bruzn.freelancers.Modele.Modele;
+import il.bruzn.freelancers.Modele.iRepositories.iMessageRepo;
 
 /**
  * Created by Moshe on 17/12/14.
@@ -107,7 +105,7 @@ public class MessageRepoSQLite extends SQLiteTech<Message> implements iMessageRe
 		listOfIds += ")";
 
 		// requete
-		ArrayList<Member> listOfMember = Module.getMemberRepo().selectByIds(listOfIds);
+		ArrayList<Member> listOfMember = Modele.getMemberRepo().selectByIds(listOfIds);
 		Message message;
 		for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()){
 

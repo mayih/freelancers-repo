@@ -1,6 +1,6 @@
 package il.bruzn.freelancers.Controller.fragments;
 
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -10,9 +10,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
-import il.bruzn.freelancers.Module.ConnectedMember;
-import il.bruzn.freelancers.Module.Entities.Member;
-import il.bruzn.freelancers.Module.Module;
+import il.bruzn.freelancers.Modele.ConnectedMember;
+import il.bruzn.freelancers.Modele.Entities.Member;
+import il.bruzn.freelancers.Modele.Modele;
 import il.bruzn.freelancers.R;
 
 /**
@@ -76,7 +76,7 @@ public class EditMyProfileFragment extends Fragment implements TitledFragment{
 				Member member = _member.setEmail(_email.getText().toString())
 						.setFirstName(_firstName.getText().toString())
 						.setLastName(_lastName.getText().toString());
-				Module.getMemberRepo().update(member, member.getId());
+				Modele.getMemberRepo().update(member, member.getId());
 
 				((HomeFragment)MenuFragment.getMenu()[0].getFragment()).isToUpdate();
 			}

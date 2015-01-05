@@ -13,8 +13,8 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import il.bruzn.freelancers.Module.Entities.Member;
-import il.bruzn.freelancers.Module.Module;
+import il.bruzn.freelancers.Modele.Entities.Member;
+import il.bruzn.freelancers.Modele.Modele;
 import il.bruzn.freelancers.R;
 import il.bruzn.freelancers.basic.AsyncToRun;
 import il.bruzn.freelancers.basic.ToRun;
@@ -89,7 +89,7 @@ public class JoinInActivity extends ActionBarActivity {
 	ToRun<Member> addMember = new ToRun<Member>() {
 		@Override
 		public Member run(Object... parameters) {
-			Member IsMemberExist = Module.getMemberRepo().selectByEmail(_email.getText().toString());
+			Member IsMemberExist = Modele.getMemberRepo().selectByEmail(_email.getText().toString());
 
 			if (IsMemberExist == null) {
 				if ((!_email.getText().toString().matches(_emailPattern)) || //if is not a mail or
@@ -110,7 +110,7 @@ public class JoinInActivity extends ActionBarActivity {
 							.setLastName(_lastName.getText().toString())
 							.setSpeciality(_specialities.getSelectedItem().toString());
 
-					Module.getMemberRepo().add(member);
+					Modele.getMemberRepo().add(member);
 				}
 			}
 			return IsMemberExist;

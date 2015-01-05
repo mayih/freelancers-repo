@@ -1,10 +1,10 @@
-package il.bruzn.freelancers.Module.ListTech;
+package il.bruzn.freelancers.Modele.ListTech;
 
 import java.util.ArrayList;
 
-import il.bruzn.freelancers.Module.Entities.Member;
-import il.bruzn.freelancers.Module.Entities.Opinion;
-import il.bruzn.freelancers.Module.iRepositories.iOpinionRepo;
+import il.bruzn.freelancers.Modele.Entities.Member;
+import il.bruzn.freelancers.Modele.Entities.Opinion;
+import il.bruzn.freelancers.Modele.iRepositories.iOpinionRepo;
 
 /**
  * Created by Yair on 08/12/2014.

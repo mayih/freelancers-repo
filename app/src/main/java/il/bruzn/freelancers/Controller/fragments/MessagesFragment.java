@@ -1,39 +1,36 @@
 package il.bruzn.freelancers.Controller.fragments;
 
-import android.app.ListFragment;
+import android.support.v4.app.ListFragment;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import il.bruzn.freelancers.Controller.MainActivity;
-import il.bruzn.freelancers.Module.ConnectedMember;
-import il.bruzn.freelancers.Module.Entities.Member;
-import il.bruzn.freelancers.Module.Entities.Message;
-import il.bruzn.freelancers.Module.Module;
+import il.bruzn.freelancers.Modele.ConnectedMember;
+import il.bruzn.freelancers.Modele.Entities.Member;
+import il.bruzn.freelancers.Modele.Entities.Message;
+import il.bruzn.freelancers.Modele.Modele;
 import il.bruzn.freelancers.R;
 import il.bruzn.freelancers.basic.ImageHelper;
 
 /**
  * Created by Yair on 01/12/2014.
  */
-public class InboxFragment extends ListFragment implements TitledFragment {
+public class MessagesFragment extends ListFragment implements TitledFragment {
 
 	ArrayList<ArrayList<Message>> _listOfDiscussion;
-	private final static String KEY_LISTOFDISCUSSION = "key list of discussion in hashmap";
+//	private final static String KEY_LISTOFDISCUSSION = "key list of discussion in hashmap";
 
 	@Override
 	public String getTitle() {
@@ -41,34 +38,18 @@ public class InboxFragment extends ListFragment implements TitledFragment {
 	}
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-//		if (savedInstanceState != null && savedInstanceState.containsKey(KEY_LISTOFDISCUSSION)) {
-//			long hashMapKey = savedInstanceState.getLong(KEY_LISTOFDISCUSSION);
-//			_listOfDiscussion = (ArrayList<ArrayList<Message>>) Module.getHashMap().get(hashMapKey);
-//			Module.getHashMap().remove(KEY_LISTOFDISCUSSION);
-//		}
-	}
-
-	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
-//		setListAdapter(new InboxArrayAdapter(_listOfDiscussion));
-		getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				getListView().setItemChecked(position, true);
-				DiscussionFragment fragment = new DiscussionFragment();
-				fragment.setMessages(_listOfDiscussion.get(position));
-				((MainActivity) getActivity()).setFragment(fragment);
-			}
-		});
+	public void onListItemClick(ListView l, View v, int position, long id) {
+		super.onListItemClick(l, v, position, id);
+		getListView().setItemChecked(position, true);
+		DiscussionFragment fragment = new DiscussionFragment();
+		fragment.setMessages(_listOfDiscussion.get(position));
+		((MainActivity) getActivity()).setFragment(fragment);
 	}
 
 	@Override
 	public void onResume() {
 		super.onResume();
-		_listOfDiscussion = Module.getMessageRepo().selectAllDiscussions(ConnectedMember.getMember());
+		_listOfDiscussion = Modele.getMessageRepo().selectAllDiscussions(ConnectedMember.getMember());
 		setListAdapter(new InboxArrayAdapter(_listOfDiscussion));
 	}
 
@@ -88,15 +69,6 @@ public class InboxFragment extends ListFragment implements TitledFragment {
 		    default:
 				return super.onOptionsItemSelected(item);
 		}
-	}
-
-	@Override
-	public void onSaveInstanceState(Bundle outState) {
-		long hashMapKey = System.currentTimeMillis();
-		Module.getHashMap().put(hashMapKey, _listOfDiscussion);
-		outState.putLong(KEY_LISTOFDISCUSSION, hashMapKey);
-
-		super.onSaveInstanceState(outState);
 	}
 
 	// The arrayList passed to the constructor contains the discussions. A discussion is a list of messages sorted by dates.

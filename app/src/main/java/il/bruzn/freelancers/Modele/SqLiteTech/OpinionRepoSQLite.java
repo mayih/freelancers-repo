@@ -1,4 +1,4 @@
-package il.bruzn.freelancers.Module.SqLiteTech;
+package il.bruzn.freelancers.Modele.SqLiteTech;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -6,13 +6,11 @@ import android.database.Cursor;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-import java.util.logging.Level;
 
-import il.bruzn.freelancers.Module.Entities.Member;
-import il.bruzn.freelancers.Module.Entities.Opinion;
-import il.bruzn.freelancers.Module.Module;
-import il.bruzn.freelancers.Module.iRepositories.iOpinionRepo;
+import il.bruzn.freelancers.Modele.Entities.Member;
+import il.bruzn.freelancers.Modele.Entities.Opinion;
+import il.bruzn.freelancers.Modele.Modele;
+import il.bruzn.freelancers.Modele.iRepositories.iOpinionRepo;
 
 /**
  * Created by Moshe on 17/12/14.
@@ -106,8 +104,8 @@ public class OpinionRepoSQLite extends SQLiteTech<Opinion> implements iOpinionRe
 				int subject_id = cursor.getInt(cursor.getColumnIndex(FIELDS_NAME.SUBJECT.toString()));
 				Date date = new Date(cursor.getLong(cursor.getColumnIndex(FIELDS_NAME.DATE.toString())) * 1000);
 
-				Member authors = Module.getMemberRepo().selectById(authors_id);
-				Member subject = Module.getMemberRepo().selectById(subject_id);
+				Member authors = Modele.getMemberRepo().selectById(authors_id);
+				Member subject = Modele.getMemberRepo().selectById(subject_id);
 				Opinion.Level level = Opinion.Level.fromInteger(levelInteger);
 
 				opinion.setId(id)

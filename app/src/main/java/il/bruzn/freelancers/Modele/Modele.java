@@ -1,23 +1,23 @@
-package il.bruzn.freelancers.Module;
+package il.bruzn.freelancers.Modele;
 
 import android.content.Context;
 
 import java.util.HashMap;
 
-import il.bruzn.freelancers.Module.ListTech.MemberRepoList;
-import il.bruzn.freelancers.Module.ListTech.MessageRepoList;
-import il.bruzn.freelancers.Module.ListTech.OpinionRepoList;
-import il.bruzn.freelancers.Module.SqLiteTech.MemberRepoSqLite;
-import il.bruzn.freelancers.Module.SqLiteTech.MessageRepoSQLite;
-import il.bruzn.freelancers.Module.SqLiteTech.OpinionRepoSQLite;
-import il.bruzn.freelancers.Module.iRepositories.iMemberRepo;
-import il.bruzn.freelancers.Module.iRepositories.iMessageRepo;
-import il.bruzn.freelancers.Module.iRepositories.iOpinionRepo;
+import il.bruzn.freelancers.Modele.ListTech.MemberRepoList;
+import il.bruzn.freelancers.Modele.ListTech.MessageRepoList;
+import il.bruzn.freelancers.Modele.ListTech.OpinionRepoList;
+import il.bruzn.freelancers.Modele.SqLiteTech.MemberRepoSqLite;
+import il.bruzn.freelancers.Modele.SqLiteTech.MessageRepoSQLite;
+import il.bruzn.freelancers.Modele.SqLiteTech.OpinionRepoSQLite;
+import il.bruzn.freelancers.Modele.iRepositories.iMemberRepo;
+import il.bruzn.freelancers.Modele.iRepositories.iMessageRepo;
+import il.bruzn.freelancers.Modele.iRepositories.iOpinionRepo;
 
 /**
  * Created by Yair on 08/12/2014.
  */
-public class Module {
+public class Modele {
 	static final Technology tech = Technology.SQLite;
 	enum Technology{SQLite, Server, List };
 

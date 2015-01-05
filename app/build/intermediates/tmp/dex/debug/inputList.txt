@@ -1,5 +1,5 @@
-/Users/Moshe/AndroidStudioProjects/Freelancers/app/build/intermediates/classes/debug
-/Users/Moshe/AndroidStudioProjects/Freelancers/app/build/intermediates/pre-dexed/debug/support-annotations-21.0.0-6d87d36c3b5c04a3abca7bfdeae3106a81ddff20.jar
-/Users/Moshe/AndroidStudioProjects/Freelancers/app/build/intermediates/pre-dexed/debug/internal_impl-21.0.0-b902e8327dea38627de13806d74593680ae40d60.jar
-/Users/Moshe/AndroidStudioProjects/Freelancers/app/build/intermediates/pre-dexed/debug/classes-4a6a52ffaf270ac43ee525d1d3c418b13f1b207b.jar
-/Users/Moshe/AndroidStudioProjects/Freelancers/app/build/intermediates/pre-dexed/debug/classes-559a3e719c29a6c61741e0691687ed41da535902.jar
+C:\Users\yairo_000\Documents\Java-Projects\Freelancers\app\build\intermediates\classes\debug
+C:\Users\yairo_000\Documents\Java-Projects\Freelancers\app\build\intermediates\pre-dexed\debug\support-annotations-21.0.0-673f5d72a763bcdd65c7f688eb500fea6a5a8d71.jar
+C:\Users\yairo_000\Documents\Java-Projects\Freelancers\app\build\intermediates\pre-dexed\debug\internal_impl-21.0.0-535d54c36768f9745eda3a5101112ac5e4b32a2b.jar
+C:\Users\yairo_000\Documents\Java-Projects\Freelancers\app\build\intermediates\pre-dexed\debug\classes-cc15ee08dc0080457a73acc84cdde3cae77af050.jar
+C:\Users\yairo_000\Documents\Java-Projects\Freelancers\app\build\intermediates\pre-dexed\debug\classes-d1788415daf08ee436d00fba23d0be51849224bd.jar

@@ -1,4 +1,4 @@
-package il.bruzn.freelancers.Module.SqLiteTech;
+package il.bruzn.freelancers.Modele.SqLiteTech;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -9,7 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import java.util.ArrayList;
 import java.util.List;
 
-import il.bruzn.freelancers.Module.CRUD;
+import il.bruzn.freelancers.Modele.CRUD;
 
 /**
  * Created by Moshe on 17/12/14.

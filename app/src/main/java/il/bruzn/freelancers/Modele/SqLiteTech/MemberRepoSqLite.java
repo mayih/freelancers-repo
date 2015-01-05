@@ -1,4 +1,4 @@
-package il.bruzn.freelancers.Module.SqLiteTech;
+package il.bruzn.freelancers.Modele.SqLiteTech;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -7,12 +7,8 @@ import android.database.Cursor;
 import java.util.ArrayList;
 import java.util.List;
 
-import il.bruzn.freelancers.Module.Entities.Member;
-import il.bruzn.freelancers.Module.ListTech.OpinionRepoList;
-import il.bruzn.freelancers.Module.iRepositories.iMemberRepo;
-import il.bruzn.freelancers.Module.iRepositories.iOpinionRepo;
-import il.bruzn.freelancers.basic.Delegate;
-import il.bruzn.freelancers.basic.ToRun;
+import il.bruzn.freelancers.Modele.Entities.Member;
+import il.bruzn.freelancers.Modele.iRepositories.iMemberRepo;
 
 /**
  * Created by Yair on 17/12/2014.
@@ -55,7 +51,7 @@ public class MemberRepoSqLite extends  SQLiteTech<Member> implements iMemberRepo
 			FIELDS_NAME.PHONENUMBER	+ " TEXT, " +
 			FIELDS_NAME.PICTURE		+ " TEXT, " +
 			FIELDS_NAME.GOOGLE		+ " TEXT, " +
-			FIELDS_NAME.LINKEDIN	+ " TEXT " +
+			FIELDS_NAME.LINKEDIN	+ " TEXT "	+
 			");";
 
 	public MemberRepoSqLite(Context context, String name, int version) {
@@ -71,6 +67,16 @@ public class MemberRepoSqLite extends  SQLiteTech<Member> implements iMemberRepo
 			return selectedMember.get(0);
 		return null;
 	}
+	@Override
+	public Member selectByEmailAndPassword(String email, String password) {
+		Member member = selectByEmail(email);
+		if (member!= null && member.authenticate(email, password))
+			return member;
+		else
+			return null;
+	}
+
+
 	@Override
 	public Member selectWithOpinions(String email) {
 		return null;

@@ -1,4 +1,4 @@
-package il.bruzn.freelancers.Module;
+package il.bruzn.freelancers.Modele;
 
 import java.util.ArrayList;
 
