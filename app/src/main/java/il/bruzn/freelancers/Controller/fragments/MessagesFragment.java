@@ -1,5 +1,6 @@
 package il.bruzn.freelancers.Controller.fragments;
 
+import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -30,7 +31,15 @@ import il.bruzn.freelancers.basic.ImageHelper;
 public class MessagesFragment extends ListFragment implements TitledFragment {
 
 	ArrayList<ArrayList<Message>> _listOfDiscussion;
-//	private final static String KEY_LISTOFDISCUSSION = "key list of discussion in hashmap";
+	private final static String KEY_DISCUSSIONS = "key for discussion in hashmap";
+
+
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		_listOfDiscussion = Modele.getMessageRepo().selectAllDiscussions(ConnectedMember.getMember());
+		setListAdapter(new MessagesArrayAdapter(_listOfDiscussion));
+	}
 
 	@Override
 	public String getTitle() {
@@ -45,14 +54,6 @@ public class MessagesFragment extends ListFragment implements TitledFragment {
 		fragment.setMessages(_listOfDiscussion.get(position));
 		((MainActivity) getActivity()).setFragment(fragment);
 	}
-
-	@Override
-	public void onResume() {
-		super.onResume();
-		_listOfDiscussion = Modele.getMessageRepo().selectAllDiscussions(ConnectedMember.getMember());
-		setListAdapter(new InboxArrayAdapter(_listOfDiscussion));
-	}
-
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		inflater.inflate(R.menu.inbox_actionbar, menu);
@@ -63,8 +64,7 @@ public class MessagesFragment extends ListFragment implements TitledFragment {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		    case R.id.action_new_discussion:
-				NewDiscussionFragment NewDiscussion = new NewDiscussionFragment();
-				((MainActivity)getActivity()).setFragment(NewDiscussion);
+				((MainActivity)getActivity()).setFragment(new NewDiscussionFragment());
 		        return true;
 		    default:
 				return super.onOptionsItemSelected(item);
@@ -72,9 +72,9 @@ public class MessagesFragment extends ListFragment implements TitledFragment {
 	}
 
 	// The arrayList passed to the constructor contains the discussions. A discussion is a list of messages sorted by dates.
-	private class InboxArrayAdapter extends ArrayAdapter<ArrayList<Message>> {
+	public class MessagesArrayAdapter extends ArrayAdapter<ArrayList<Message>> {
 
-		public InboxArrayAdapter(List<ArrayList<Message>> discussions) {
+		public MessagesArrayAdapter(List<ArrayList<Message>> discussions) {
 			super(getActivity(), 0,discussions);
 		}
 

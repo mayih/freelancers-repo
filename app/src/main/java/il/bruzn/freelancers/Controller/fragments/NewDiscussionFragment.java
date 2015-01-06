@@ -62,7 +62,7 @@ public class NewDiscussionFragment extends ListFragment implements TitledFragmen
 				Member selectedMember = _listOfMember.get(position);
 				DiscussionFragment newDiscussion = new DiscussionFragment();
 				newDiscussion.setInterlocutor(selectedMember);
-				getActivity().getFragmentManager().popBackStack();
+				getActivity().getSupportFragmentManager().popBackStack();
 				((MainActivity)getActivity()).setFragment(newDiscussion);
 			}
 		});

@@ -80,7 +80,6 @@ public class MainActivity extends ActionBarActivity implements MenuFragment.iMen
 		if (frag == oldFragment)
 			return;
 
-
 		FragmentTransaction transaction = fm.beginTransaction();
 		frag.setHasOptionsMenu(true);
 
