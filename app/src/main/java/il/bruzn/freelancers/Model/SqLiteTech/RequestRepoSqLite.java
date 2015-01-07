@@ -44,7 +44,7 @@ public class RequestRepoSqLite extends SQLiteTech<Request> implements iRequestRe
 			FIELDS_NAME.ID			+ " INTEGER PRIMARY KEY AUTOINCREMENT, " +
 			FIELDS_NAME.AUTHOR	    + " INTEGER NOT NULL, " +
 			FIELDS_NAME.RECEIVER	+ " INTEGER NOT NULL, " +
-			FIELDS_NAME.OPINION		+ " INTEGER NOT NULL, " +
+			FIELDS_NAME.OPINION		+ " INTEGER, " +
 			FIELDS_NAME.REQUEST	    + " TEXT NOT NULL, "    +
 			FIELDS_NAME.DATE	    + " INTEGER NOT NULL, "	+ // TimeStamp in seconds
 			FIELDS_NAME.ISACCEPTED	+ " INTEGER " +
@@ -84,9 +84,10 @@ public class RequestRepoSqLite extends SQLiteTech<Request> implements iRequestRe
 					receiver = Model.getMemberRepo().selectById(receiver_id);
 			Opinion opinion = Model.getOpnionRepo().selectById(opinion_id);
 
-			request = new Request(authors, receiver, requestMsg, isAccepted != 0, opinion);
+			request = new Request(id, authors, receiver,opinion, requestMsg, date, isAccepted != 0);
 			requestArrayList.add(request);
 		}
+		cursor.close();
 		return requestArrayList;
 	}
 

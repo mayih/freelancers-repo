@@ -138,7 +138,8 @@ public class MessageRepoSQLite extends SQLiteTech<Message> implements iMessageRe
 		}
 		cursor.close();
 		return messageArrayList;
-	}
+}
+
 	@Override
 	public ContentValues toContentValues(Message message) {
 		ContentValues content = new ContentValues();

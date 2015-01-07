@@ -119,6 +119,7 @@ public class OpinionRepoSQLite extends SQLiteTech<Opinion> implements iOpinionRe
 
 				opinionArrayList.add(opinion);
 			}
+			cursor.close();
 			return opinionArrayList;
 	}
 
