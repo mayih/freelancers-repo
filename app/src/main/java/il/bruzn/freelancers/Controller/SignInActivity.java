@@ -10,9 +10,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import il.bruzn.freelancers.Module.Entities.Member;
-import il.bruzn.freelancers.Module.ConnectedMember;
-import il.bruzn.freelancers.Module.Model;
+import il.bruzn.freelancers.Model.Entities.Member;
+import il.bruzn.freelancers.Model.ConnectedMember;
+import il.bruzn.freelancers.Model.Model;
 import il.bruzn.freelancers.R;
 import il.bruzn.freelancers.basic.AsyncToRun;
 import il.bruzn.freelancers.basic.ToRun;
@@ -27,18 +27,16 @@ public class SignInActivity extends ActionBarActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_sign_in);
+
 		if (Model.getMemberRepo() == null) // If the technologie hasn't been instanced
 			Model.create(this, Model.DB_NAME, Model.DB_VERSION);
 
 		// Check if the user is already connected
 		String email = getSharedPreferences(ConnectedMember.filename, MODE_PRIVATE).getString(ConnectedMember.key, "");
-
 		if (email != null && !email.isEmpty()) { // if the file isn't empty
-			_progressDialog = ProgressDialog.show(this, "Authenticating", "Loading.."); // Show progress dialog
-
-			// Launch thread..
-			new AsyncToRun<String>()
-					.setMain(requestTheMember)
+//			_progressDialog = ProgressDialog.show(this, "Authenticating", "Loading..");
+			new AsyncToRun<Member>()
+					.setMain(autoAuthentication)
 					.setPost(closeProgressDialog)
 					.execute();
 		}
@@ -51,17 +49,14 @@ public class SignInActivity extends ActionBarActivity {
 		_joinin.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-			startActivity(new Intent(SignInActivity.this, JoinInActivity.class)/*, ActivityOptions.makeCustomAnimation(getApplicationContext(), R.transition.slide_right_to_left, R.transition.slide_left_to_right).toBundle()*/);
+			startActivity(new Intent(SignInActivity.this, JoinInActivity.class));//, ActivityOptions.makeCustomAnimation(getApplicationContext(), R.transition.slide_right_to_left, R.transition.slide_left_to_right).toBundle());
 			}
 		});
 		_connect.setOnClickListener(new View.OnClickListener() {
-
 			@Override
 			public void onClick(View v) {
-				// Put some design
 				_progressDialog = ProgressDialog.show(SignInActivity.this, "Authenticating", "Loading..");
-
-				new AsyncToRun<String>()
+				new AsyncToRun<Member>()
 						.setMain(connection)
 						.setPost(closeProgressDialog)
 						.execute();
@@ -69,63 +64,45 @@ public class SignInActivity extends ActionBarActivity {
 		});
 	}
 
-	ToRun<String> requestTheMember = new ToRun<String>()
-	{
+	private ToRun<Member> autoAuthentication = new ToRun<Member>() {
+		int param;
 		@Override
-		public String run(Object... parameters) { // Setup the function for thread
-			// on thread..
+		public Member run(Object... parameters) {
 			String email = getSharedPreferences(ConnectedMember.filename, MODE_PRIVATE).getString(ConnectedMember.key, "");
-			Member member = Model.getMemberRepo().selectByEmail(email);
-			if (member != null){ // Check if already connected
-				ConnectedMember.setMember(member);
-				startActivity(new Intent(SignInActivity.this, MainActivity.class));
-				finish();
-			}
-			// post thread..
-			return null;
+			return Model.getMemberRepo().selectByEmail(email);
 		}
 	};
-
-	ToRun<String> connection = new ToRun<String>() {
+	private ToRun<Member> connection = new ToRun<Member>() {
+		int  param;
 		@Override
-		public String run(Object... parameters) {
-			String finalMessage = null;
-			Member memberOnClick = null;
-			String emailOnClick, passwordOnClick;
+		public Member run(Object... parameters) {
+			String email	= _email.getText().toString();
+			String password	= _password.getText().toString();
 
-			// Check email and password
-			emailOnClick	= _email.getText().toString();
-			passwordOnClick	= _password.getText().toString();
-			// on thread..
-			memberOnClick = Model.getMemberRepo().selectByEmail(emailOnClick);
-			if (memberOnClick != null && memberOnClick.authenticate(emailOnClick, passwordOnClick)) {
-				ConnectedMember.setMember(memberOnClick);
+			return Model.getMemberRepo().selectByEmailAndPassword(email, password);
+		}
+	};
+	private ToRun closeProgressDialog = new ToRun<Void>() {
+		int param;
+		@Override
+		public Void run(Object... parameters) {
+			if (_progressDialog != null) {
+				_progressDialog.dismiss();
+			}
+
+			if (	(parameters.length > 0) &&
+					(parameters[0] != null) &&
+					(parameters[0].getClass() == Member.class) ) {
+				Member member = (Member)parameters[0];
+				ConnectedMember.setMember(member);
 				SharedPreferences.Editor edit = getSharedPreferences(ConnectedMember.filename, MODE_PRIVATE).edit();
-				edit.putString(ConnectedMember.key, memberOnClick.getEmail()).commit();
+				edit.putString(ConnectedMember.key, member.getEmail()).commit();
 
 				startActivity(new Intent(SignInActivity.this, MainActivity.class));
 				finish();
 			}
 			else
-				finalMessage = "The email or the password doesn't match with our datas";
-
-			// post thread..
-			return finalMessage;
-		}
-	};
-
-	private ToRun closeProgressDialog = new ToRun<Void>() {
-		@Override
-		public Void run(Object... parameters) {
-			if (	(parameters.length > 0) &&
-					(parameters[0] != null) &&
-					(parameters[0].getClass() == String.class) &&
-					(!((String)parameters[0]).isEmpty()) ) {
-				Toast.makeText(SignInActivity.this, (String) parameters[0], Toast.LENGTH_LONG).show();
-			}
-
-			if (_progressDialog.isShowing())
-				_progressDialog.dismiss();
+				Toast.makeText(SignInActivity.this, getResources().getText(R.string.wrong_login_message), Toast.LENGTH_SHORT).show();
 			return null;
 		}
 	};

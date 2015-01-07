@@ -1,6 +1,6 @@
 package il.bruzn.freelancers.Controller.fragments;
 
-import android.app.ListFragment;
+import android.support.v4.app.ListFragment;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -15,9 +15,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import il.bruzn.freelancers.Controller.MainActivity;
-import il.bruzn.freelancers.Module.ConnectedMember;
-import il.bruzn.freelancers.Module.Entities.Member;
-import il.bruzn.freelancers.Module.Model;
+import il.bruzn.freelancers.Model.ConnectedMember;
+import il.bruzn.freelancers.Model.Entities.Member;
+import il.bruzn.freelancers.Model.Model;
 import il.bruzn.freelancers.R;
 import il.bruzn.freelancers.basic.ImageHelper;
 
@@ -60,9 +60,9 @@ public class NewDiscussionFragment extends ListFragment implements TitledFragmen
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				Member selectedMember = _listOfMember.get(position);
-				DiscussionFragment newDiscussion = new DiscussionFragment();
+				MessageFragment newDiscussion = new MessageFragment();
 				newDiscussion.setInterlocutor(selectedMember);
-				getActivity().getFragmentManager().popBackStack();
+				getActivity().getSupportFragmentManager().popBackStack();
 				((MainActivity)getActivity()).setFragment(newDiscussion);
 			}
 		});

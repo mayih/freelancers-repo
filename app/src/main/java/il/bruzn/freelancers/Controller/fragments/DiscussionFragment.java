@@ -1,158 +1,107 @@
 package il.bruzn.freelancers.Controller.fragments;
 
-import android.app.Fragment;
-import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.view.LayoutInflater;
+import android.support.v4.app.ListFragment;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Locale;
+import java.util.List;
 
-import il.bruzn.freelancers.Module.ConnectedMember;
-import il.bruzn.freelancers.Module.Entities.Member;
-import il.bruzn.freelancers.Module.Entities.Message;
-import il.bruzn.freelancers.Module.Model;
+import il.bruzn.freelancers.Controller.MainActivity;
+import il.bruzn.freelancers.Model.ConnectedMember;
+import il.bruzn.freelancers.Model.Entities.Member;
+import il.bruzn.freelancers.Model.Entities.Message;
+import il.bruzn.freelancers.Model.Model;
 import il.bruzn.freelancers.R;
+import il.bruzn.freelancers.basic.ImageHelper;
 
 /**
- * Created by Yair on 11/12/2014.
+ * Created by Yair on 01/12/2014.
  */
-public class DiscussionFragment extends Fragment  implements TitledFragment {
+public class DiscussionFragment extends ListFragment implements TitledFragment {
 
-	private ListView _listView;
-	private SimpleDateFormat _dateForm;
+	ArrayList<ArrayList<Message>> _listOfDiscussion;
+	private final static String KEY_DISCUSSIONS = "key for discussion in hashmap";
 
-	private Member _interlocutor;
-	public DiscussionFragment setInterlocutor(Member interlocutor) {
-		_interlocutor = interlocutor;
-		if (_messages == null)
-			_messages = Model.getMessageRepo().selectDiscussion(ConnectedMember.getMember(), interlocutor);
-		return this;
-	}
-
-	private ArrayList<Message> _messages;
-	public DiscussionFragment setMessages(ArrayList<Message> messages) {
-		_messages = messages;
-		return this;
-	}
-
-	private static final String KEY_FOR_MESSAGES = "keyForMessagesInHashMap";
-	private static final String KEY_FOR_INTERLOCUTOR = "keyForInterlocutorInHashMap";
-
-	public DiscussionFragment() {
-		_dateForm =  new SimpleDateFormat("HH:mm", Locale.US);
-		_messages = null;
-	}
-
-	@Override
-	public String getTitle() {
-		return "Discussion";
-	}
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		if (savedInstanceState!=null) {
-			if (savedInstanceState.containsKey(KEY_FOR_MESSAGES)) {
-				long hashMapKey = savedInstanceState.getLong(KEY_FOR_MESSAGES);
-				_messages = (ArrayList<Message>) Model.getHashMap().get(hashMapKey);
-				Model.getHashMap().remove(hashMapKey);
-			}
-			else if (savedInstanceState.containsKey(KEY_FOR_INTERLOCUTOR)) {
-				long hashMapKey = savedInstanceState.getLong(KEY_FOR_MESSAGES);
-				_interlocutor = (Member) Model.getHashMap().get(hashMapKey);
-				Model.getHashMap().remove(hashMapKey);
-			}
-		}
-
-		// Get the interlocutor
-		if (!_messages.isEmpty()) {
-			if (_messages.get(0).getAuthor().getId() != ConnectedMember.getMember().getId())
-				_interlocutor = _messages.get(0).getAuthor();
-			else
-				_interlocutor = _messages.get(0).getReceiver();
-		}
-	}
-
-	@Nullable
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		final View layout = inflater.inflate(R.layout.fragment_discussion, container, false);
-
-		_listView = (ListView) layout.findViewById(R.id.messages_listview);
-		_listView.setAdapter(new DiscussionAdapter(_messages));
-
-		ImageView sendIcon = (ImageView) layout.findViewById(R.id.send_icon);
-		sendIcon.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				// Get the message
-				EditText editText = (EditText)layout.findViewById(R.id.message_edittext);
-				String text = editText.getText().toString();
-				// Send the message
-				Message message = new Message(ConnectedMember.getMember(),_interlocutor,text);
-				Model.getMessageRepo().add(message);
-				// Clear the EditText
-				editText.getText().clear();
-				// Update the ListView
-				_messages.add(message);
-				// Close Keyboard
-				InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-				imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
-				// At the end of the listView
-				_listView.setSelection(_listView.getCount()-1);
-			}
-		});
-		return layout;
+		_listOfDiscussion = Model.getMessageRepo().selectAllDiscussions(ConnectedMember.getMember());
+		setListAdapter(new MessagesArrayAdapter(_listOfDiscussion));
 	}
 
 	@Override
-	public void onViewCreated(View view, Bundle savedInstanceState) {
-		_listView.setSelection(_listView.getCount()-1); // Scroll to bottom of list
+	public String getTitle() {
+		return "Messages";
 	}
 
 	@Override
-	public void onSaveInstanceState(Bundle outState) {
-		long hashMapKey = System.currentTimeMillis(); // Key for the list to store
-		if (!_messages.isEmpty()) {
-			Model.getHashMap().put(hashMapKey, _messages); // Store the list
-			outState.putLong(KEY_FOR_MESSAGES, hashMapKey); // Save the key
-		}
-		Model.getHashMap().put(hashMapKey, _messages); // Store the interlocutor
-		outState.putLong(KEY_FOR_INTERLOCUTOR, hashMapKey); // Save the key
-
-		super.onSaveInstanceState(outState);
+	public void onListItemClick(ListView l, View v, int position, long id) {
+		super.onListItemClick(l, v, position, id);
+		getListView().setItemChecked(position, true);
+		MessageFragment fragment = new MessageFragment();
+		fragment.setMessages(_listOfDiscussion.get(position));
+		((MainActivity) getActivity()).setFragment(fragment);
+	}
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		inflater.inflate(R.menu.inbox_actionbar, menu);
+		super.onCreateOptionsMenu(menu, inflater);
 	}
 
-	public class DiscussionAdapter extends ArrayAdapter<Message> {
-		public DiscussionAdapter(ArrayList<Message> list) {
-			super(getActivity(), R.layout.item_message_self, list);
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		    case R.id.action_new_discussion:
+				((MainActivity)getActivity()).setFragment(new NewDiscussionFragment());
+		        return true;
+		    default:
+				return super.onOptionsItemSelected(item);
+		}
+	}
+
+	// The arrayList passed to the constructor contains the discussions. A discussion is a list of messages sorted by dates.
+	public class MessagesArrayAdapter extends ArrayAdapter<ArrayList<Message>> {
+
+		public MessagesArrayAdapter(List<ArrayList<Message>> discussions) {
+			super(getActivity(), 0,discussions);
 		}
 
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
-			Message message = getItem(position);
-			int layoutId;
-			if (message.getAuthor().getId() == ConnectedMember.getMember().getId())
-				layoutId = R.layout.item_message_self;
+			if (convertView==null)
+				convertView = getActivity().getLayoutInflater().inflate(R.layout.item_discussion, parent, false);
+
+			// Identify the interlocutor
+			Member interlocutor;
+			if (getItem(position).get(0).getAuthor().getId() != ConnectedMember.getMember().getId())
+				interlocutor = getItem(position).get(0).getAuthor();
 			else
-				layoutId = R.layout.item_message_other;
+				interlocutor = getItem(position).get(0).getReceiver();
 
-			if (convertView == null)
-				convertView = getActivity().getLayoutInflater().inflate(layoutId, parent, false);
+			// Fill convertView
+			TextView nameView = (TextView) convertView.findViewById(R.id.name_item_discussion);
+			nameView.setText(interlocutor.getFirstName() + " " + interlocutor.getLastName());
 
-			((TextView)convertView.findViewById(R.id.time_message)).setText(_dateForm.format(message.getDate()));
-			((TextView)convertView.findViewById(R.id.text_message)).setText(message.getText());
+			ImageView pictureView = (ImageView) convertView.findViewById(R.id.picture_item_discussion);
+			Bitmap picture;
+			if (interlocutor.getPicture() != null)
+				picture = interlocutor.getPicture();
+			else
+				picture = BitmapFactory.decodeResource(getResources(), R.drawable.default_profile_pic);
+			picture = ImageHelper.getRoundedCornerBitmap(picture, 100);
+			pictureView.setImageBitmap(picture);
 
 			return convertView;
 		}

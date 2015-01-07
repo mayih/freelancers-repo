@@ -4,12 +4,13 @@
 	<string name="app_name">Freelance-it</string>
 	<string name="action_settings">Settings</string>
 
-	<!-- Authentication activity -->
+	<!-- SignIn activity -->
 	<string name="title_activity_sign_in">Sign In</string>
 	<string name="email_edtext">Email</string>
 	<string name="password_edtext">Password</string>
 	<string name="connect_button">Connect</string>
 	<string name="joinin_button">Join in</string>
+	<string name="wrong_login_message">Wrong login or password</string>
 
     <!-- JoinIn activity -->
     <string name="title_activity_join_in">Join-In</string>
@@ -31,8 +32,12 @@
 	<string name="Welcome">Welcome home!</string>
 	<string name="disconnect_button">Disconnect</string>
 
-	<!--Inbox Fragment-->
+	<!--Inbox fragment-->
+	<string name="inbox_actionbar_title">Inbox</string>
+
+	<!--Messages Fragment-->
 	<string name="new_button">New</string>
+	<string name="messages_title">Messages</string>
 
 	<!--New discussion fragment-->
 	<string name="title_new_discussion">New discussion</string>

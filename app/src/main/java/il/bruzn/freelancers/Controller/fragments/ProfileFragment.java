@@ -1,6 +1,6 @@
 package il.bruzn.freelancers.Controller.fragments;
 
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -11,9 +11,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import il.bruzn.freelancers.Controller.MainActivity;
-import il.bruzn.freelancers.Module.ConnectedMember;
-import il.bruzn.freelancers.Module.Entities.Member;
-import il.bruzn.freelancers.Module.Model;
+import il.bruzn.freelancers.Model.ConnectedMember;
+import il.bruzn.freelancers.Model.Entities.Member;
+import il.bruzn.freelancers.Model.Model;
 import il.bruzn.freelancers.R;
 
 /**
@@ -23,7 +23,7 @@ public class ProfileFragment extends Fragment  implements TitledFragment {
 	public static final String MEMBER_KEY ="member's email";
 
 	private Member _member;
-	private boolean _IsMyProfile;
+	private boolean _isMyProfile;
 
     private ImageView _picture;
 	private TextView _firstName;
@@ -46,11 +46,11 @@ public class ProfileFragment extends Fragment  implements TitledFragment {
 		if (getArguments() != null) {
 			_member = (Member) Model.getHashMap().get(getArguments().getLong(MEMBER_KEY));
 			Model.getHashMap().remove(MEMBER_KEY);
-			_IsMyProfile = false;
+			_isMyProfile = _member.getId() == ConnectedMember.getMember().getId(); // _isMyProfile = true;
 		}
 		else {
 			_member = ConnectedMember.getMember();
-			_IsMyProfile = true;
+			_isMyProfile = true;
 		}
 
 	}
@@ -90,7 +90,7 @@ public class ProfileFragment extends Fragment  implements TitledFragment {
 
 		_reqButton = (Button)v.findViewById(R.id.request_button);
 
-		if(_IsMyProfile) {
+		if(_isMyProfile) {
 			_reqButton.setText(R.string.modify_button);
 			_reqButton.setOnClickListener(new View.OnClickListener() {
 				@Override

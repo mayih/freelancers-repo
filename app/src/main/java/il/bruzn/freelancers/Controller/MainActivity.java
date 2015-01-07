@@ -1,9 +1,8 @@
 package il.bruzn.freelancers.Controller;
 
-import android.app.ActionBar;
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.content.Intent;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -12,9 +11,8 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.MenuItem;
 
-import il.bruzn.freelancers.Controller.fragments.HomeFragment;
 import il.bruzn.freelancers.Controller.fragments.TitledFragment;
-import il.bruzn.freelancers.Module.ConnectedMember;
+import il.bruzn.freelancers.Model.ConnectedMember;
 import il.bruzn.freelancers.R;
 import il.bruzn.freelancers.Controller.fragments.MenuFragment;
 
@@ -29,22 +27,22 @@ public class MainActivity extends ActionBarActivity implements MenuFragment.iMen
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		getFragmentManager().beginTransaction().add(R.id.menu_container, new MenuFragment()).commit();
+		getSupportFragmentManager().beginTransaction().add(R.id.menu_container, new MenuFragment()).commit();
 		_drawerLayout = (DrawerLayout) findViewById(R.id.main_drawerlayout);
 		_toggle = new ActionBarDrawerToggle(this, _drawerLayout, R.string.menu_opened, R.string.menu_closed);
 		_drawerLayout.setDrawerListener(_toggle); // Calls onDrawerOpened() & OnDrawerClosed() functions
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true); // Make the menu icon appear at top left of the screen
 
-		boolean backstackEmpty = getFragmentManager().getBackStackEntryCount() == 0;
+		boolean backstackEmpty = getSupportFragmentManager().getBackStackEntryCount() == 0;
 		if (backstackEmpty) // first time instancied
 			menuItemClicked(MenuFragment.getMenu()[0]);
 		else // Get back the last fragment & its title
-			getSupportActionBar().setTitle(((TitledFragment)getFragmentManager().findFragmentById(R.id.main_container)).getTitle());
+			getSupportActionBar().setTitle(((TitledFragment)getSupportFragmentManager().findFragmentById(R.id.main_container)).getTitle());
 
-		getFragmentManager().addOnBackStackChangedListener( new FragmentManager.OnBackStackChangedListener() {
+		getSupportFragmentManager().addOnBackStackChangedListener( new FragmentManager.OnBackStackChangedListener() {
 			@Override
 			public void onBackStackChanged() {
-				Fragment frag = getFragmentManager().findFragmentById(R.id.main_container);
+				Fragment frag = getSupportFragmentManager().findFragmentById(R.id.main_container);
 				if (frag != null)
 					getSupportActionBar().setTitle(((TitledFragment)frag).getTitle());
 			}
@@ -71,7 +69,7 @@ public class MainActivity extends ActionBarActivity implements MenuFragment.iMen
 		setFragment(frag, true, false);
 	}
 	public void setFragment(Fragment frag, boolean keepThisTransaction, boolean clearTransactions){
-		FragmentManager fm = getFragmentManager();
+		FragmentManager fm = getSupportFragmentManager();
 		Fragment oldFragment = fm.findFragmentById(R.id.main_container);
 
 		if (clearTransactions && fm.getBackStackEntryCount()>0) {// Clear the back stack
@@ -81,7 +79,6 @@ public class MainActivity extends ActionBarActivity implements MenuFragment.iMen
 
 		if (frag == oldFragment)
 			return;
-
 
 		FragmentTransaction transaction = fm.beginTransaction();
 		frag.setHasOptionsMenu(true);
@@ -98,8 +95,8 @@ public class MainActivity extends ActionBarActivity implements MenuFragment.iMen
 	public void onBackPressed() {
 		if (_drawerLayout.isDrawerOpen(GravityCompat.START))
 			_drawerLayout.closeDrawers();
-		else if (getFragmentManager().getBackStackEntryCount() > 0 ){
-			getFragmentManager().popBackStack();
+		else if (getSupportFragmentManager().getBackStackEntryCount() > 0 ){
+			getSupportFragmentManager().popBackStack();
 		} else {
 			super.onBackPressed();
 		}
@@ -122,9 +119,9 @@ public class MainActivity extends ActionBarActivity implements MenuFragment.iMen
 		setFragment(item.getFragment(), item != MenuFragment.getMenu()[0], true);
 
 		// Change the main Fragment
-//		setFragment(MenuFragment.getMenu()[0].getFragment(), false);
+//		setFragment(MenuFragment.getMenu()[0].getSupportFragment(), false);
 //		if (item != MenuFragment.getMenu()[0])
-//			setFragment(item.getFragment());
+//			setFragment(item.getSupportFragment());
 
 		_drawerLayout.closeDrawers();
 	}

@@ -13,8 +13,8 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import il.bruzn.freelancers.Module.Entities.Member;
-import il.bruzn.freelancers.Module.Model;
+import il.bruzn.freelancers.Model.Entities.Member;
+import il.bruzn.freelancers.Model.Model;
 import il.bruzn.freelancers.R;
 import il.bruzn.freelancers.basic.AsyncToRun;
 import il.bruzn.freelancers.basic.ToRun;
@@ -87,6 +87,7 @@ public class JoinInActivity extends ActionBarActivity {
     }
 
 	ToRun<Member> addMember = new ToRun<Member>() {
+		int param;
 		@Override
 		public Member run(Object... parameters) {
 			Member IsMemberExist = Model.getMemberRepo().selectByEmail(_email.getText().toString());
@@ -118,6 +119,7 @@ public class JoinInActivity extends ActionBarActivity {
 	};
 
 	ToRun printIsMemberExist = new ToRun<Void>() {
+		int param;
 		@Override
 		public Void run(Object... parameters) {
 

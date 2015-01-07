@@ -1,14 +1,11 @@
 package il.bruzn.freelancers.Controller.fragments;
 
 import android.app.Activity;
-import android.app.Fragment;
-import android.app.ListFragment;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.ListFragment;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -24,7 +21,7 @@ public class MenuFragment extends ListFragment {
 	private iMenulistener _activity;
 	static ItemMenu[] _menu = {	new ItemMenu(R.drawable.home_icon,		"Home",		new HomeFragment()),
 								new ItemMenu(R.drawable.profile_icon,	"Profile",	new ProfileFragment()),
-								new ItemMenu(R.drawable.inbox_icon,		"Inbox",	new InboxFragment()),
+								new ItemMenu(R.drawable.inbox_icon,		"Inbox",	new InboxPagerFragment()),
 								new ItemMenu(R.drawable.disconnect_icon,"Disconnect",	null),
 	};
 	public static ItemMenu[] getMenu(){
@@ -37,16 +34,10 @@ public class MenuFragment extends ListFragment {
 		_activity = (iMenulistener)getActivity();
 	}
 
-	@Nullable
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		ListView listView = (ListView) inflater.inflate(R.layout.fragment_menu, container, false);
-		return listView;
-	}
-
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
+		getListView().setBackgroundColor(0xffffffff);
 		setListAdapter(new MenuAdapter()); // Fills the menu
 	}
 
@@ -77,6 +68,8 @@ public class MenuFragment extends ListFragment {
 	} // The listView adapter which will fill the view
 
 	// Other classes ---
+
+	// An item in the menu list
 	public static class ItemMenu {
 		private int _image;
 		private String _text;
@@ -110,8 +103,9 @@ public class MenuFragment extends ListFragment {
 			_fragment = fragment;
 			return this;
 		}
-	} // An item in the menu list
+	}
+	//The activity which use this menu fragment has to implement this inerface
 	public interface iMenulistener {
 		public void menuItemClicked(ItemMenu item);
-	} //The activity which use this menu fragment has to implement this inerface
+	}
 }
