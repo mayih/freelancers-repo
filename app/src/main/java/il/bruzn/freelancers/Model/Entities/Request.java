@@ -7,18 +7,25 @@ public class Request extends Message{
 	private boolean _isAccepted;
 	private Opinion _opinion;
 
-	public Request(Member author, Member receiver, String text, boolean isAccepted, Opinion opinion) {
+	public Request(Member author, Member receiver, String text) {
 		super(author, receiver, text);
-		_isAccepted = isAccepted;
-		_opinion = opinion;
-
+		_isAccepted = false;
+		_opinion = null;
 	}
 
 	public boolean getIsAccepted() {
 		return _isAccepted;
 	}
-
 	public Opinion getOpinion() {
 		return _opinion;
+	}
+
+	public Request setAccepted(boolean isAccepted) {
+		_isAccepted = isAccepted;
+		return this;
+	}
+	public Request setOpinion(Opinion opinion) {
+		_opinion = opinion;
+		return this;
 	}
 }

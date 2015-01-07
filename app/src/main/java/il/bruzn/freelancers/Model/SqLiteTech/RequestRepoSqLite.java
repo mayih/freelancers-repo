@@ -70,21 +70,24 @@ public class RequestRepoSqLite extends SQLiteTech<Request> implements iRequestRe
 		ArrayList<Request> requestArrayList = new ArrayList<>();
 		Request request;
 
+
+
 		for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
 
 			int id				= cursor.getInt(cursor.getColumnIndex(FIELDS_NAME.ID.toString()));
 			int author_id		= cursor.getInt(cursor.getColumnIndex(FIELDS_NAME.AUTHOR.toString()));
 			int receiver_id		= cursor.getInt(cursor.getColumnIndex(FIELDS_NAME.RECEIVER.toString()));
-			int opinion_id		= cursor.getInt(cursor.getColumnIndex(FIELDS_NAME.OPINION.toString()));
-			String requestMsg 	= cursor.getString(cursor.getColumnIndex(FIELDS_NAME.REQUEST.toString()));
+			Integer opinion_id	= cursor.getInt(cursor.getColumnIndex(FIELDS_NAME.OPINION.toString()));
+			String requestMsg	= cursor.getString(cursor.getColumnIndex(FIELDS_NAME.REQUEST.toString()));
 			Date date	 		= new Date(cursor.getLong(cursor.getColumnIndex(FIELDS_NAME.DATE.toString())) * 1000);
-			int isAccepted		= cursor.getInt(cursor.getColumnIndex(FIELDS_NAME.ISACCEPTED.toString()));
+			boolean isAccepted	= cursor.getInt(cursor.getColumnIndex(FIELDS_NAME.ISACCEPTED.toString())) == 1;
 
 			Member authors = Model.getMemberRepo().selectById(author_id),
 					receiver = Model.getMemberRepo().selectById(receiver_id);
 			Opinion opinion = Model.getOpnionRepo().selectById(opinion_id);
 
-			request = new Request(authors, receiver, requestMsg, isAccepted != 0, opinion);
+			request = new Request(authors, receiver, requestMsg);
+			request.setAccepted(isAccepted).setOpinion(opinion).setId(id).setDate(date);
 			requestArrayList.add(request);
 		}
 		return requestArrayList;
