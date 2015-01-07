@@ -12,9 +12,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +21,7 @@ import il.bruzn.freelancers.Controller.MainActivity;
 import il.bruzn.freelancers.Module.ConnectedMember;
 import il.bruzn.freelancers.Module.Entities.Member;
 import il.bruzn.freelancers.Module.Entities.Message;
-import il.bruzn.freelancers.Module.Module;
+import il.bruzn.freelancers.Module.Model;
 import il.bruzn.freelancers.R;
 import il.bruzn.freelancers.basic.ImageHelper;
 
@@ -68,7 +66,7 @@ public class InboxFragment extends ListFragment implements TitledFragment {
 	@Override
 	public void onResume() {
 		super.onResume();
-		_listOfDiscussion = Module.getMessageRepo().selectAllDiscussions(ConnectedMember.getMember());
+		_listOfDiscussion = Model.getMessageRepo().selectAllDiscussions(ConnectedMember.getMember());
 		setListAdapter(new InboxArrayAdapter(_listOfDiscussion));
 	}
 
@@ -93,7 +91,7 @@ public class InboxFragment extends ListFragment implements TitledFragment {
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		long hashMapKey = System.currentTimeMillis();
-		Module.getHashMap().put(hashMapKey, _listOfDiscussion);
+		Model.getHashMap().put(hashMapKey, _listOfDiscussion);
 		outState.putLong(KEY_LISTOFDISCUSSION, hashMapKey);
 
 		super.onSaveInstanceState(outState);

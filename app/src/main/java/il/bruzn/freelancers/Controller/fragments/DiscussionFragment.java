@@ -16,13 +16,12 @@ import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
 import il.bruzn.freelancers.Module.ConnectedMember;
 import il.bruzn.freelancers.Module.Entities.Member;
 import il.bruzn.freelancers.Module.Entities.Message;
-import il.bruzn.freelancers.Module.Module;
+import il.bruzn.freelancers.Module.Model;
 import il.bruzn.freelancers.R;
 
 /**
@@ -37,7 +36,7 @@ public class DiscussionFragment extends Fragment  implements TitledFragment {
 	public DiscussionFragment setInterlocutor(Member interlocutor) {
 		_interlocutor = interlocutor;
 		if (_messages == null)
-			_messages = Module.getMessageRepo().selectDiscussion(ConnectedMember.getMember(), interlocutor);
+			_messages = Model.getMessageRepo().selectDiscussion(ConnectedMember.getMember(), interlocutor);
 		return this;
 	}
 
@@ -66,13 +65,13 @@ public class DiscussionFragment extends Fragment  implements TitledFragment {
 		if (savedInstanceState!=null) {
 			if (savedInstanceState.containsKey(KEY_FOR_MESSAGES)) {
 				long hashMapKey = savedInstanceState.getLong(KEY_FOR_MESSAGES);
-				_messages = (ArrayList<Message>) Module.getHashMap().get(hashMapKey);
-				Module.getHashMap().remove(hashMapKey);
+				_messages = (ArrayList<Message>) Model.getHashMap().get(hashMapKey);
+				Model.getHashMap().remove(hashMapKey);
 			}
 			else if (savedInstanceState.containsKey(KEY_FOR_INTERLOCUTOR)) {
 				long hashMapKey = savedInstanceState.getLong(KEY_FOR_MESSAGES);
-				_interlocutor = (Member) Module.getHashMap().get(hashMapKey);
-				Module.getHashMap().remove(hashMapKey);
+				_interlocutor = (Member) Model.getHashMap().get(hashMapKey);
+				Model.getHashMap().remove(hashMapKey);
 			}
 		}
 
@@ -102,7 +101,7 @@ public class DiscussionFragment extends Fragment  implements TitledFragment {
 				String text = editText.getText().toString();
 				// Send the message
 				Message message = new Message(ConnectedMember.getMember(),_interlocutor,text);
-				Module.getMessageRepo().add(message);
+				Model.getMessageRepo().add(message);
 				// Clear the EditText
 				editText.getText().clear();
 				// Update the ListView
@@ -126,10 +125,10 @@ public class DiscussionFragment extends Fragment  implements TitledFragment {
 	public void onSaveInstanceState(Bundle outState) {
 		long hashMapKey = System.currentTimeMillis(); // Key for the list to store
 		if (!_messages.isEmpty()) {
-			Module.getHashMap().put(hashMapKey, _messages); // Store the list
+			Model.getHashMap().put(hashMapKey, _messages); // Store the list
 			outState.putLong(KEY_FOR_MESSAGES, hashMapKey); // Save the key
 		}
-		Module.getHashMap().put(hashMapKey, _messages); // Store the interlocutor
+		Model.getHashMap().put(hashMapKey, _messages); // Store the interlocutor
 		outState.putLong(KEY_FOR_INTERLOCUTOR, hashMapKey); // Save the key
 
 		super.onSaveInstanceState(outState);

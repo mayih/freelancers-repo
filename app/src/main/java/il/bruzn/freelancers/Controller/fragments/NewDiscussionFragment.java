@@ -17,8 +17,7 @@ import java.util.List;
 import il.bruzn.freelancers.Controller.MainActivity;
 import il.bruzn.freelancers.Module.ConnectedMember;
 import il.bruzn.freelancers.Module.Entities.Member;
-import il.bruzn.freelancers.Module.Entities.Message;
-import il.bruzn.freelancers.Module.Module;
+import il.bruzn.freelancers.Module.Model;
 import il.bruzn.freelancers.R;
 import il.bruzn.freelancers.basic.ImageHelper;
 
@@ -40,11 +39,11 @@ public class NewDiscussionFragment extends ListFragment implements TitledFragmen
 		super.onCreate(savedInstanceState);
 		if (savedInstanceState != null && savedInstanceState.containsKey(KEY_LISTOFMEMBER)) {
 			long hashMapKey = savedInstanceState.getLong(KEY_LISTOFMEMBER);
-			_listOfMember = (ArrayList<Member>) Module.getHashMap().get(hashMapKey);
-			Module.getHashMap().remove(KEY_LISTOFMEMBER);
+			_listOfMember = (ArrayList<Member>) Model.getHashMap().get(hashMapKey);
+			Model.getHashMap().remove(KEY_LISTOFMEMBER);
 		}
 		else {
-			_listOfMember = Module.getMemberRepo().selectAll();
+			_listOfMember = Model.getMemberRepo().selectAll();
 			for (Member member: _listOfMember)
 				if (member.getId() == ConnectedMember.getMember().getId()) {
 					_listOfMember.remove(member);
@@ -73,7 +72,7 @@ public class NewDiscussionFragment extends ListFragment implements TitledFragmen
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
 		long hashMapKey = System.currentTimeMillis();
-		Module.getHashMap().put(hashMapKey, _listOfMember);
+		Model.getHashMap().put(hashMapKey, _listOfMember);
 		outState.putLong(KEY_LISTOFMEMBER, hashMapKey);
 	}
 

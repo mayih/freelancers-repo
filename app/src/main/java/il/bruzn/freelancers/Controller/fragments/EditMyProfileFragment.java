@@ -1,6 +1,7 @@
 package il.bruzn.freelancers.Controller.fragments;
 
 import android.app.Fragment;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -10,16 +11,20 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import il.bruzn.freelancers.Controller.MainActivity;
 import il.bruzn.freelancers.Module.ConnectedMember;
 import il.bruzn.freelancers.Module.Entities.Member;
-import il.bruzn.freelancers.Module.Module;
+import il.bruzn.freelancers.Module.Model;
 import il.bruzn.freelancers.R;
+import il.bruzn.freelancers.basic.AsyncToRun;
+import il.bruzn.freelancers.basic.ToRun;
 
 /**
  * Created by Moshe on 04/01/15.
  */
 public class EditMyProfileFragment extends Fragment implements TitledFragment{
 	private Member _member;
+	private ProgressDialog _progressDialog;
 
 	private ImageView _picture;
 	private EditText _firstName;
@@ -73,15 +78,39 @@ public class EditMyProfileFragment extends Fragment implements TitledFragment{
 		_reqButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Member member = _member.setEmail(_email.getText().toString())
-						.setFirstName(_firstName.getText().toString())
-						.setLastName(_lastName.getText().toString());
-				Module.getMemberRepo().update(member, member.getId());
+				_progressDialog = ProgressDialog.show(getActivity(), "Update", "Loading.."); // Show progress dialog
+
+				new AsyncToRun<Void>()
+						.setMain(updateMyProfile)
+						.setPost(closeProgressDialog).execute();
 
 				((HomeFragment)MenuFragment.getMenu()[0].getFragment()).isToUpdate();
+				((MainActivity)getActivity()).setFragment(MenuFragment.getMenu()[1].getFragment());
 			}
 		});
 
 		return v;
 	}
+
+	ToRun<Void> updateMyProfile = new ToRun<Void>() {
+		@Override
+		public Void run(Object... parameters) {
+			Member member = _member.setEmail(_email.getText().toString())
+					.setFirstName(_firstName.getText().toString())
+					.setLastName(_lastName.getText().toString());
+			Model.getMemberRepo().update(member, member.getId());
+			return null;
+		}
+	};
+
+	ToRun closeProgressDialog = new ToRun<Void>() {
+		@Override
+		public Void run(Object... parameters) {
+
+			if (_progressDialog.isShowing())
+				_progressDialog.dismiss();
+
+			return null;
+		}
+	};
 }

@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 import il.bruzn.freelancers.Module.Entities.Member;
 import il.bruzn.freelancers.Module.ConnectedMember;
-import il.bruzn.freelancers.Module.Module;
+import il.bruzn.freelancers.Module.Model;
 import il.bruzn.freelancers.R;
 import il.bruzn.freelancers.basic.AsyncToRun;
 import il.bruzn.freelancers.basic.ToRun;
@@ -27,8 +27,8 @@ public class SignInActivity extends ActionBarActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_sign_in);
-		if (Module.getMemberRepo() == null) // If the technologie hasn't been instanced
-			Module.create(this, Module.DB_NAME, Module.DB_VERSION);
+		if (Model.getMemberRepo() == null) // If the technologie hasn't been instanced
+			Model.create(this, Model.DB_NAME, Model.DB_VERSION);
 
 		// Check if the user is already connected
 		String email = getSharedPreferences(ConnectedMember.filename, MODE_PRIVATE).getString(ConnectedMember.key, "");
@@ -75,7 +75,7 @@ public class SignInActivity extends ActionBarActivity {
 		public String run(Object... parameters) { // Setup the function for thread
 			// on thread..
 			String email = getSharedPreferences(ConnectedMember.filename, MODE_PRIVATE).getString(ConnectedMember.key, "");
-			Member member = Module.getMemberRepo().selectByEmail(email);
+			Member member = Model.getMemberRepo().selectByEmail(email);
 			if (member != null){ // Check if already connected
 				ConnectedMember.setMember(member);
 				startActivity(new Intent(SignInActivity.this, MainActivity.class));
@@ -97,7 +97,7 @@ public class SignInActivity extends ActionBarActivity {
 			emailOnClick	= _email.getText().toString();
 			passwordOnClick	= _password.getText().toString();
 			// on thread..
-			memberOnClick = Module.getMemberRepo().selectByEmail(emailOnClick);
+			memberOnClick = Model.getMemberRepo().selectByEmail(emailOnClick);
 			if (memberOnClick != null && memberOnClick.authenticate(emailOnClick, passwordOnClick)) {
 				ConnectedMember.setMember(memberOnClick);
 				SharedPreferences.Editor edit = getSharedPreferences(ConnectedMember.filename, MODE_PRIVATE).edit();

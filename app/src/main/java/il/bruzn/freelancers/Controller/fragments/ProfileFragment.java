@@ -7,14 +7,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import il.bruzn.freelancers.Controller.MainActivity;
 import il.bruzn.freelancers.Module.ConnectedMember;
 import il.bruzn.freelancers.Module.Entities.Member;
-import il.bruzn.freelancers.Module.Module;
+import il.bruzn.freelancers.Module.Model;
 import il.bruzn.freelancers.R;
 
 /**
@@ -45,8 +44,8 @@ public class ProfileFragment extends Fragment  implements TitledFragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		if (getArguments() != null) {
-			_member = (Member)Module.getHashMap().get(getArguments().getLong(MEMBER_KEY));
-			Module.getHashMap().remove(MEMBER_KEY);
+			_member = (Member) Model.getHashMap().get(getArguments().getLong(MEMBER_KEY));
+			Model.getHashMap().remove(MEMBER_KEY);
 			_IsMyProfile = false;
 		}
 		else {

@@ -8,7 +8,8 @@ import java.util.Date;
 public class Message implements Comparable<Message>{
 
 	private int _id;
-	private Member _author, _receiver;
+	private Member _author;
+	private Member _receiver;
 	private String _text;
 	private Date _date = new Date();
 

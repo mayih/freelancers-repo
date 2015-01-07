@@ -7,13 +7,11 @@ import android.database.Cursor;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
 import il.bruzn.freelancers.Module.ConnectedMember;
 import il.bruzn.freelancers.Module.Entities.Member;
 import il.bruzn.freelancers.Module.Entities.Message;
-import il.bruzn.freelancers.Module.Module;
-import il.bruzn.freelancers.Module.iRepositories.iMemberRepo;
+import il.bruzn.freelancers.Module.Model;
 import il.bruzn.freelancers.Module.iRepositories.iMessageRepo;
 
 /**
@@ -91,24 +89,31 @@ public class MessageRepoSQLite extends SQLiteTech<Message> implements iMessageRe
 	@Override
 	public ArrayList<Message> toEntity(Cursor cursor) {
 		ArrayList<Message> messageArrayList = new ArrayList<>();
-		if (cursor.getCount() == 0)
+
+		if (cursor.getCount() == 0) {
 			return messageArrayList;
+		}
 
 		// recup les ids
 		String listOfIds = "(";
 		int author_id, receiver_id;
+
 		while (cursor.moveToNext()){
+
 			author_id	= cursor.getInt( cursor.getColumnIndex(FIELDS_NAME.AUTHOR.toString()));
 			receiver_id	= cursor.getInt( cursor.getColumnIndex(FIELDS_NAME.RECEIVER.toString()));
 			listOfIds += author_id + ", " + receiver_id;
-			if (!cursor.isLast())
+
+			if (!cursor.isLast()) {
 				listOfIds += ", ";
+			}
 		}
 		listOfIds += ")";
 
 		// requete
-		ArrayList<Member> listOfMember = Module.getMemberRepo().selectByIds(listOfIds);
+		ArrayList<Member> listOfMember = Model.getMemberRepo().selectByIds(listOfIds);
 		Message message;
+
 		for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()){
 
 			int id			= cursor.getInt(cursor.getColumnIndex(FIELDS_NAME.ID.toString()));
@@ -120,13 +125,15 @@ public class MessageRepoSQLite extends SQLiteTech<Message> implements iMessageRe
 			// get the author and the receiver
 			Member author = null, receiver = null;
 			for (Member member : listOfMember) {
-				if (member.getId() == author_id)
+				if (member.getId() == author_id) {
 					author = member;
-				else if (member.getId() == receiver_id)
+				}
+				else if (member.getId() == receiver_id) {
 					receiver = member;
-
-				if (author != null && receiver != null)
+				}
+				if (author != null && receiver != null){
 					break;
+				}
 			}
 
 			// Convert the timestamp in date

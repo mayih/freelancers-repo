@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import il.bruzn.freelancers.Module.Entities.Member;
 import il.bruzn.freelancers.Module.Entities.Opinion;
-import il.bruzn.freelancers.Module.Module;
+import il.bruzn.freelancers.Module.Model;
 import il.bruzn.freelancers.Module.iRepositories.iMemberRepo;
 
 /**
@@ -29,7 +29,7 @@ public class MemberRepoList extends ListTech implements iMemberRepo {
 	public Member selectWithOpinions(String email) {
 		Member m = selectByEmail(email);
 		if (m!=null && m.getOpinionsOnMe().isEmpty())
-			for (Opinion op : Module.getOpnionRepo().selectAll()){
+			for (Opinion op : Model.getOpnionRepo().selectAll()){
 				if (op.getSubject() == m){
 					m.getOpinionsOnMe().add(op);
 				}
