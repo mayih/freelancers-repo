@@ -10,9 +10,11 @@ import il.bruzn.freelancers.Model.ListTech.OpinionRepoList;
 import il.bruzn.freelancers.Model.SqLiteTech.MemberRepoSqLite;
 import il.bruzn.freelancers.Model.SqLiteTech.MessageRepoSQLite;
 import il.bruzn.freelancers.Model.SqLiteTech.OpinionRepoSQLite;
+import il.bruzn.freelancers.Model.SqLiteTech.RequestRepoSqLite;
 import il.bruzn.freelancers.Model.iRepositories.iMemberRepo;
 import il.bruzn.freelancers.Model.iRepositories.iMessageRepo;
 import il.bruzn.freelancers.Model.iRepositories.iOpinionRepo;
+import il.bruzn.freelancers.Model.iRepositories.iRequestRepo;
 
 /**
  * Created by Yair on 08/12/2014.
@@ -36,6 +38,7 @@ public class Model {
 	static iMemberRepo	_memberRepo;
 	static iOpinionRepo _opnionRepo;
 	static iMessageRepo _messageRepo;
+	static iRequestRepo _requestRepo;
 
 	public static void create(Context context, String dbName, int version){
 		switch (tech){
@@ -49,6 +52,7 @@ public class Model {
 				_memberRepo = new MemberRepoSqLite(context, dbName, version);
 				_messageRepo = new MessageRepoSQLite(context, dbName, version);
 				_opnionRepo = new OpinionRepoSQLite(context, dbName, version);
+				_requestRepo = new RequestRepoSqLite(context, dbName, version);
 				// ...
 				break;
 			// ...

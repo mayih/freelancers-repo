@@ -50,9 +50,9 @@ public class ListTech {
 		}};
 
 		_requests = new ArrayList<Request>() {{
-			add(new Request(_members.get(1), _members.get(0), "I have a job for you"));
-			add(new Request(_members.get(2), _members.get(0), "Do you want a new job?"));
-			add(new Request(_members.get(2), _members.get(1), "I have a job for you"));
+			add(new Request(_members.get(1), _members.get(0), "I have a job for you", false, new Opinion()));
+			add(new Request(_members.get(2), _members.get(0), "Do you want a new job?", false, new Opinion()));
+			add(new Request(_members.get(2), _members.get(1), "I have a job for you", false, new Opinion()));
 		}};
 	}
 }

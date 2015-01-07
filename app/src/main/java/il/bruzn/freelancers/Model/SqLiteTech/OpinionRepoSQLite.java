@@ -10,6 +10,7 @@ import java.util.Date;
 import il.bruzn.freelancers.Model.Entities.Member;
 import il.bruzn.freelancers.Model.Entities.Opinion;
 import il.bruzn.freelancers.Model.Model;
+import il.bruzn.freelancers.Model.SqLiteTech.SQLiteTech;
 import il.bruzn.freelancers.Model.iRepositories.iOpinionRepo;
 
 /**
@@ -118,8 +119,7 @@ public class OpinionRepoSQLite extends SQLiteTech<Opinion> implements iOpinionRe
 
 				opinionArrayList.add(opinion);
 			}
-		cursor.close();
-		return opinionArrayList;
+			return opinionArrayList;
 	}
 
 	@Override
