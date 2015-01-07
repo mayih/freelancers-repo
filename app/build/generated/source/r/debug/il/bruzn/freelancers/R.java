@@ -1328,7 +1328,7 @@ containing a value of this type.
         public static final int action_mode_bar=0x7f0a0030;
         public static final int action_mode_bar_stub=0x7f0a002f;
         public static final int action_mode_close_button=0x7f0a0022;
-        public static final int action_new_discussion=0x7f0a0071;
+        public static final int action_new_discussion=0x7f0a0072;
         public static final int activity_chooser_view_content=0x7f0a0023;
         public static final int always=0x7f0a0016;
         public static final int beginning=0x7f0a0013;
@@ -1362,16 +1362,16 @@ containing a value of this type.
         public static final int icon=0x7f0a0028;
         public static final int ifRoom=0x7f0a0018;
         public static final int image=0x7f0a0025;
-        public static final int item_opinion_mark=0x7f0a006b;
-        public static final int item_opinion_name=0x7f0a006a;
-        public static final int item_opinion_text=0x7f0a006c;
-        public static final int item_profile_mark=0x7f0a006e;
-        public static final int item_profile_name=0x7f0a006d;
+        public static final int item_opinion_mark=0x7f0a006c;
+        public static final int item_opinion_name=0x7f0a006b;
+        public static final int item_opinion_text=0x7f0a006d;
+        public static final int item_profile_mark=0x7f0a006f;
+        public static final int item_profile_name=0x7f0a006e;
         public static final int joinin_button=0x7f0a0047;
         public static final int lastname_edtext=0x7f0a0043;
         public static final int listMode=0x7f0a0009;
         public static final int list_item=0x7f0a0027;
-        public static final int list_opinons_in_profile_item=0x7f0a006f;
+        public static final int list_opinons_in_profile_item=0x7f0a0070;
         public static final int main_container=0x7f0a0049;
         public static final int main_drawerlayout=0x7f0a0048;
         public static final int menu_container=0x7f0a004a;
@@ -1387,6 +1387,7 @@ containing a value of this type.
         public static final int password=0x7f0a004c;
         public static final int password_edtext=0x7f0a0045;
         public static final int picture_item_discussion=0x7f0a0064;
+        public static final int picture_item_message=0x7f0a0068;
         public static final int profile_adress_label=0x7f0a0061;
         public static final int profile_average_label=0x7f0a0062;
         public static final int profile_email_label=0x7f0a005f;
@@ -1420,13 +1421,13 @@ containing a value of this type.
         public static final int split_action_bar=0x7f0a0007;
         public static final int submit_area=0x7f0a003e;
         public static final int tabMode=0x7f0a000b;
-        public static final int text_message=0x7f0a0068;
-        public static final int time_message=0x7f0a0069;
+        public static final int text_message=0x7f0a0069;
+        public static final int time_message=0x7f0a006a;
         public static final int title=0x7f0a0029;
         public static final int top=0x7f0a001f;
         public static final int up=0x7f0a0008;
         public static final int useLogo=0x7f0a0012;
-        public static final int view_pager=0x7f0a0070;
+        public static final int view_pager=0x7f0a0071;
         public static final int withText=0x7f0a001a;
         public static final int wrap_content=0x7f0a001d;
     }

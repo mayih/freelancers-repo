@@ -1,4 +1,4 @@
-package il.bruzn.freelancers.Modele.Entities;
+package il.bruzn.freelancers.Model.Entities;
 
 /**
  * Created by Yair on 20/11/2014.

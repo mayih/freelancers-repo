@@ -1,29 +1,29 @@
-package il.bruzn.freelancers.Modele;
+package il.bruzn.freelancers.Model;
 
 import android.content.Context;
 
 import java.util.HashMap;
 
-import il.bruzn.freelancers.Modele.ListTech.MemberRepoList;
-import il.bruzn.freelancers.Modele.ListTech.MessageRepoList;
-import il.bruzn.freelancers.Modele.ListTech.OpinionRepoList;
-import il.bruzn.freelancers.Modele.SqLiteTech.MemberRepoSqLite;
-import il.bruzn.freelancers.Modele.SqLiteTech.MessageRepoSQLite;
-import il.bruzn.freelancers.Modele.SqLiteTech.OpinionRepoSQLite;
-import il.bruzn.freelancers.Modele.iRepositories.iMemberRepo;
-import il.bruzn.freelancers.Modele.iRepositories.iMessageRepo;
-import il.bruzn.freelancers.Modele.iRepositories.iOpinionRepo;
+import il.bruzn.freelancers.Model.ListTech.MemberRepoList;
+import il.bruzn.freelancers.Model.ListTech.MessageRepoList;
+import il.bruzn.freelancers.Model.ListTech.OpinionRepoList;
+import il.bruzn.freelancers.Model.SqLiteTech.MemberRepoSqLite;
+import il.bruzn.freelancers.Model.SqLiteTech.MessageRepoSQLite;
+import il.bruzn.freelancers.Model.SqLiteTech.OpinionRepoSQLite;
+import il.bruzn.freelancers.Model.iRepositories.iMemberRepo;
+import il.bruzn.freelancers.Model.iRepositories.iMessageRepo;
+import il.bruzn.freelancers.Model.iRepositories.iOpinionRepo;
 
 /**
  * Created by Yair on 08/12/2014.
  */
-public class Modele {
+public class Model {
 	static final Technology tech = Technology.SQLite;
 	enum Technology{SQLite, Server, List };
 
 	// DataBase Name
 	public final static String DB_NAME = "DB";
-	public final static int DB_VERSION = 7;
+	public final static int DB_VERSION = 8;
 
 	// Android FAQ: How do I pass data between Activities/Services within a single application?
 	// http://developer.android.com/guide/faq/framework.html

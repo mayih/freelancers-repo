@@ -1,20 +1,15 @@
 package il.bruzn.freelancers.Controller.fragments;
 
-import android.app.Activity;
-import android.media.audiofx.BassBoost;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import il.bruzn.freelancers.Modele.Modele;
+import il.bruzn.freelancers.Model.Model;
 import il.bruzn.freelancers.R;
 import il.bruzn.freelancers.basic.Sleep;
 
@@ -31,11 +26,11 @@ public class InboxPagerFragment extends Fragment implements TitledFragment {
 		super.onCreate(savedInstanceState);
 		if (savedInstanceState != null){
 			long hashMapKey = savedInstanceState.getLong(KEY_FRAGMENTS);
-			_fragments = (Fragment[])Modele.getHashMap().get(hashMapKey);
-			Modele.getHashMap().remove(hashMapKey);
+			_fragments = (Fragment[]) Model.getHashMap().get(hashMapKey);
+			Model.getHashMap().remove(hashMapKey);
 		}
 		else if (_fragments == null) {
-			_fragments = new Fragment[]{new MessagesFragment(), new RequestFragment()};
+			_fragments = new Fragment[]{new DiscussionFragment(), new RequestFragment()};
 			for (Fragment frag : _fragments)
 				frag.setHasOptionsMenu(true);
 		}
@@ -53,7 +48,7 @@ public class InboxPagerFragment extends Fragment implements TitledFragment {
 		super.onSaveInstanceState(outState);
 		Sleep.sleep(1);
 		long hashMapKey = System.currentTimeMillis();
-		Modele.getHashMap().put(hashMapKey, _fragments);
+		Model.getHashMap().put(hashMapKey, _fragments);
 		outState.putLong(KEY_FRAGMENTS, hashMapKey);
 	}
 

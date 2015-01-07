@@ -1,4 +1,4 @@
-package il.bruzn.freelancers.Modele.SqLiteTech;
+package il.bruzn.freelancers.Model.SqLiteTech;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -9,7 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import java.util.ArrayList;
 import java.util.List;
 
-import il.bruzn.freelancers.Modele.CRUD;
+import il.bruzn.freelancers.Model.CRUD;
 
 /**
  * Created by Moshe on 17/12/14.
@@ -119,5 +119,19 @@ public abstract class SQLiteTech<T> extends SQLiteOpenHelper implements CRUD<T> 
 	@Override
 	public void delete(T entry, int id) {
 		getWritableDatabase().execSQL("DELETE FROM "+getNameTable()+" WHERE _id = ?", new String[]{id+""});
+	}
+
+	// Usefull functions for requests
+	public static String listOfIdsToString(List<Integer> listOfIds){
+		String toString = "(";
+
+		for (int i = 0; i < listOfIds.size(); i++){
+			toString += listOfIds.get(i);
+			if (i < listOfIds.size() -1) // while i isn't the last id
+				toString += ", ";
+		}
+
+		toString += ")";
+		return toString;
 	}
 }

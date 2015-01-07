@@ -1,11 +1,12 @@
-package il.bruzn.freelancers.Modele.ListTech;
+package il.bruzn.freelancers.Model.ListTech;
 
 import java.util.ArrayList;
 import java.util.Date;
 
-import il.bruzn.freelancers.Modele.Entities.Member;
-import il.bruzn.freelancers.Modele.Entities.Message;
-import il.bruzn.freelancers.Modele.Entities.Opinion;
+import il.bruzn.freelancers.Model.Entities.Member;
+import il.bruzn.freelancers.Model.Entities.Message;
+import il.bruzn.freelancers.Model.Entities.Opinion;
+import il.bruzn.freelancers.Model.Entities.Request;
 
 /**
  * Created by Yair on 08/12/2014.
@@ -14,6 +15,7 @@ public class ListTech {
 	protected static ArrayList<Member> _members;
 	protected static ArrayList<Opinion> _opinions;
 	protected static ArrayList<Message> _messages;
+	protected static ArrayList<Request> _requests;
 
 	public ListTech() {
 		_members = new ArrayList<Member>(){{
@@ -22,7 +24,7 @@ public class ListTech {
 			add(new Member().setId(2).setEmail("moshe").setPassword("").setFirstName("Moshe").setLastName("Lubliner"));
 			add(new Member().setId(3).setEmail("ruben").setPassword("").setFirstName("Ruben").setLastName("Dardour"));
 			add(new Member().setId(4).setEmail("jeremie").setPassword("").setFirstName("Jeremie").setLastName("Berrebi"));
-		}};
+		}}; // ids : 0 -> 4
 
 		_opinions = new ArrayList<Opinion>(){{
 			add(new Opinion().setAuthor(_members.get(0)).setSubject(_members.get(1)).setLevel(Opinion.Level.FOUR).setText("Job well done.").setDone(true));
@@ -45,6 +47,12 @@ public class ListTech {
 			add(new Message(_members.get(3),_members.get(0), "file moi ton crane!").setDate(new Date(new Date().getTime() - 2*60*1000)));
 			add(new Message(_members.get(0),_members.get(3), "CHATIMENT").setDate(new Date(new Date().getTime() - 2*60*1000)));
 			add(new Message(_members.get(3),_members.get(0), "LOOL").setDate(new Date(new Date().getTime() - 1*60*1000)));
+		}};
+
+		_requests = new ArrayList<Request>() {{
+			add(new Request(_members.get(1), _members.get(0), "I have a job for you"));
+			add(new Request(_members.get(2), _members.get(0), "Do you want a new job?"));
+			add(new Request(_members.get(2), _members.get(1), "I have a job for you"));
 		}};
 	}
 }

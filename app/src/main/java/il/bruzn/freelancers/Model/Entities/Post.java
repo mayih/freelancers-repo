@@ -1,4 +1,4 @@
-package il.bruzn.freelancers.Modele.Entities;
+package il.bruzn.freelancers.Model.Entities;
 
 import java.util.ArrayList;
 import java.util.Date;

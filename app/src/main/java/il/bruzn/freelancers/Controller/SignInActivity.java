@@ -1,6 +1,5 @@
 package il.bruzn.freelancers.Controller;
 
-import android.app.ActivityOptions;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -11,9 +10,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import il.bruzn.freelancers.Modele.Entities.Member;
-import il.bruzn.freelancers.Modele.ConnectedMember;
-import il.bruzn.freelancers.Modele.Modele;
+import il.bruzn.freelancers.Model.Entities.Member;
+import il.bruzn.freelancers.Model.ConnectedMember;
+import il.bruzn.freelancers.Model.Model;
 import il.bruzn.freelancers.R;
 import il.bruzn.freelancers.basic.AsyncToRun;
 import il.bruzn.freelancers.basic.ToRun;
@@ -29,15 +28,13 @@ public class SignInActivity extends ActionBarActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_sign_in);
 
-		if (Modele.getMemberRepo() == null) // If the technologie hasn't been instanced
-			Modele.create(this, Modele.DB_NAME, Modele.DB_VERSION);
+		if (Model.getMemberRepo() == null) // If the technologie hasn't been instanced
+			Model.create(this, Model.DB_NAME, Model.DB_VERSION);
 
 		// Check if the user is already connected
 		String email = getSharedPreferences(ConnectedMember.filename, MODE_PRIVATE).getString(ConnectedMember.key, "");
 		if (email != null && !email.isEmpty()) { // if the file isn't empty
-			_progressDialog = ProgressDialog.show(this, "Authenticating", "Loading.."); // Show progress dialog
-
-			// Launch thread..
+//			_progressDialog = ProgressDialog.show(this, "Authenticating", "Loading..");
 			new AsyncToRun<Member>()
 					.setMain(autoAuthentication)
 					.setPost(closeProgressDialog)
@@ -52,7 +49,7 @@ public class SignInActivity extends ActionBarActivity {
 		_joinin.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-			startActivity(new Intent(SignInActivity.this, JoinInActivity.class), ActivityOptions.makeCustomAnimation(getApplicationContext(), R.transition.slide_right_to_left, R.transition.slide_left_to_right).toBundle());
+			startActivity(new Intent(SignInActivity.this, JoinInActivity.class));//, ActivityOptions.makeCustomAnimation(getApplicationContext(), R.transition.slide_right_to_left, R.transition.slide_left_to_right).toBundle());
 			}
 		});
 		_connect.setOnClickListener(new View.OnClickListener() {
@@ -72,7 +69,7 @@ public class SignInActivity extends ActionBarActivity {
 		@Override
 		public Member run(Object... parameters) {
 			String email = getSharedPreferences(ConnectedMember.filename, MODE_PRIVATE).getString(ConnectedMember.key, "");
-			return Modele.getMemberRepo().selectByEmail(email);
+			return Model.getMemberRepo().selectByEmail(email);
 		}
 	};
 	private ToRun<Member> connection = new ToRun<Member>() {
@@ -82,15 +79,16 @@ public class SignInActivity extends ActionBarActivity {
 			String email	= _email.getText().toString();
 			String password	= _password.getText().toString();
 
-			return Modele.getMemberRepo().selectByEmailAndPassword(email, password);
+			return Model.getMemberRepo().selectByEmailAndPassword(email, password);
 		}
 	};
 	private ToRun closeProgressDialog = new ToRun<Void>() {
 		int param;
 		@Override
 		public Void run(Object... parameters) {
-			if (_progressDialog.isShowing())
+			if (_progressDialog != null) {
 				_progressDialog.dismiss();
+			}
 
 			if (	(parameters.length > 0) &&
 					(parameters[0] != null) &&

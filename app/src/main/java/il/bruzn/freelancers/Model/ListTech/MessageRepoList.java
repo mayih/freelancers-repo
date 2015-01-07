@@ -1,12 +1,12 @@
-package il.bruzn.freelancers.Modele.ListTech;
+package il.bruzn.freelancers.Model.ListTech;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
-import il.bruzn.freelancers.Modele.ConnectedMember;
-import il.bruzn.freelancers.Modele.Entities.Member;
-import il.bruzn.freelancers.Modele.Entities.Message;
-import il.bruzn.freelancers.Modele.iRepositories.iMessageRepo;
+import il.bruzn.freelancers.Model.ConnectedMember;
+import il.bruzn.freelancers.Model.Entities.Member;
+import il.bruzn.freelancers.Model.Entities.Message;
+import il.bruzn.freelancers.Model.iRepositories.iMessageRepo;
 
 /**
  * Created by Yair on 10/12/2014.

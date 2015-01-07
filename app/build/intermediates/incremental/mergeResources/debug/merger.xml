@@ -2246,7 +2246,7 @@ m>        <item name="android:textColorLink">@color/link_text_material_dark</ite
         <item>Computer</item>
     </string-array><string name="modify_button">Modify</string><string name="joinin_button">Join in</string><string name="password_edtext">Password</string><string name="action_settings">Settings</string><string name="app_name">Freelance-it</string><string name="title_new_discussion">New discussion</string><string name="repeatpass_edtext">Repeat password</string><string name="disconnect_button">Disconnect</string><string name="menu_opened">Menu opened</string><string name="inbox_actionbar_title">Inbox</string></file><file path="C:\Users\yairo_000\Documents\Java-Projects\Freelancers\app\src\main\res\values\styles.xml" qualifiers=""><style name="pager_title_strip">
 		<item name="android:padding">10dp</item>
-		<item name="android:background">#99000000</item>
+		<item name="android:background">#880add7e</item>
 		<item name="android:textColor">#ffffff</item>
 	</style><style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->

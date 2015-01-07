@@ -12,9 +12,9 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import il.bruzn.freelancers.Controller.MainActivity;
-import il.bruzn.freelancers.Modele.Entities.Member;
-import il.bruzn.freelancers.Modele.Entities.Opinion;
-import il.bruzn.freelancers.Modele.Modele;
+import il.bruzn.freelancers.Model.Entities.Member;
+import il.bruzn.freelancers.Model.Entities.Opinion;
+import il.bruzn.freelancers.Model.Model;
 import il.bruzn.freelancers.R;
 
 /**
@@ -40,7 +40,7 @@ public class HomeFragment extends ListFragment implements TitledFragment {
 	public void onResume() {
 		super.onResume();
 		if (!_isUpToDate){
-			_listToPrint = Modele.getMemberRepo().selectAll();
+			_listToPrint = Model.getMemberRepo().selectAll();
 
 			HomeAdapter adapter = new HomeAdapter(_listToPrint);
 			setListAdapter(adapter);
@@ -54,7 +54,7 @@ public class HomeFragment extends ListFragment implements TitledFragment {
         // Save the member
 		Member memberSelected = ((HomeAdapter)getListAdapter()).getItem(position);
 		long hashMapKey = System.currentTimeMillis();
-		Modele.getHashMap().put(hashMapKey, memberSelected);
+		Model.getHashMap().put(hashMapKey, memberSelected);
 		// Transfer the key
         ProfileFragment fragment = new ProfileFragment();
         Bundle bundle = new Bundle();
@@ -81,7 +81,7 @@ public class HomeFragment extends ListFragment implements TitledFragment {
 			if (convertView == null)
 				convertView = getActivity().getLayoutInflater().inflate(R.layout.item_profile, parent, false);
 
-			Member subject = Modele.getOpnionRepo().fillMember(getItem(position));
+			Member subject = Model.getOpnionRepo().fillMember(getItem(position));
 
 			// Set the header of the view (name + average mark)
 			TextView text = (TextView) convertView.findViewById(R.id.item_profile_name);

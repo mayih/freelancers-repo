@@ -1,4 +1,4 @@
-package il.bruzn.freelancers.Modele.SqLiteTech;
+package il.bruzn.freelancers.Model.SqLiteTech;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -8,11 +8,11 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import il.bruzn.freelancers.Modele.ConnectedMember;
-import il.bruzn.freelancers.Modele.Entities.Member;
-import il.bruzn.freelancers.Modele.Entities.Message;
-import il.bruzn.freelancers.Modele.Modele;
-import il.bruzn.freelancers.Modele.iRepositories.iMessageRepo;
+import il.bruzn.freelancers.Model.ConnectedMember;
+import il.bruzn.freelancers.Model.Entities.Member;
+import il.bruzn.freelancers.Model.Entities.Message;
+import il.bruzn.freelancers.Model.Model;
+import il.bruzn.freelancers.Model.iRepositories.iMessageRepo;
 
 /**
  * Created by Moshe on 17/12/14.
@@ -93,27 +93,27 @@ public class MessageRepoSQLite extends SQLiteTech<Message> implements iMessageRe
 			return messageArrayList;
 
 		// recup les ids
-		String listOfIds = "(";
-		int author_id, receiver_id;
+		ArrayList<Integer> listOfIds = new ArrayList<>();
 		while (cursor.moveToNext()){
-			author_id	= cursor.getInt( cursor.getColumnIndex(FIELDS_NAME.AUTHOR.toString()));
-			receiver_id	= cursor.getInt( cursor.getColumnIndex(FIELDS_NAME.RECEIVER.toString()));
-			listOfIds += author_id + ", " + receiver_id;
-			if (!cursor.isLast())
-				listOfIds += ", ";
-		}
-		listOfIds += ")";
+			int author_id	= cursor.getInt( cursor.getColumnIndex(FIELDS_NAME.AUTHOR.toString()));
+			int receiver_id	= cursor.getInt( cursor.getColumnIndex(FIELDS_NAME.RECEIVER.toString()));
 
-		// requete
-		ArrayList<Member> listOfMember = Modele.getMemberRepo().selectByIds(listOfIds);
+			if (!listOfIds.contains(author_id))
+				listOfIds.add(author_id);
+			if ((!listOfIds.contains(receiver_id)))
+				listOfIds.add(receiver_id);
+		}
+		// query
+		ArrayList<Member> listOfMember = Model.getMemberRepo().selectByIds(listOfIds);
+
 		Message message;
 		for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()){
 
 			int id			= cursor.getInt(cursor.getColumnIndex(FIELDS_NAME.ID.toString()));
-			author_id	= cursor.getInt(cursor.getColumnIndex(FIELDS_NAME.AUTHOR.toString()));
-			receiver_id	= cursor.getInt(cursor.getColumnIndex(FIELDS_NAME.RECEIVER.toString()));
-			String messageTxt=cursor.getString(cursor.getColumnIndex(FIELDS_NAME.MESSAGE.toString()));
-			long timeStamp = cursor.getLong(cursor.getColumnIndex(FIELDS_NAME.DATE.toString()));
+			int author_id	= cursor.getInt(cursor.getColumnIndex(FIELDS_NAME.AUTHOR.toString()));
+			int receiver_id	= cursor.getInt(cursor.getColumnIndex(FIELDS_NAME.RECEIVER.toString()));
+			String messageTxt =cursor.getString(cursor.getColumnIndex(FIELDS_NAME.MESSAGE.toString()));
+			long timeStamp	= cursor.getLong(cursor.getColumnIndex(FIELDS_NAME.DATE.toString()));
 
 			// get the author and the receiver
 			Member author = null, receiver = null;
@@ -136,6 +136,7 @@ public class MessageRepoSQLite extends SQLiteTech<Message> implements iMessageRe
 				messageArrayList.add(message);
 			}
 		}
+		cursor.close();
 		return messageArrayList;
 	}
 	@Override

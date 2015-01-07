@@ -15,9 +15,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import il.bruzn.freelancers.Controller.MainActivity;
-import il.bruzn.freelancers.Modele.ConnectedMember;
-import il.bruzn.freelancers.Modele.Entities.Member;
-import il.bruzn.freelancers.Modele.Modele;
+import il.bruzn.freelancers.Model.ConnectedMember;
+import il.bruzn.freelancers.Model.Entities.Member;
+import il.bruzn.freelancers.Model.Model;
 import il.bruzn.freelancers.R;
 import il.bruzn.freelancers.basic.ImageHelper;
 
@@ -39,11 +39,11 @@ public class NewDiscussionFragment extends ListFragment implements TitledFragmen
 		super.onCreate(savedInstanceState);
 		if (savedInstanceState != null && savedInstanceState.containsKey(KEY_LISTOFMEMBER)) {
 			long hashMapKey = savedInstanceState.getLong(KEY_LISTOFMEMBER);
-			_listOfMember = (ArrayList<Member>) Modele.getHashMap().get(hashMapKey);
-			Modele.getHashMap().remove(KEY_LISTOFMEMBER);
+			_listOfMember = (ArrayList<Member>) Model.getHashMap().get(hashMapKey);
+			Model.getHashMap().remove(KEY_LISTOFMEMBER);
 		}
 		else {
-			_listOfMember = Modele.getMemberRepo().selectAll();
+			_listOfMember = Model.getMemberRepo().selectAll();
 			for (Member member: _listOfMember)
 				if (member.getId() == ConnectedMember.getMember().getId()) {
 					_listOfMember.remove(member);
@@ -60,7 +60,7 @@ public class NewDiscussionFragment extends ListFragment implements TitledFragmen
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				Member selectedMember = _listOfMember.get(position);
-				DiscussionFragment newDiscussion = new DiscussionFragment();
+				MessageFragment newDiscussion = new MessageFragment();
 				newDiscussion.setInterlocutor(selectedMember);
 				getActivity().getSupportFragmentManager().popBackStack();
 				((MainActivity)getActivity()).setFragment(newDiscussion);
@@ -72,7 +72,7 @@ public class NewDiscussionFragment extends ListFragment implements TitledFragmen
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
 		long hashMapKey = System.currentTimeMillis();
-		Modele.getHashMap().put(hashMapKey, _listOfMember);
+		Model.getHashMap().put(hashMapKey, _listOfMember);
 		outState.putLong(KEY_LISTOFMEMBER, hashMapKey);
 	}
 

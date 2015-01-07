@@ -1,11 +1,12 @@
-package il.bruzn.freelancers.Modele.ListTech;
+package il.bruzn.freelancers.Model.ListTech;
 
 import java.util.ArrayList;
+import java.util.List;
 
-import il.bruzn.freelancers.Modele.Entities.Member;
-import il.bruzn.freelancers.Modele.Entities.Opinion;
-import il.bruzn.freelancers.Modele.Modele;
-import il.bruzn.freelancers.Modele.iRepositories.iMemberRepo;
+import il.bruzn.freelancers.Model.Entities.Member;
+import il.bruzn.freelancers.Model.Entities.Opinion;
+import il.bruzn.freelancers.Model.Model;
+import il.bruzn.freelancers.Model.iRepositories.iMemberRepo;
 
 /**
  * Created by Yair on 08/12/2014.
@@ -38,7 +39,7 @@ public class MemberRepoList extends ListTech implements iMemberRepo {
 	public Member selectWithOpinions(String email) {
 		Member m = selectByEmail(email);
 		if (m!=null && m.getOpinionsOnMe().isEmpty())
-			for (Opinion op : Modele.getOpnionRepo().selectAll()){
+			for (Opinion op : Model.getOpnionRepo().selectAll()){
 				if (op.getSubject() == m){
 					m.getOpinionsOnMe().add(op);
 				}
@@ -47,9 +48,13 @@ public class MemberRepoList extends ListTech implements iMemberRepo {
 	}
 
 	@Override
-	public ArrayList<Member> selectByIds(String listOfIds) {
-		return null;
-	} // NO USE
+	public ArrayList<Member> selectByIds(List<Integer> listOfIds) {
+		ArrayList<Member> selected = new ArrayList<>();
+		for (Member m : _members)
+			if (listOfIds.contains(m.getId()))
+				selected.add(m);
+		return selected;
+	}
 
 	@Override
 	public Member selectById(int Id) {

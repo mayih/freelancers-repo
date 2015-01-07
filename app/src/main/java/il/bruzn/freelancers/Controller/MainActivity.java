@@ -12,7 +12,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.MenuItem;
 
 import il.bruzn.freelancers.Controller.fragments.TitledFragment;
-import il.bruzn.freelancers.Modele.ConnectedMember;
+import il.bruzn.freelancers.Model.ConnectedMember;
 import il.bruzn.freelancers.R;
 import il.bruzn.freelancers.Controller.fragments.MenuFragment;
 

@@ -1,6 +1,6 @@
-package il.bruzn.freelancers.Modele;
+package il.bruzn.freelancers.Model;
 
-import il.bruzn.freelancers.Modele.Entities.Member;
+import il.bruzn.freelancers.Model.Entities.Member;
 
 /**
  * Created by Yair on 24/11/2014.
@@ -10,14 +10,8 @@ public class ConnectedMember {
 	public static String filename = "connected_member";
 	public static String key = "email";
 
-
-
 	public static void nullMember(){
 		theOneConnected = null;
-	}
-	public static Member initInstance(){
-		theOneConnected = new Member();
-		return theOneConnected;
 	}
 	public static Member getMember(){
 		return theOneConnected;

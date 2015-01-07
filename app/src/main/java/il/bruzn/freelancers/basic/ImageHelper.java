@@ -14,6 +14,9 @@ import android.graphics.PorterDuff.Mode;
 
 public class ImageHelper {
 	public static Bitmap getRoundedCornerBitmap(Bitmap bitmap, int pixels) {
+		if (bitmap == null)
+			return bitmap;
+
 		Bitmap output = Bitmap.createBitmap(bitmap.getWidth(), bitmap
 				.getHeight(), Config.ARGB_8888);
 		Canvas canvas = new Canvas(output);

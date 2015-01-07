@@ -68,6 +68,8 @@ public class MenuFragment extends ListFragment {
 	} // The listView adapter which will fill the view
 
 	// Other classes ---
+
+	// An item in the menu list
 	public static class ItemMenu {
 		private int _image;
 		private String _text;
@@ -101,8 +103,9 @@ public class MenuFragment extends ListFragment {
 			_fragment = fragment;
 			return this;
 		}
-	} // An item in the menu list
+	}
+	//The activity which use this menu fragment has to implement this inerface
 	public interface iMenulistener {
 		public void menuItemClicked(ItemMenu item);
-	} //The activity which use this menu fragment has to implement this inerface
+	}
 }
