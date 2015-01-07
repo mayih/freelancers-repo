@@ -102,6 +102,21 @@ public abstract class SQLiteTech<T> extends SQLiteOpenHelper implements CRUD<T> 
 	}
 
 	@Override
+	public ArrayList<T> selectWhereIdIn(List<Integer> listOfIds) {
+		String stringListOfIds = "(";
+		for (int i = 0; i < listOfIds.size(); i++){
+			stringListOfIds += listOfIds.get(i);
+			if (i < listOfIds.size() -1)
+				stringListOfIds += ", ";
+		}
+		stringListOfIds += ")";
+
+		// Query
+		Cursor cursor = getReadableDatabase().rawQuery("SELECT * FROM " + getNameTable() + " WHERE _id IN " + stringListOfIds, null);
+		return toEntity(cursor);
+	}
+
+	@Override
 	public ArrayList<T> selectAll() {
 		return toEntity(getReadableDatabase().rawQuery("SELECT * FROM "+getNameTable(), null));
 	}

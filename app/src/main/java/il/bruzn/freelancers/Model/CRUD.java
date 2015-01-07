@@ -1,6 +1,7 @@
 package il.bruzn.freelancers.Model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Yair on 02/12/2014.
@@ -12,6 +13,7 @@ public interface CRUD<T> {
 
 	// Read
 	public T	selectById(int Id);
+	public ArrayList<T> selectWhereIdIn(List<Integer> listOfIds);
 	public	ArrayList<T> selectAll();
 	public	ArrayList<T> selectBy(String field, String value);
 

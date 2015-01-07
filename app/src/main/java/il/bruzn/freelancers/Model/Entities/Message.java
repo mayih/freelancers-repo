@@ -18,6 +18,13 @@ public class Message implements Comparable<Message>{
 		_receiver = receiver;
 		_text = text;
 	}
+	public Message(int id, Member author, Member receiver, String text, Date date) {
+		_id = id;
+		_author = author;
+		_receiver = receiver;
+		_text = text;
+		_date = date;
+	}
 
 	public int getId() {
 		return _id;

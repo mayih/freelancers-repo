@@ -1,8 +1,10 @@
 package il.bruzn.freelancers.Model.ListTech;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import il.bruzn.freelancers.Model.Entities.Member;
+import il.bruzn.freelancers.Model.Entities.Message;
 import il.bruzn.freelancers.Model.Entities.Opinion;
 import il.bruzn.freelancers.Model.iRepositories.iOpinionRepo;
 
@@ -46,6 +48,15 @@ public class OpinionRepoList extends ListTech implements iOpinionRepo {
 			if (op.getId() == Id)
 				return op;
 		return null;
+	}
+
+	@Override
+	public ArrayList<Opinion> selectWhereIdIn(List<Integer> listOfIds) {
+		ArrayList<Opinion> selected = new ArrayList<>();
+		for (int id : listOfIds)
+			selected.add( selectById(id) );
+
+		return selected;
 	}
 
 	@Override

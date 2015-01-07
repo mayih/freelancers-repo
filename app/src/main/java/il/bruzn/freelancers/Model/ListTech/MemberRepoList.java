@@ -48,21 +48,21 @@ public class MemberRepoList extends ListTech implements iMemberRepo {
 	}
 
 	@Override
-	public ArrayList<Member> selectByIds(List<Integer> listOfIds) {
-		ArrayList<Member> selected = new ArrayList<>();
-		for (Member m : _members)
-			if (listOfIds.contains(m.getId()))
-				selected.add(m);
-		return selected;
-	}
-
-	@Override
 	public Member selectById(int Id) {
 		for (Member m: _members)
 			if (m.getId() == Id)
 				return m;
 		return null;
 	} // NO USE
+
+	@Override
+	public ArrayList<Member> selectWhereIdIn(List<Integer> listOfIds) {
+		ArrayList<Member> selected = new ArrayList<>();
+		for (int id : listOfIds)
+			selected.add( selectById(id) );
+
+		return selected;
+	}
 
 	@Override
 	public ArrayList<Member> selectAll() {

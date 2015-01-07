@@ -10,14 +10,12 @@ import java.util.Date;
 import il.bruzn.freelancers.Model.Entities.Member;
 import il.bruzn.freelancers.Model.Entities.Opinion;
 import il.bruzn.freelancers.Model.Model;
-import il.bruzn.freelancers.Model.SqLiteTech.SQLiteTech;
 import il.bruzn.freelancers.Model.iRepositories.iOpinionRepo;
 
 /**
  * Created by Moshe on 17/12/14.
  */
 public class OpinionRepoSQLite extends SQLiteTech<Opinion> implements iOpinionRepo {
-
 
 	// Table's name
 	static final String NAME_TABLE = "Opinion";
@@ -26,7 +24,7 @@ public class OpinionRepoSQLite extends SQLiteTech<Opinion> implements iOpinionRe
 		LEVEL("level"),
 		IS_DONE("done"),
 		OPINION_MESSAGE("message"),
-		AUTHORS("authors"),
+		AUTHOR("author"),
 		SUBJECT("subject"),
 		DATE("date_of_opinion");
 
@@ -44,7 +42,7 @@ public class OpinionRepoSQLite extends SQLiteTech<Opinion> implements iOpinionRe
 			FIELDS_NAME.LEVEL			+ " INTEGER NOT NULL, " +
 			FIELDS_NAME.IS_DONE			+ " INTEGER, " +
 			FIELDS_NAME.OPINION_MESSAGE	+ " TEXT, " 			+
-			FIELDS_NAME.AUTHORS			+ " INTEGER NOT NULL, " +
+			FIELDS_NAME.AUTHOR + " INTEGER NOT NULL, " +
 			FIELDS_NAME.SUBJECT			+ " INTEGER NOT NULL, " +
 			FIELDS_NAME.DATE			+ " INTEGER NOT NULL" +
 			");";
@@ -63,63 +61,55 @@ public class OpinionRepoSQLite extends SQLiteTech<Opinion> implements iOpinionRe
 		return NAME_TABLE;
 	}
 
-//	@Override
-//	public List<ContentValues> tableCopied(Cursor cursor) {
-//		ArrayList<ContentValues> listSaved = new ArrayList<>();
-//		ContentValues content;
-//		int index;
-//
-//		// Copy each line of the cursor into a content and add it to the list
-//		while (cursor.moveToNext()){
-//			content = new ContentValues();
-//			for (FIELDS_NAME field : FIELDS_NAME.values()){
-//				if (field != FIELDS_NAME.ID) {
-//					index = cursor.getColumnIndex(field.toString());
-//					if (index >= 0) {
-//						if (field == FIELDS_NAME.OPINION_MESSAGE) {
-//							content.put(field.toString(), cursor.getString(index));
-//						} else {
-//							content.put(field.toString(), cursor.getInt(index));
-//						}
-//					}
-//				}
-//			}
-//			listSaved.add(content); // Insert the content
-//		}
-//		return listSaved;
-//	}
-
 	@Override
 	public ArrayList<Opinion> toEntity(Cursor cursor) {
 		ArrayList<Opinion> opinionArrayList = new ArrayList<>();
-		Opinion opinion;
 
-			for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
-				opinion = new Opinion();
+		// get list of ids for author and subject
+		ArrayList<Integer> listOfIds = new ArrayList<>();
+		while (cursor.moveToNext()){
+			int author_id	= cursor.getInt( cursor.getColumnIndex(FIELDS_NAME.AUTHOR.toString()));
+			int subject_id	= cursor.getInt( cursor.getColumnIndex(FIELDS_NAME.SUBJECT.toString()));
 
-				int id = cursor.getInt(cursor.getColumnIndex(FIELDS_NAME.ID.toString()));
-				int levelInteger = cursor.getInt(cursor.getColumnIndex(FIELDS_NAME.LEVEL.toString()));
-				int done = cursor.getInt(cursor.getColumnIndex(FIELDS_NAME.IS_DONE.toString()));
-				String message = cursor.getString(cursor.getColumnIndex(FIELDS_NAME.OPINION_MESSAGE.toString()));
-				int authors_id = cursor.getInt(cursor.getColumnIndex(FIELDS_NAME.AUTHORS.toString()));
-				int subject_id = cursor.getInt(cursor.getColumnIndex(FIELDS_NAME.SUBJECT.toString()));
-				Date date = new Date(cursor.getLong(cursor.getColumnIndex(FIELDS_NAME.DATE.toString())) * 1000);
+			if (!listOfIds.contains(author_id))
+				listOfIds.add(author_id);
+			if ((!listOfIds.contains(subject_id)))
+				listOfIds.add(subject_id);
+		}
+		// query
+		ArrayList<Member> listOfMember = Model.getMemberRepo().selectWhereIdIn(listOfIds);
 
-				Member authors = Model.getMemberRepo().selectById(authors_id);
-				Member subject = Model.getMemberRepo().selectById(subject_id);
-				Opinion.Level level = Opinion.Level.fromInteger(levelInteger);
+		for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
 
-				opinion.setId(id)
-						.setLevel(level)
-						.setDone(done != 0)
-						.setText(message)
-						.setAuthor(authors)
-						.setSubject(subject)
-						.setDate(date);
+			int id = cursor.getInt(cursor.getColumnIndex(FIELDS_NAME.ID.toString()));
+			int levelInteger = cursor.getInt(cursor.getColumnIndex(FIELDS_NAME.LEVEL.toString()));
+			String message = cursor.getString(cursor.getColumnIndex(FIELDS_NAME.OPINION_MESSAGE.toString()));
+			int author_id = cursor.getInt(cursor.getColumnIndex(FIELDS_NAME.AUTHOR.toString()));
+			int subject_id = cursor.getInt(cursor.getColumnIndex(FIELDS_NAME.SUBJECT.toString()));
+			Date date = new Date(cursor.getLong(cursor.getColumnIndex(FIELDS_NAME.DATE.toString())) * 1000);
 
-				opinionArrayList.add(opinion);
+			boolean done = !cursor.isNull(cursor.getColumnIndex(FIELDS_NAME.IS_DONE.toString()))
+						&& cursor.getInt(cursor.getColumnIndex(FIELDS_NAME.IS_DONE.toString())) == 1;
+
+			Member author = null, subject = null;
+			for (Member member : listOfMember){
+				if (member.getId() == author_id)
+					author = member;
+
+				if (member.getId() == subject_id)
+					subject = member;
+
+				if (author != null && subject != null)
+					break;
 			}
-			return opinionArrayList;
+
+			Opinion.Level level = Opinion.Level.fromInteger(levelInteger);
+
+			Opinion opinion = new Opinion(id, level, done, message, author, subject, date);
+			opinionArrayList.add(opinion);
+		}
+		cursor.close();
+		return opinionArrayList;
 	}
 
 	@Override
@@ -129,7 +119,7 @@ public class OpinionRepoSQLite extends SQLiteTech<Opinion> implements iOpinionRe
 		content.put(FIELDS_NAME.LEVEL.toString(), opinion.getLevel().getValue());
 		content.put(FIELDS_NAME.IS_DONE.toString(), opinion.isDone());
 		content.put(FIELDS_NAME.OPINION_MESSAGE.toString(), opinion.getText() );
-		content.put(FIELDS_NAME.AUTHORS.toString(), opinion.getAuthor().getId());
+		content.put(FIELDS_NAME.AUTHOR.toString(), opinion.getAuthor().getId());
 		content.put(FIELDS_NAME.SUBJECT.toString(), opinion.getSubject().getId());
 		content.put(FIELDS_NAME.DATE.toString(), opinion.getDate().getTime() / 1000);
 

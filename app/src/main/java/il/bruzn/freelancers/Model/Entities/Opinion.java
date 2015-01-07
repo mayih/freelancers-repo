@@ -15,6 +15,23 @@ public class Opinion {
 	private Member	_subject;
 	private Date _date = new Date();
 
+	public Opinion(Member author, Member subject, Level level, boolean done) {
+		_level = level;
+		_done = done;
+		_author = author;
+		_subject = subject;
+		_date = new Date();
+	}
+	public Opinion(int id, Level level, boolean done, String text, Member author, Member subject, Date date) {
+		this.id = id;
+		_level = level;
+		_done = done;
+		_text = text;
+		_author = author;
+		_subject = subject;
+		_date = date;
+	}
+
 	public int getId() {
 		return id;
 	}

@@ -2,6 +2,7 @@ package il.bruzn.freelancers.Model.ListTech;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import il.bruzn.freelancers.Model.Entities.Member;
 import il.bruzn.freelancers.Model.Entities.Message;
@@ -11,7 +12,7 @@ import il.bruzn.freelancers.Model.Entities.Request;
 /**
  * Created by Yair on 08/12/2014.
  */
-public class ListTech {
+public abstract class ListTech {
 	protected static ArrayList<Member> _members;
 	protected static ArrayList<Opinion> _opinions;
 	protected static ArrayList<Message> _messages;
@@ -27,11 +28,11 @@ public class ListTech {
 		}}; // ids : 0 -> 4
 
 		_opinions = new ArrayList<Opinion>(){{
-			add(new Opinion().setAuthor(_members.get(0)).setSubject(_members.get(1)).setLevel(Opinion.Level.FOUR).setText("Job well done.").setDone(true));
-			add(new Opinion().setAuthor(_members.get(2)).setSubject(_members.get(1)).setLevel(Opinion.Level.FIVE).setText("You did good.").setDone(true));
-			add(new Opinion().setAuthor(_members.get(2)).setSubject(_members.get(0)).setLevel(Opinion.Level.THREE).setText("Bof bof.").setDone(true));
-			add(new Opinion().setAuthor(_members.get(4)).setSubject(_members.get(0)).setLevel(Opinion.Level.TWO).setText("Just do it better.").setDone(false));
-			add(new Opinion().setAuthor(_members.get(0)).setSubject(_members.get(3)).setLevel(Opinion.Level.FOUR).setText("Job well done too.").setDone(true));
+			add(new Opinion(_members.get(0), _members.get(1), Opinion.Level.FOUR, true).setText("Job well done."));
+			add(new Opinion(_members.get(2), _members.get(1), Opinion.Level.FIVE, true).setText("You did good."));
+			add(new Opinion(_members.get(2), _members.get(0), Opinion.Level.THREE, true).setText("Bof bof."));
+			add(new Opinion(_members.get(4), _members.get(0), Opinion.Level.TWO, false).setText("You can do it better."));
+			add(new Opinion(_members.get(0), _members.get(3), Opinion.Level.FOUR, true).setText("Job well done too."));
 		}};
 
 		_messages = new ArrayList<Message>(){{
@@ -50,9 +51,9 @@ public class ListTech {
 		}};
 
 		_requests = new ArrayList<Request>() {{
-			add(new Request(_members.get(1), _members.get(0), "I have a job for you", false, new Opinion()));
-			add(new Request(_members.get(2), _members.get(0), "Do you want a new job?", false, new Opinion()));
-			add(new Request(_members.get(2), _members.get(1), "I have a job for you", false, new Opinion()));
+			add(new Request(_members.get(1), _members.get(0), "I have a job for you"));
+			add(new Request(_members.get(2), _members.get(0), "Do you want a new job?"));
+			add(new Request(_members.get(2), _members.get(1), "I have a job for you"));
 		}};
 	}
 }

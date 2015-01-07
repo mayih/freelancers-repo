@@ -92,7 +92,7 @@ public class MessageRepoSQLite extends SQLiteTech<Message> implements iMessageRe
 		if (cursor.getCount() == 0)
 			return messageArrayList;
 
-		// recup les ids
+		// get list of ids for author and receiver
 		ArrayList<Integer> listOfIds = new ArrayList<>();
 		while (cursor.moveToNext()){
 			int author_id	= cursor.getInt( cursor.getColumnIndex(FIELDS_NAME.AUTHOR.toString()));
@@ -104,7 +104,7 @@ public class MessageRepoSQLite extends SQLiteTech<Message> implements iMessageRe
 				listOfIds.add(receiver_id);
 		}
 		// query
-		ArrayList<Member> listOfMember = Model.getMemberRepo().selectByIds(listOfIds);
+		ArrayList<Member> listOfMember = Model.getMemberRepo().selectWhereIdIn(listOfIds);
 
 		Message message;
 		for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()){
@@ -138,7 +138,8 @@ public class MessageRepoSQLite extends SQLiteTech<Message> implements iMessageRe
 		}
 		cursor.close();
 		return messageArrayList;
-	}
+}
+
 	@Override
 	public ContentValues toContentValues(Message message) {
 		ContentValues content = new ContentValues();

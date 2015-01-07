@@ -13,5 +13,4 @@ public interface iMemberRepo extends CRUD<Member> {
 	public Member selectByEmail(String email);
 	public Member selectByEmailAndPassword(String email, String password);
 	public Member selectWithOpinions(String email);
-	public ArrayList<Member> selectByIds(List<Integer> listOfIds);
 }

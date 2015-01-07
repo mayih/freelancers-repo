@@ -6,6 +6,7 @@ import android.database.Cursor;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import il.bruzn.freelancers.Model.Entities.Member;
 import il.bruzn.freelancers.Model.Entities.Opinion;
@@ -28,7 +29,8 @@ public class RequestRepoSqLite extends SQLiteTech<Request> implements iRequestRe
 		OPINION("opinion_id"),
 		REQUEST("request"),
 		DATE("date_of_request"),
-		ISACCEPTED("isAccepted");
+		ISACCEPTED("isAccepted"),
+		DONE("isDone");
 
 		private String _name;
 		FIELDS_NAME(String name) {
@@ -48,13 +50,15 @@ public class RequestRepoSqLite extends SQLiteTech<Request> implements iRequestRe
 			FIELDS_NAME.REQUEST	    + " TEXT NOT NULL, "    +
 			FIELDS_NAME.DATE	    + " INTEGER NOT NULL, "	+ // TimeStamp in seconds
 			FIELDS_NAME.ISACCEPTED	+ " INTEGER " +
+			FIELDS_NAME.DONE		+ " INTEGER " +
 			");";
 
-
+	// CONSTRUCTOR  ---
 	public RequestRepoSqLite(Context context, String name, int version) {
 		super(context, name, version);
 	}
 
+	// SQLiteTech IMPLEMENTATION
 	@Override
 	public String createReq() {
 		return CREATE_REQ;
@@ -70,6 +74,25 @@ public class RequestRepoSqLite extends SQLiteTech<Request> implements iRequestRe
 		ArrayList<Request> requestArrayList = new ArrayList<>();
 		Request request;
 
+		// get list of ids for members and opinions
+		ArrayList<Integer> listOfIdsMembers = new ArrayList<>();
+		ArrayList<Integer> listOfIdsOpinions = new ArrayList<>();
+		while (cursor.moveToNext()) {
+			int author_id = cursor.getInt(cursor.getColumnIndex(FIELDS_NAME.AUTHOR.toString()));
+			if (listOfIdsMembers.contains(author_id))
+				listOfIdsMembers.add(author_id);
+
+			int receiver_id	= cursor.getInt(cursor.getColumnIndex(FIELDS_NAME.RECEIVER.toString()));
+			if (listOfIdsMembers.contains(receiver_id))
+				listOfIdsMembers.add(receiver_id);
+
+			if (!cursor.isNull( cursor.getColumnIndex(FIELDS_NAME.OPINION.toString()) ))
+				listOfIdsOpinions.add( cursor.getInt(cursor.getColumnIndex(FIELDS_NAME.OPINION.toString())) );
+		}
+
+		// Query..
+		ArrayList<Member> listOfMembers = Model.getMemberRepo().selectWhereIdIn(listOfIdsMembers);
+		ArrayList<Opinion> listOfOpinions = Model.getOpnionRepo().selectWhereIdIn(listOfIdsOpinions);
 
 
 		for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
@@ -77,19 +100,44 @@ public class RequestRepoSqLite extends SQLiteTech<Request> implements iRequestRe
 			int id				= cursor.getInt(cursor.getColumnIndex(FIELDS_NAME.ID.toString()));
 			int author_id		= cursor.getInt(cursor.getColumnIndex(FIELDS_NAME.AUTHOR.toString()));
 			int receiver_id		= cursor.getInt(cursor.getColumnIndex(FIELDS_NAME.RECEIVER.toString()));
-			Integer opinion_id	= cursor.getInt(cursor.getColumnIndex(FIELDS_NAME.OPINION.toString()));
 			String requestMsg	= cursor.getString(cursor.getColumnIndex(FIELDS_NAME.REQUEST.toString()));
 			Date date	 		= new Date(cursor.getLong(cursor.getColumnIndex(FIELDS_NAME.DATE.toString())) * 1000);
-			boolean isAccepted	= cursor.getInt(cursor.getColumnIndex(FIELDS_NAME.ISACCEPTED.toString())) == 1;
 
-			Member authors = Model.getMemberRepo().selectById(author_id),
-					receiver = Model.getMemberRepo().selectById(receiver_id);
-			Opinion opinion = Model.getOpnionRepo().selectById(opinion_id);
+			boolean isAccepted	= !cursor.isNull(cursor.getColumnIndex(FIELDS_NAME.ISACCEPTED.toString()))
+								&& cursor.getInt(cursor.getColumnIndex(FIELDS_NAME.ISACCEPTED.toString())) == 1;
+			boolean isDone		= !cursor.isNull(cursor.getColumnIndex(FIELDS_NAME.DONE.toString()))
+					&& cursor.getInt(cursor.getColumnIndex(FIELDS_NAME.DONE.toString())) == 1;
 
-			request = new Request(authors, receiver, requestMsg);
-			request.setAccepted(isAccepted).setOpinion(opinion).setId(id).setDate(date);
+			Integer opinion_id	= null;
+			if (!cursor.isNull( cursor.getColumnIndex(FIELDS_NAME.OPINION.toString()) ))
+				opinion_id = cursor.getInt(cursor.getColumnIndex(FIELDS_NAME.OPINION.toString()));
+
+			// search the author and receiver from the list
+			Member author = null, receiver = null;
+			for (Member member : listOfMembers) {
+				if (member.getId() == author_id)
+					author = member;
+
+				if (member.getId() == receiver_id)
+					receiver = member;
+
+				if (author != null && receiver != null)
+					break;
+			}
+
+			// search the opinion on this request from the list
+			Opinion opinion = null;
+			for (Opinion opinionInList : listOfOpinions) {
+				if (opinion_id == opinionInList.getId()) {
+					opinion = opinionInList;
+					break;
+				}
+			}
+
+			request = new Request(id, author, receiver, requestMsg, date, isAccepted, isDone, opinion );
 			requestArrayList.add(request);
 		}
+		cursor.close();
 		return requestArrayList;
 	}
 
@@ -102,10 +150,9 @@ public class RequestRepoSqLite extends SQLiteTech<Request> implements iRequestRe
 		content.put(FIELDS_NAME.REQUEST.toString(), entity.getText());
 		content.put(FIELDS_NAME.OPINION.toString(), entity.getOpinion().getId());
 		content.put(FIELDS_NAME.DATE.toString(), entity.getDate().getTime()/1000);
-		content.put(FIELDS_NAME.ISACCEPTED.toString(), entity.getIsAccepted());
+		content.put(FIELDS_NAME.ISACCEPTED.toString(), entity.isAccepted());
+		content.put(FIELDS_NAME.DONE.toString(), entity.isDone());
 
 		return content;
 	}
-
-
 }

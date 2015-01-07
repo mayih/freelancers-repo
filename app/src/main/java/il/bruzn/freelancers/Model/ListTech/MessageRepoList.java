@@ -2,6 +2,7 @@ package il.bruzn.freelancers.Model.ListTech;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import il.bruzn.freelancers.Model.ConnectedMember;
 import il.bruzn.freelancers.Model.Entities.Member;
@@ -72,6 +73,15 @@ public class MessageRepoList extends ListTech implements iMessageRepo {
 			if (message.getId() == Id)
 				return message;
 		return null;
+	}
+
+	@Override
+	public ArrayList<Message> selectWhereIdIn(List<Integer> listOfIds) {
+		ArrayList<Message> selected = new ArrayList<>();
+		for (int id : listOfIds)
+			selected.add( selectById(id) );
+
+		return selected;
 	}
 
 	// DO NOT USE IT!!!
