@@ -16,10 +16,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import il.bruzn.freelancers.Controller.MainActivity;
 import il.bruzn.freelancers.Model.ConnectedMember;
 import il.bruzn.freelancers.Model.Entities.Member;
 import il.bruzn.freelancers.Model.Model;
 import il.bruzn.freelancers.R;
+import il.bruzn.freelancers.basic.AsyncToRun;
+import il.bruzn.freelancers.basic.ToRun;
 
 /**
  * Created by Moshe on 04/01/15.
@@ -82,12 +85,12 @@ public class EditMyProfileFragment extends Fragment implements TitledFragment{
 		_reqButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Member member = _member.setEmail(_email.getText().toString())
-						.setFirstName(_firstName.getText().toString())
-						.setLastName(_lastName.getText().toString());
-				Model.getMemberRepo().update(member, member.getId());
+				new AsyncToRun<Void>()
+						.setMain(updateMyProfile)
+						.setPost(null).execute();
 
 				((HomeFragment)MenuFragment.getMenu()[0].getFragment()).isToUpdate();
+				((MainActivity)getActivity()).setFragment(MenuFragment.getMenu()[1].getFragment());
 			}
 		});
 
@@ -122,4 +125,15 @@ public class EditMyProfileFragment extends Fragment implements TitledFragment{
 		        break;
 		}
 	}
+
+	ToRun<Void> updateMyProfile = new ToRun<Void>() {
+		@Override
+		public Void run(Object... parameters) {
+			Member member = _member.setEmail(_email.getText().toString())
+					.setFirstName(_firstName.getText().toString())
+					.setLastName(_lastName.getText().toString());
+			Model.getMemberRepo().update(member, member.getId());
+			return null;
+		}
+	};
 }
