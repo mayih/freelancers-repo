@@ -107,18 +107,20 @@ public class EditMyProfileFragment extends Fragment implements TitledFragment{
 		super.onActivityResult(requestCode, resultCode, data);
 		switch (requestCode) {
 		    case REQUEST_CODE_PICTURE:
-				Uri uri=data.getData();
-				String[] projection={MediaStore.Images.Media.DATA};
+				if (data != null) {
+					Uri uri = data.getData();
+					String[] projection = {MediaStore.Images.Media.DATA};
 
-				Cursor cursor = getActivity().getContentResolver().query(uri, projection, null, null, null);
-				cursor.moveToFirst();
+					Cursor cursor = getActivity().getContentResolver().query(uri, projection, null, null, null);
+					cursor.moveToFirst();
 
-				int columnIndex=cursor.getColumnIndex(projection[0]);
-				String filePath=cursor.getString(columnIndex);
-				cursor.close();
+					int columnIndex = cursor.getColumnIndex(projection[0]);
+					String filePath = cursor.getString(columnIndex);
+					cursor.close();
 
-				Bitmap selectedImage= BitmapFactory.decodeFile(filePath);
-				_picture.setImageBitmap(selectedImage);
+					Bitmap selectedImage = BitmapFactory.decodeFile(filePath);
+					_picture.setImageBitmap(selectedImage);
+				}
 		        break;
 		}
 	}
