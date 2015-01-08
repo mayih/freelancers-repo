@@ -3,7 +3,7 @@ package il.bruzn.freelancers.Model.ListTech;
 import java.util.ArrayList;
 import java.util.List;
 
-import il.bruzn.freelancers.Model.CRUD;
+import il.bruzn.freelancers.Model.Entities.Member;
 import il.bruzn.freelancers.Model.Entities.Request;
 import il.bruzn.freelancers.Model.iRepositories.iRequestRepo;
 
@@ -11,6 +11,18 @@ import il.bruzn.freelancers.Model.iRepositories.iRequestRepo;
  * Created by Yair on 07/01/2015.
  */
 public class RequestRepoList extends ListTech implements iRequestRepo {
+
+	//iRequestRepo IMPLEMENTATION
+	@Override
+	public ArrayList<Request> selectByReceiver(Member receiver) {
+		ArrayList<Request> selected = new ArrayList<>();
+		for (Request req : _requests)
+			if (req.getReceiver() == receiver)
+				selected.add(req);
+		return selected;
+	}
+
+	// CRUD IMPLEMENTATION ---
 	@Override
 	public void add(Request entry) {
 		_requests.add(entry);

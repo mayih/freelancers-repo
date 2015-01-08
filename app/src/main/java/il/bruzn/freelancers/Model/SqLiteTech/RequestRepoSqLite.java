@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -154,5 +155,15 @@ public class RequestRepoSqLite extends SQLiteTech<Request> implements iRequestRe
 		content.put(FIELDS_NAME.DONE.toString(), entity.isDone());
 
 		return content;
+	}
+
+//	iRequestRepo IMPLMENTATION ---
+
+	@Override
+	public ArrayList<Request> selectByReceiver(Member receiver) {
+		ArrayList<Request> selected = selectBy(FIELDS_NAME.RECEIVER.toString(), receiver.getId()+"");
+		Collections.sort(selected);
+		Collections.reverse(selected);
+		return selected;
 	}
 }

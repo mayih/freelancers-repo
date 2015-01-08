@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -18,15 +19,17 @@ import il.bruzn.freelancers.Model.Entities.Member;
 import il.bruzn.freelancers.Model.Entities.Request;
 import il.bruzn.freelancers.Model.Model;
 import il.bruzn.freelancers.R;
+import il.bruzn.freelancers.basic.AsyncToRun;
 import il.bruzn.freelancers.basic.ImageHelper;
 import il.bruzn.freelancers.basic.Sleep;
+import il.bruzn.freelancers.basic.ToRun;
 
 /**
  * Created by Yair on 06/01/2015.
  */
 public class RequestFragment extends ListFragment implements TitledFragment {
 
-	ArrayList<ArrayList<Request>> _listOfRequests = new ArrayList<>();
+	ArrayList<Request> _listOfRequests;
 	final static String KEY_REQUESTS = "key for requests in hashmap";
 
 	@Override
@@ -34,18 +37,16 @@ public class RequestFragment extends ListFragment implements TitledFragment {
 		super.onCreate(savedInstanceState);
 		if (savedInstanceState != null){
 			long hashMapKey = savedInstanceState.getLong(KEY_REQUESTS);
-			_listOfRequests = (ArrayList<ArrayList<Request>>) Model.getHashMap().get(hashMapKey);
+			_listOfRequests = (ArrayList<Request>) Model.getHashMap().get(hashMapKey);
 			Model.getHashMap().remove(hashMapKey);
+			setListAdapter(new RequestFragmentAdapter(_listOfRequests));
 		}
 		else if (_listOfRequests == null) {
-			// Async Request..
+			new AsyncToRun()
+					.setMain(getAllRequest)
+					.execute();
 		}
-	}
-
-	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
-		setListAdapter(new RequestFragmentAdapter(_listOfRequests));
+		getListView().setDivider(null);
 	}
 
 	@Override
@@ -62,8 +63,8 @@ public class RequestFragment extends ListFragment implements TitledFragment {
 		return "Requests";
 	}
 
-	class RequestFragmentAdapter extends ArrayAdapter<ArrayList<Request>> {
-		RequestFragmentAdapter(List<ArrayList<Request>> list) {
+	class RequestFragmentAdapter extends ArrayAdapter<Request> {
+		RequestFragmentAdapter(List<Request> list) {
 			super(getActivity(), 0, list);
 		}
 
@@ -73,7 +74,7 @@ public class RequestFragment extends ListFragment implements TitledFragment {
 				convertView = getActivity().getLayoutInflater().inflate(R.layout.item_discussion, parent, false);
 
 			// Identify the interlocutor
-			Member sender = getItem(position).get(0).getAuthor();
+			Member sender = getItem(position).getAuthor();
 
 			// Fill convertView
 			TextView nameView = (TextView) convertView.findViewById(R.id.name_item_discussion);
@@ -91,4 +92,13 @@ public class RequestFragment extends ListFragment implements TitledFragment {
 			return convertView;
 		}
 	}
+
+	ToRun getAllRequest = new ToRun() {
+		@Override
+		public Object run(Object... parameters) {
+			_listOfRequests = Model.getRequestRepo().selectByReceiver(ConnectedMember.getMember());
+			setListAdapter(new RequestFragmentAdapter(_listOfRequests));
+			return null;
+		}
+	};
 }

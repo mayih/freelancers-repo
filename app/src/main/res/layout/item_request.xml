@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+			  android:orientation="vertical"
+			  android:layout_width="match_parent"
+			  android:layout_height="match_parent"
+			  android:layout_margin="20dp"
+			  android:background="#55999999"
+			  android:weightSum="1">
+
+	<ImageView
+		android:id="@+id/request_profile_pic"
+		android:layout_width="120dp"
+		android:layout_height="120dp"
+		android:src="@drawable/default_profile_pic"
+		/>
+
+	<TextView
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_toRightOf="@id/request_profile_pic"
+		android:textStyle="bold"
+		android:text="Firstname lastname"
+		android:textSize="20dp"
+		android:layout_alignBottom="@id/request_profile_pic"
+		android:layout_alignParentTop="true"
+		android:gravity="center"
+		/>
+
+	<TextView
+		android:id="@+id/request_message_text"
+		android:layout_below="@id/request_profile_pic"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:text="The message appears here..."
+		/>
+
+	<RelativeLayout
+		android:id="@+id/request_item_container"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_below="@id/request_message_text"
+		android:gravity="center"
+		>
+		<ImageView
+			android:id="@+id/request_accept_icon"
+			android:layout_width="50dp"
+			android:layout_height="50dp"/>
+		<ImageView
+			android:id="@+id/request_refuse_icon"
+			android:layout_width="50dp"
+			android:layout_height="50dp"/>
+	</RelativeLayout>
+
+</RelativeLayout>

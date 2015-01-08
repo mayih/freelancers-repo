@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import il.bruzn.freelancers.Model.Entities.Member;
-import il.bruzn.freelancers.Model.Entities.Message;
 import il.bruzn.freelancers.Model.Entities.Opinion;
 import il.bruzn.freelancers.Model.iRepositories.iOpinionRepo;
 

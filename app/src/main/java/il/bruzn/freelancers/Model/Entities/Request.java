@@ -13,9 +13,7 @@ public class Request extends Message{
 	// CONSTRUCTORS ---
 	public Request(Member author, Member receiver, String text) {
 		super(author, receiver, text);
-		_isAccepted = false;
 		_done = false;
-		_opinion = null;
 	}
 	public Request(int id, Member author, Member receiver, String text, Date date, boolean isAccepted, boolean done, Opinion opinion) {
 		super(id, author, receiver, text, date);
