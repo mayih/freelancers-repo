@@ -85,13 +85,6 @@ public class MemberRepoSqLite extends  SQLiteTech<Member> implements iMemberRepo
 	public Member selectWithOpinions(String email) {
 		return null;
 	}
-	@Override
-	public ArrayList<Member> selectByIds(List<Integer> listOfIds) {
-		String stringOfIds = SQLiteTech.listOfIdsToString(listOfIds); // convert the list to a string : (1,2,3,..)
-		String request = "SELECT * FROM " + getNameTable() + " WHERE _id IN " + stringOfIds;
-		Cursor cursor = getReadableDatabase().rawQuery(request, null);
-		return toEntity(cursor);
-	}
 
 	// SQLiteTech IMPLEMENTATION ---
 	@Override

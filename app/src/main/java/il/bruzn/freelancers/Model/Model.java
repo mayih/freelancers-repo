@@ -7,6 +7,7 @@ import java.util.HashMap;
 import il.bruzn.freelancers.Model.ListTech.MemberRepoList;
 import il.bruzn.freelancers.Model.ListTech.MessageRepoList;
 import il.bruzn.freelancers.Model.ListTech.OpinionRepoList;
+import il.bruzn.freelancers.Model.ListTech.RequestRepoList;
 import il.bruzn.freelancers.Model.SqLiteTech.MemberRepoSqLite;
 import il.bruzn.freelancers.Model.SqLiteTech.MessageRepoSQLite;
 import il.bruzn.freelancers.Model.SqLiteTech.OpinionRepoSQLite;
@@ -25,7 +26,7 @@ public class Model {
 
 	// DataBase Name
 	public final static String DB_NAME = "DB";
-	public final static int DB_VERSION = 7;
+	public final static int DB_VERSION = 10;
 
 	// Android FAQ: How do I pass data between Activities/Services within a single application?
 	// http://developer.android.com/guide/faq/framework.html
@@ -46,6 +47,7 @@ public class Model {
 				_memberRepo = new MemberRepoList();
 				_opnionRepo = new OpinionRepoList();
 				_messageRepo = new MessageRepoList();
+				_requestRepo = new RequestRepoList();
 				// ...
 				break;
 			case SQLite:
@@ -70,5 +72,8 @@ public class Model {
 	}
 	public static iMessageRepo getMessageRepo() {
 		return _messageRepo;
+	}
+	public static iRequestRepo getRequestRepo() {
+		return _requestRepo;
 	}
 }
