@@ -135,7 +135,7 @@ public class RequestRepoSqLite extends SQLiteTech<Request> implements iRequestRe
 				}
 			}
 
-			request = new Request(id, author, receiver, requestMsg, date, isAccepted, isDone, opinion );
+			request = new Request(id, author, receiver, opinion, requestMsg, date, isAccepted, isDone) ;
 			requestArrayList.add(request);
 		}
 		cursor.close();
@@ -151,8 +151,8 @@ public class RequestRepoSqLite extends SQLiteTech<Request> implements iRequestRe
 		content.put(FIELDS_NAME.REQUEST.toString(), entity.getText());
 		content.put(FIELDS_NAME.OPINION.toString(), entity.getOpinion().getId());
 		content.put(FIELDS_NAME.DATE.toString(), entity.getDate().getTime()/1000);
-		content.put(FIELDS_NAME.ISACCEPTED.toString(), entity.isAccepted());
-		content.put(FIELDS_NAME.DONE.toString(), entity.isDone());
+		content.put(FIELDS_NAME.ISACCEPTED.toString(), entity.getIsAccepted());
+		content.put(FIELDS_NAME.DONE.toString(), entity.getisDone());
 
 		return content;
 	}

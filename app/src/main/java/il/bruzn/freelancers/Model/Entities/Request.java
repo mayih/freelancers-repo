@@ -7,42 +7,49 @@ import java.util.Date;
  */
 public class Request extends Message{
 	private boolean _isAccepted;
-	private boolean _done;
 	private Opinion _opinion;
+	private boolean _isDone;
 
-	// CONSTRUCTORS ---
-	public Request(Member author, Member receiver, String text) {
+	public Request(Member author, Member receiver, Opinion opinion, String text, boolean isAccepted) {
 		super(author, receiver, text);
-		_done = false;
-	}
-	public Request(int id, Member author, Member receiver, String text, Date date, boolean isAccepted, boolean done, Opinion opinion) {
-		super(id, author, receiver, text, date);
+		_isDone = false;
 		_isAccepted = isAccepted;
-		_done = done;
 		_opinion = opinion;
 	}
 
-	// Getters & setters ---
-	public boolean isAccepted() {
+	public Request(int id, Member author, Member receiver, Opinion opinion, String text, Date date, boolean isAccepted, boolean isDone) {
+		super(id, author, receiver, text, date);
+		_isAccepted = isAccepted;
+		_opinion = opinion;
+
+
+	}
+
+	public boolean getIsAccepted() {
 		return _isAccepted;
 	}
+
 	public Opinion getOpinion() {
 		return _opinion;
 	}
-	public boolean isDone() {
-		return _done;
+
+	public boolean getisDone() {
+		return _isDone;
 	}
 
-	public Request setAccepted(boolean isAccepted) {
+	public void setAccepted(boolean isAccepted) {
 		_isAccepted = isAccepted;
-		return this;
 	}
-	public Request setOpinion(Opinion opinion) {
+
+	public void setOpinion(Opinion opinion) {
 		_opinion = opinion;
-		return this;
 	}
-	public Request setDone(boolean done) {
-		_done = done;
-		return this;
+
+	public void setDone(boolean isDone) {
+		_isDone = isDone;
 	}
+
+
+
+
 }
