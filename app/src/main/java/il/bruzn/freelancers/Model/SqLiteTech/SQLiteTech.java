@@ -32,7 +32,6 @@ public abstract class SQLiteTech<T> extends SQLiteOpenHelper implements CRUD<T> 
 	// Constructor ---
     SQLiteTech(Context context, String name, int version) {
         super(context, name, null, version);
-		getWritableDatabase().execSQL(createReq());
 	}
 
 	// SQLiteTech IMPLEMENTATION ---

@@ -17,14 +17,13 @@ import il.bruzn.freelancers.R;
  * Created by Moshe on 08/01/15.
  */
 public class RequestEditTextFragment extends DialogFragment {
-	public static final String EXTRA_IS_REQUEST_IN_PROGRESS = "il.bruzn.freelancers.Controller.fragments.request";
 	private String _message;
 	private EditText _messageEditText;
 
 	private void sendResult(int resultCode)
 	{
 		if (getTargetFragment() == null)
-			return;
+		return;
 		getTargetFragment().onActivityResult(getTargetRequestCode(), resultCode, null);
 	}
 
@@ -42,11 +41,11 @@ public class RequestEditTextFragment extends DialogFragment {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						_message = _messageEditText.getText().toString();
-
-						if (!_message.isEmpty())
+						if (!_message.isEmpty()){
 							sendResult(Activity.RESULT_OK);
-						else
+						}else {
 							sendResult(Activity.RESULT_CANCELED);
+						}
 					}
 				})
 				.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {

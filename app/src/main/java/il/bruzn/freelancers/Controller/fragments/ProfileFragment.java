@@ -59,7 +59,6 @@ public class ProfileFragment extends Fragment  implements TitledFragment {
 			_member = ConnectedMember.getMember();
 			_isMyProfile = true;
 		}
-
 	}
 
 	@Nullable

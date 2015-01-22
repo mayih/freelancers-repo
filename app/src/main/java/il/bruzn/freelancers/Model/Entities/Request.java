@@ -47,8 +47,4 @@ public class Request extends Message{
 	public void setDone(boolean isDone) {
 		_isDone = isDone;
 	}
-
-
-
-
 }
