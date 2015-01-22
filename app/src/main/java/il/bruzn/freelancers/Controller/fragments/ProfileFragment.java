@@ -123,6 +123,10 @@ public class ProfileFragment extends Fragment  implements TitledFragment {
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (resultCode != Activity.RESULT_OK) return;
 		if (requestCode == REQUEST_ISSEND){
+				String message = (String)data.getSerializableExtra(RequestEditTextFragment.EXTRA_MESSAGE);
+				Request request = new Request(ConnectedMember.getMember(), _member, message);
+				Model.getRequestRepo().add(request);
+
 				_reqButton.setText("In Progress...");
 				_reqButton.setEnabled(false);
 		}

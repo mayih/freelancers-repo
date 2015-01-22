@@ -148,7 +148,9 @@ public class RequestRepoSqLite extends SQLiteTech<Request> implements iRequestRe
 		content.put(FIELDS_NAME.AUTHOR.toString(), entity.getAuthor().getId());
 		content.put(FIELDS_NAME.RECEIVER.toString(),entity.getReceiver().getId());
 		content.put(FIELDS_NAME.REQUEST.toString(), entity.getText());
-		content.put(FIELDS_NAME.OPINION.toString(), entity.getOpinion().getId());
+		if(entity.getOpinion() != null) {
+			content.put(FIELDS_NAME.OPINION.toString(), entity.getOpinion().getId());
+		}
 		content.put(FIELDS_NAME.DATE.toString(), entity.getDate().getTime()/1000);
 		content.put(FIELDS_NAME.ISACCEPTED.toString(), entity.getIsAccepted());
 		content.put(FIELDS_NAME.DONE.toString(), entity.getisDone());

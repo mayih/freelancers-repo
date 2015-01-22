@@ -17,6 +17,7 @@ import il.bruzn.freelancers.R;
  * Created by Moshe on 08/01/15.
  */
 public class RequestEditTextFragment extends DialogFragment {
+	public static final String EXTRA_MESSAGE = "message";
 	private String _message;
 	private EditText _messageEditText;
 
@@ -24,7 +25,9 @@ public class RequestEditTextFragment extends DialogFragment {
 	{
 		if (getTargetFragment() == null)
 		return;
-		getTargetFragment().onActivityResult(getTargetRequestCode(), resultCode, null);
+		Intent i = new Intent();
+		i.putExtra(EXTRA_MESSAGE, _message);
+		getTargetFragment().onActivityResult(getTargetRequestCode(), resultCode, i);
 	}
 
 	@NonNull
