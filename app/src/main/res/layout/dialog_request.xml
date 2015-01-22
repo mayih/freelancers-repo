@@ -3,10 +3,7 @@
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:gravity="top|left"
-          android:singleLine="false"
           android:lines="8"
           android:scrollbars="vertical"
           android:inputType="textMultiLine|textCapSentences"
-          android:layout_marginLeft="10dip"
-          android:layout_marginRight="10dip"
     />

@@ -1330,7 +1330,7 @@ containing a value of this type.
         public static final int action_mode_bar=0x7f0a0030;
         public static final int action_mode_bar_stub=0x7f0a002f;
         public static final int action_mode_close_button=0x7f0a0022;
-        public static final int action_new_discussion=0x7f0a0078;
+        public static final int action_new_discussion=0x7f0a0079;
         public static final int activity_chooser_view_content=0x7f0a0023;
         public static final int always=0x7f0a0016;
         public static final int beginning=0x7f0a0013;
@@ -1370,6 +1370,7 @@ containing a value of this type.
         public static final int item_opinion_text=0x7f0a006e;
         public static final int item_profile_mark=0x7f0a0070;
         public static final int item_profile_name=0x7f0a006f;
+        public static final int item_request_name=0x7f0a0073;
         public static final int joinin_button=0x7f0a0047;
         public static final int lastname_edtext=0x7f0a0043;
         public static final int listMode=0x7f0a0009;
@@ -1404,12 +1405,12 @@ containing a value of this type.
         public static final int radio=0x7f0a002d;
         public static final int recordRequest_button=0x7f0a0059;
         public static final int repeatpass_edtext=0x7f0a0046;
-        public static final int request_accept_icon=0x7f0a0075;
+        public static final int request_accept_icon=0x7f0a0076;
         public static final int request_button=0x7f0a0064;
-        public static final int request_item_container=0x7f0a0074;
-        public static final int request_message_text=0x7f0a0073;
+        public static final int request_item_container=0x7f0a0075;
+        public static final int request_message_text=0x7f0a0074;
         public static final int request_profile_pic=0x7f0a0072;
-        public static final int request_refuse_icon=0x7f0a0076;
+        public static final int request_refuse_icon=0x7f0a0077;
         public static final int search_badge=0x7f0a0037;
         public static final int search_bar=0x7f0a0036;
         public static final int search_button=0x7f0a0038;
@@ -1435,7 +1436,7 @@ containing a value of this type.
         public static final int top=0x7f0a001f;
         public static final int up=0x7f0a0008;
         public static final int useLogo=0x7f0a0012;
-        public static final int view_pager=0x7f0a0077;
+        public static final int view_pager=0x7f0a0078;
         public static final int withText=0x7f0a001a;
         public static final int wrap_content=0x7f0a001d;
     }

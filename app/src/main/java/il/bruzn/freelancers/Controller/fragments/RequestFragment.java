@@ -46,7 +46,7 @@ public class RequestFragment extends ListFragment implements TitledFragment {
 					.setMain(getAllRequest)
 					.execute();
 		}
-		getListView().setDivider(null);
+//		getListView().setDivider(null);
 	}
 
 	@Override
@@ -71,16 +71,16 @@ public class RequestFragment extends ListFragment implements TitledFragment {
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			if (convertView==null)
-				convertView = getActivity().getLayoutInflater().inflate(R.layout.item_discussion, parent, false);
+				convertView = getActivity().getLayoutInflater().inflate(R.layout.item_request, parent, false);
 
 			// Identify the interlocutor
 			Member sender = getItem(position).getAuthor();
 
 			// Fill convertView
-			TextView nameView = (TextView) convertView.findViewById(R.id.name_item_discussion);
+			TextView nameView = (TextView) convertView.findViewById(R.id.item_request_name);
 			nameView.setText(sender.getFirstName() + " " + sender.getLastName());
 
-			ImageView pictureView = (ImageView) convertView.findViewById(R.id.picture_item_discussion);
+			ImageView pictureView = (ImageView) convertView.findViewById(R.id.request_profile_pic);
 			Bitmap picture;
 			if (sender.getPicture() != null)
 				picture = sender.getPicture();
@@ -88,6 +88,9 @@ public class RequestFragment extends ListFragment implements TitledFragment {
 				picture = BitmapFactory.decodeResource(getResources(), R.drawable.default_profile_pic);
 			picture = ImageHelper.getRoundedCornerBitmap(picture, 100);
 			pictureView.setImageBitmap(picture);
+
+			TextView messageView = (TextView) convertView.findViewById(R.id.request_message_text);
+			messageView.setText(getItem(position).getText());
 
 			return convertView;
 		}

@@ -357,7 +357,7 @@ int id action_menu_presenter 0x7f0a0003
 int id action_mode_bar 0x7f0a0030
 int id action_mode_bar_stub 0x7f0a002f
 int id action_mode_close_button 0x7f0a0022
-int id action_new_discussion 0x7f0a0078
+int id action_new_discussion 0x7f0a0079
 int id activity_chooser_view_content 0x7f0a0023
 int id always 0x7f0a0016
 int id beginning 0x7f0a0013
@@ -397,6 +397,7 @@ int id item_opinion_name 0x7f0a006c
 int id item_opinion_text 0x7f0a006e
 int id item_profile_mark 0x7f0a0070
 int id item_profile_name 0x7f0a006f
+int id item_request_name 0x7f0a0073
 int id joinin_button 0x7f0a0047
 int id lastname_edtext 0x7f0a0043
 int id listMode 0x7f0a0009
@@ -431,12 +432,12 @@ int id progress_horizontal 0x7f0a0006
 int id radio 0x7f0a002d
 int id recordRequest_button 0x7f0a0059
 int id repeatpass_edtext 0x7f0a0046
-int id request_accept_icon 0x7f0a0075
+int id request_accept_icon 0x7f0a0076
 int id request_button 0x7f0a0064
-int id request_item_container 0x7f0a0074
-int id request_message_text 0x7f0a0073
+int id request_item_container 0x7f0a0075
+int id request_message_text 0x7f0a0074
 int id request_profile_pic 0x7f0a0072
-int id request_refuse_icon 0x7f0a0076
+int id request_refuse_icon 0x7f0a0077
 int id search_badge 0x7f0a0037
 int id search_bar 0x7f0a0036
 int id search_button 0x7f0a0038
@@ -462,7 +463,7 @@ int id title 0x7f0a0029
 int id top 0x7f0a001f
 int id up 0x7f0a0008
 int id useLogo 0x7f0a0012
-int id view_pager 0x7f0a0077
+int id view_pager 0x7f0a0078
 int id withText 0x7f0a001a
 int id wrap_content 0x7f0a001d
 int integer abc_max_action_buttons 0x7f0b0000

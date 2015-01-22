@@ -10,11 +10,10 @@ public class Request extends Message{
 	private Opinion _opinion;
 	private boolean _isDone;
 
-	public Request(Member author, Member receiver, Opinion opinion, String text, boolean isAccepted) {
+	public Request(Member author, Member receiver, String text) {
 		super(author, receiver, text);
 		_isDone = false;
-		_isAccepted = isAccepted;
-		_opinion = opinion;
+		_isAccepted = false;
 	}
 
 	public Request(int id, Member author, Member receiver, Opinion opinion, String text, Date date, boolean isAccepted, boolean isDone) {

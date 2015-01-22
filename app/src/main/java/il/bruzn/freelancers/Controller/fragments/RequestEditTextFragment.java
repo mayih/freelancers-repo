@@ -18,16 +18,14 @@ import il.bruzn.freelancers.R;
  */
 public class RequestEditTextFragment extends DialogFragment {
 	public static final String EXTRA_IS_REQUEST_IN_PROGRESS = "il.bruzn.freelancers.Controller.fragments.request";
-	private boolean _isRequestSend;
 	private String _message;
 	private EditText _messageEditText;
 
 	private void sendResult(int resultCode)
 	{
 		if (getTargetFragment() == null)
-		return;
-		Intent i = new Intent().putExtra(EXTRA_IS_REQUEST_IN_PROGRESS, _isRequestSend);
-		getTargetFragment().onActivityResult(getTargetRequestCode(), resultCode, i);
+			return;
+		getTargetFragment().onActivityResult(getTargetRequestCode(), resultCode, null);
 	}
 
 	@NonNull
@@ -37,7 +35,6 @@ public class RequestEditTextFragment extends DialogFragment {
 		View v = getActivity().getLayoutInflater().inflate(R.layout.dialog_request, null);
 		_messageEditText = (EditText)v.findViewById(R.id.dialog_request_editText);
 
-
 		return new AlertDialog.Builder(getActivity())
 				.setView(v)
 				.setTitle("Request")
@@ -46,19 +43,16 @@ public class RequestEditTextFragment extends DialogFragment {
 					public void onClick(DialogInterface dialog, int which) {
 						_message = _messageEditText.getText().toString();
 
-						if (!_message.isEmpty()) {
-							_isRequestSend = true;
-						} else {
-							_isRequestSend = false;
-						}
-						sendResult(Activity.RESULT_OK);
+						if (!_message.isEmpty())
+							sendResult(Activity.RESULT_OK);
+						else
+							sendResult(Activity.RESULT_CANCELED);
 					}
 				})
 				.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
-						_isRequestSend = false;
-						sendResult(Activity.RESULT_OK);
+						sendResult(Activity.RESULT_CANCELED);
 					}
 				})
 				.create();

@@ -21,7 +21,7 @@ import il.bruzn.freelancers.Model.iRepositories.iRequestRepo;
  * Created by Yair on 08/12/2014.
  */
 public class Model {
-	static final Technology tech = Technology.List;
+	static final Technology tech = Technology.SQLite;
 	enum Technology{SQLite, Server, List };
 
 	// DataBase Name
