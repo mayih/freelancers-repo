@@ -59,7 +59,6 @@ public class ProfileFragment extends Fragment  implements TitledFragment {
 			_member = ConnectedMember.getMember();
 			_isMyProfile = true;
 		}
-
 	}
 
 	@Nullable
@@ -124,11 +123,8 @@ public class ProfileFragment extends Fragment  implements TitledFragment {
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (resultCode != Activity.RESULT_OK) return;
 		if (requestCode == REQUEST_ISSEND){
-			boolean isRequestInProgress = (boolean)data.getSerializableExtra(RequestEditTextFragment.EXTRA_IS_REQUEST_IN_PROGRESS);
-			if (isRequestInProgress) {
 				_reqButton.setText("In Progress...");
 				_reqButton.setEnabled(false);
-			}
 		}
 	}
 }
