@@ -167,15 +167,15 @@ public class JoinInActivity extends ActionBarActivity {
 		public String[] run(Object... parameters) {
 
 
-			//String result = new String("[\"N/S\", \"Teacher\", \"Computer\"]");
+			String result = new String("[\"N/S\", \"Teacher\", \"Computer\"]");
 			String [] specialitysArray = new String[]{};
 			try {
-				URL url = new URL(myUrl);
+				//URL url = new URL(myUrl);
 
-				HttpURLConnection connection = (HttpURLConnection)url.openConnection();
-				connection.connect();
-				InputStream inputStream = connection.getInputStream();
-				String result = convertIputStreamToString(inputStream);
+				//HttpURLConnection connection = (HttpURLConnection)url.openConnection();
+				//connection.connect();
+				//InputStream inputStream = connection.getInputStream();
+				//String result = convertIputStreamToString(inputStream);
 
 				JSONArray jsonArray = new JSONArray(result);
 				specialitysArray = new String[jsonArray.length()];
@@ -187,9 +187,9 @@ public class JoinInActivity extends ActionBarActivity {
 			catch (JSONException e) {
 				e.printStackTrace();
 			}
-			catch (IOException e){
-				e.printStackTrace();
-			}
+			//catch (IOException e){
+			//	e.printStackTrace();
+			//}
 
 			return specialitysArray;
 		}

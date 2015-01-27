@@ -1,33 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-				android:layout_width="match_parent"
-				android:layout_height="match_parent"
-				android:padding="20dp">
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:padding="10dp"
+    >
+        <TextView
+            android:id="@+id/item_profile_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Firstname lastname"
+            android:textAppearance="?android:attr/textAppearanceMedium"
 
-	<TextView
-		android:id="@+id/item_profile_name"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:text="Firstname lastname"
-		android:textAppearance="?android:attr/textAppearanceMedium"/>
+            />
+        <TextView android:id="@+id/item_profile_speciality"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:textAppearance="?android:attr/textAppearanceMedium"
+                  android:text="Speciality"
+                  android:layout_toRightOf="@id/item_profile_name"
+                  android:layout_toLeftOf="@+id/item_profile_mark"
+                  android:gravity="center"/>
+        <TextView
+            android:id="@+id/item_profile_mark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="mark /5"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_alignParentRight="true"/>
 
-	<TextView
-		android:id="@+id/item_profile_mark"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:text="mark /5"
-		android:layout_alignParentRight="true"
-		android:textAppearance="?android:attr/textAppearanceMedium"/>
 
-	<LinearLayout
-		android:id="@+id/list_opinons_in_profile_item"
-		android:layout_below="@id/item_profile_name"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:orientation="vertical"
-		android:padding="10dp">
-	</LinearLayout>
-
+    <LinearLayout
+        android:id="@+id/list_opinons_in_profile_item"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_below="@id/item_profile_mark"
+        android:padding="10dp"
+   >
+    </LinearLayout>
 
 </RelativeLayout>
 <!-- From: file:/Users/Moshe/AndroidStudioProjects/Freelancers/app/src/main/res/layout/item_profile.xml -->

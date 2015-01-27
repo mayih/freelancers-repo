@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -56,16 +57,16 @@ public class NewDiscussionFragment extends ListFragment implements TitledFragmen
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		setListAdapter(new MembersArrayAdapter(_listOfMember));
-		getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				Member selectedMember = _listOfMember.get(position);
-				MessageFragment newDiscussion = new MessageFragment();
-				newDiscussion.setInterlocutor(selectedMember);
-				getActivity().getSupportFragmentManager().popBackStack();
-				((MainActivity)getActivity()).setFragment(newDiscussion);
-			}
-		});
+	}
+
+	@Override
+	public void onListItemClick(ListView l, View v, int position, long id) {
+		super.onListItemClick(l, v, position, id);
+		Member selectedMember = _listOfMember.get(position);
+		MessageFragment newDiscussion = new MessageFragment();
+		newDiscussion.setInterlocutor(selectedMember);
+		getActivity().getSupportFragmentManager().popBackStack();
+		((MainActivity)getActivity()).setFragment(newDiscussion);
 	}
 
 	@Override

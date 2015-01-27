@@ -11,14 +11,16 @@ public class AsyncToRun<typeToReturn> extends AsyncTask<Object, Void, typeToRetu
 
 	@Override
 	protected typeToReturn doInBackground(Object... params) {
-		return _main.run(params);
+		if (_main != null)
+			return _main.run(params);
+		return null;
 	}
 
 	@Override
 	protected void onPostExecute(typeToReturn returnedValue) {
 		super.onPostExecute(returnedValue);
 		if(_post != null)
-		_post.run(returnedValue);
+			_post.run(returnedValue);
 	}
 
 	// Setters  ----

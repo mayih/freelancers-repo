@@ -92,6 +92,9 @@ public class HomeFragment extends ListFragment implements TitledFragment {
 			else
 				text.setText("");
 
+			TextView speciality = (TextView)convertView.findViewById(R.id.item_profile_speciality);
+			speciality.setText(subject.getSpeciality());
+
 			// set the inner listView
 			LinearLayout listviewofopinions = (LinearLayout) convertView.findViewById(R.id.list_opinons_in_profile_item);
 			listviewofopinions.removeAllViews();

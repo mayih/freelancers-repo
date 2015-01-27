@@ -33,22 +33,16 @@ import il.bruzn.freelancers.basic.Sleep;
 public class MessageFragment extends Fragment  implements TitledFragment {
 
 	private ListView _listView;
-	private SimpleDateFormat _dateForm;
 
 	private Member _interlocutor;
 	private ArrayList<Message> _messages;
 
 	private static final String KEY_FOR_MESSAGES = "keyForMessagesInHashMap";
 	private static final String KEY_FOR_INTERLOCUTOR = "keyForInterlocutorInHashMap";
+	private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("HH:mm", Locale.US);
 
 	public MessageFragment() {
-		_dateForm =  new SimpleDateFormat("HH:mm", Locale.US);
 		_messages = null;
-	}
-
-	@Override
-	public String getTitle() {
-		return _interlocutor.getFirstName() + " " + _interlocutor.getLastName();
 	}
 
 	@Override
@@ -68,7 +62,7 @@ public class MessageFragment extends Fragment  implements TitledFragment {
 			}
 		}
 
-		// Get the interlocutor
+		// Get the interlocutor if messages exists
 		if (_messages != null && !_messages.isEmpty() && _interlocutor==null) {
 			if (_messages.get(0).getAuthor().getId() != ConnectedMember.getMember().getId())
 				_interlocutor = _messages.get(0).getAuthor();
@@ -148,11 +142,16 @@ public class MessageFragment extends Fragment  implements TitledFragment {
 			if (convertView == null)
 				convertView = getActivity().getLayoutInflater().inflate(layoutId, parent, false);
 
-			((TextView)convertView.findViewById(R.id.time_message)).setText(_dateForm.format(message.getDate()));
+			((TextView)convertView.findViewById(R.id.time_message)).setText(DATE_FORMAT.format(message.getDate()));
 			((TextView)convertView.findViewById(R.id.text_message)).setText(message.getText());
 
 			return convertView;
 		}
+	}
+
+	@Override
+	public String getTitle() {
+		return _interlocutor.getFirstName() + " " + _interlocutor.getLastName();
 	}
 
 	// Setters  ---

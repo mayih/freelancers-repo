@@ -9,6 +9,7 @@ import java.util.Date;
 
 import il.bruzn.freelancers.Model.Entities.Member;
 import il.bruzn.freelancers.Model.Entities.Opinion;
+import il.bruzn.freelancers.Model.Entities.Request;
 import il.bruzn.freelancers.Model.Model;
 import il.bruzn.freelancers.Model.iRepositories.iOpinionRepo;
 
@@ -20,12 +21,13 @@ public class OpinionRepoSQLite extends SQLiteTech<Opinion> implements iOpinionRe
 	// Table's name
 	static final String NAME_TABLE = "Opinion";
 	// Fields' name
-	enum FIELDS_NAME {  ID("_id"),
+	public enum FIELDS_NAME {  ID("_id"),
 		LEVEL("level"),
 		IS_DONE("done"),
 		OPINION_MESSAGE("message"),
 		AUTHOR("author"),
 		SUBJECT("subject"),
+		REQUEST_ID("request_id"),
 		DATE("date_of_opinion");
 
 		private String _name;
@@ -39,11 +41,12 @@ public class OpinionRepoSQLite extends SQLiteTech<Opinion> implements iOpinionRe
 	// Request to create the table
 	static final String CREATE_REQ = "CREATE TABLE IF NOT EXISTS " + NAME_TABLE + " (" +
 			FIELDS_NAME.ID				+ " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-			FIELDS_NAME.LEVEL			+ " INTEGER NOT NULL, " +
+			FIELDS_NAME.LEVEL			+ " REAL NOT NULL, " +
 			FIELDS_NAME.IS_DONE			+ " INTEGER, " +
 			FIELDS_NAME.OPINION_MESSAGE	+ " TEXT, " 			+
-			FIELDS_NAME.AUTHOR + " INTEGER NOT NULL, " +
+			FIELDS_NAME.AUTHOR 			+ " INTEGER NOT NULL, " +
 			FIELDS_NAME.SUBJECT			+ " INTEGER NOT NULL, " +
+			FIELDS_NAME.REQUEST_ID		+ " INTEGER NOT NULL, "	+
 			FIELDS_NAME.DATE			+ " INTEGER NOT NULL" +
 			");";
 
@@ -82,10 +85,11 @@ public class OpinionRepoSQLite extends SQLiteTech<Opinion> implements iOpinionRe
 		for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
 
 			int id = cursor.getInt(cursor.getColumnIndex(FIELDS_NAME.ID.toString()));
-			int levelInteger = cursor.getInt(cursor.getColumnIndex(FIELDS_NAME.LEVEL.toString()));
+			double level = cursor.getDouble(cursor.getColumnIndex(FIELDS_NAME.LEVEL.toString()));
 			String message = cursor.getString(cursor.getColumnIndex(FIELDS_NAME.OPINION_MESSAGE.toString()));
 			int author_id = cursor.getInt(cursor.getColumnIndex(FIELDS_NAME.AUTHOR.toString()));
 			int subject_id = cursor.getInt(cursor.getColumnIndex(FIELDS_NAME.SUBJECT.toString()));
+			int requestId = cursor.getColumnIndex(FIELDS_NAME.REQUEST_ID.toString());
 			Date date = new Date(cursor.getLong(cursor.getColumnIndex(FIELDS_NAME.DATE.toString())) * 1000);
 
 			boolean done = !cursor.isNull(cursor.getColumnIndex(FIELDS_NAME.IS_DONE.toString()))
@@ -103,9 +107,7 @@ public class OpinionRepoSQLite extends SQLiteTech<Opinion> implements iOpinionRe
 					break;
 			}
 
-			Opinion.Level level = Opinion.Level.fromInteger(levelInteger);
-
-			Opinion opinion = new Opinion(id, level, done, message, author, subject, date);
+			Opinion opinion = new Opinion(id, level, done, message, author, subject, requestId, date);
 			opinionArrayList.add(opinion);
 		}
 		cursor.close();
@@ -121,6 +123,7 @@ public class OpinionRepoSQLite extends SQLiteTech<Opinion> implements iOpinionRe
 		content.put(FIELDS_NAME.OPINION_MESSAGE.toString(), opinion.getText() );
 		content.put(FIELDS_NAME.AUTHOR.toString(), opinion.getAuthor().getId());
 		content.put(FIELDS_NAME.SUBJECT.toString(), opinion.getSubject().getId());
+		content.put(FIELDS_NAME.REQUEST_ID.toString(), opinion.getRequestId());
 		content.put(FIELDS_NAME.DATE.toString(), opinion.getDate().getTime() / 1000);
 
 		return content;

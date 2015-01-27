@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -49,7 +50,7 @@ public class RequestRepoSqLite extends SQLiteTech<Request> implements iRequestRe
 			FIELDS_NAME.OPINION		+ " INTEGER, " +
 			FIELDS_NAME.REQUEST	    + " TEXT NOT NULL, "    +
 			FIELDS_NAME.DATE	    + " INTEGER NOT NULL, "	+ // TimeStamp in seconds
-			FIELDS_NAME.ISACCEPTED	+ " INTEGER " +
+			FIELDS_NAME.ISACCEPTED	+ " INTEGER, " +
 			FIELDS_NAME.DONE		+ " INTEGER " +
 			");";
 
@@ -79,11 +80,11 @@ public class RequestRepoSqLite extends SQLiteTech<Request> implements iRequestRe
 		ArrayList<Integer> listOfIdsOpinions = new ArrayList<>();
 		while (cursor.moveToNext()) {
 			int author_id = cursor.getInt(cursor.getColumnIndex(FIELDS_NAME.AUTHOR.toString()));
-			if (listOfIdsMembers.contains(author_id))
+			if (!listOfIdsMembers.contains(author_id))
 				listOfIdsMembers.add(author_id);
 
 			int receiver_id	= cursor.getInt(cursor.getColumnIndex(FIELDS_NAME.RECEIVER.toString()));
-			if (listOfIdsMembers.contains(receiver_id))
+			if (!listOfIdsMembers.contains(receiver_id))
 				listOfIdsMembers.add(receiver_id);
 
 			if (!cursor.isNull( cursor.getColumnIndex(FIELDS_NAME.OPINION.toString()) ))
@@ -103,10 +104,15 @@ public class RequestRepoSqLite extends SQLiteTech<Request> implements iRequestRe
 			String requestMsg	= cursor.getString(cursor.getColumnIndex(FIELDS_NAME.REQUEST.toString()));
 			Date date	 		= new Date(cursor.getLong(cursor.getColumnIndex(FIELDS_NAME.DATE.toString())) * 1000);
 
-			boolean isAccepted	= !cursor.isNull(cursor.getColumnIndex(FIELDS_NAME.ISACCEPTED.toString()))
-								&& cursor.getInt(cursor.getColumnIndex(FIELDS_NAME.ISACCEPTED.toString())) == 1;
+			Boolean isAccepted;
+			if (cursor.isNull(cursor.getColumnIndex(FIELDS_NAME.ISACCEPTED.toString()))){
+				isAccepted	= null;
+			}else{
+				isAccepted = cursor.getInt(cursor.getColumnIndex(FIELDS_NAME.ISACCEPTED.toString())) == 1;
+			}
+
 			boolean isDone		= !cursor.isNull(cursor.getColumnIndex(FIELDS_NAME.DONE.toString()))
-					&& cursor.getInt(cursor.getColumnIndex(FIELDS_NAME.DONE.toString())) == 1;
+								&& cursor.getInt(cursor.getColumnIndex(FIELDS_NAME.DONE.toString())) == 1;
 
 			Integer opinion_id	= null;
 			if (!cursor.isNull( cursor.getColumnIndex(FIELDS_NAME.OPINION.toString()) ))
@@ -128,9 +134,11 @@ public class RequestRepoSqLite extends SQLiteTech<Request> implements iRequestRe
 			// search the opinion on this request from the list
 			Opinion opinion = null;
 			for (Opinion opinionInList : listOfOpinions) {
-				if (opinion_id == opinionInList.getId()) {
-					opinion = opinionInList;
-					break;
+				if (opinion_id != null) {
+					if (opinion_id == opinionInList.getId()) {
+						opinion = opinionInList;
+						break;
+					}
 				}
 			}
 
@@ -152,9 +160,44 @@ public class RequestRepoSqLite extends SQLiteTech<Request> implements iRequestRe
 			content.put(FIELDS_NAME.OPINION.toString(), entity.getOpinion().getId());
 		}
 		content.put(FIELDS_NAME.DATE.toString(), entity.getDate().getTime()/1000);
-		content.put(FIELDS_NAME.ISACCEPTED.toString(), entity.getIsAccepted());
+
+		if (entity.getIsAccepted() != null) {
+			content.put(FIELDS_NAME.ISACCEPTED.toString(), entity.getIsAccepted());
+		}
 		content.put(FIELDS_NAME.DONE.toString(), entity.getisDone());
 
 		return content;
+	}
+
+//	iRequestRepo IMPLMENTATION ---
+
+	@Override
+	public ArrayList<Request> selectByReceiver(Member receiver) {
+		ArrayList<Request> selected = selectBy(FIELDS_NAME.RECEIVER.toString(), receiver.getId()+"");
+		Collections.sort(selected);
+		Collections.reverse(selected);
+		return selected;
+	}
+
+	public Request selectLastInProgress(Member author, Member receiver){
+
+		String req = "SELECT * FROM " + getNameTable() + " WHERE (" + FIELDS_NAME.ISACCEPTED + "=1 OR " + FIELDS_NAME.ISACCEPTED + " IS NULL) AND "
+				+ FIELDS_NAME.DONE + "=0 AND " + FIELDS_NAME.AUTHOR + "=? AND " + FIELDS_NAME.RECEIVER+ "=? " +
+				"ORDER BY " + FIELDS_NAME.DATE + " DESC LIMIT 1";
+		Cursor cursor = getReadableDatabase().rawQuery(req, new String[]{author.getId() + "", receiver.getId() + ""});
+		ArrayList<Request> requests = toEntity(cursor);
+		Request request = null;
+		if (requests.size() > 0)
+			request = requests.get(0);
+
+		return request;
+	}
+
+	public ArrayList<Request> selectFinishedRequest(Member author){
+
+		String req = "SELECT * FROM " + getNameTable() + " WHERE " + FIELDS_NAME.AUTHOR+ "=? ORDER BY " + FIELDS_NAME.DATE + " DESC";
+		Cursor cursor = getReadableDatabase().rawQuery(req, new String[]{author.getId() + ""});
+		ArrayList<Request> requests = toEntity(cursor);
+		return requests;
 	}
 }

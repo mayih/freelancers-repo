@@ -38,6 +38,7 @@ public class EditMyProfileFragment extends Fragment implements TitledFragment{
 	private EditText _phoneNumber;
 	private EditText _adress;
 	private Button _reqButton;
+	private Bitmap _selectedImage;
 
 	private final static int REQUEST_CODE_PICTURE = 1;
 
@@ -100,7 +101,7 @@ public class EditMyProfileFragment extends Fragment implements TitledFragment{
 	View.OnClickListener selectPicture = new View.OnClickListener() {
 		@Override
 		public void onClick(View v) {
-			Intent i=new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+			Intent i = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 			startActivityForResult(i, REQUEST_CODE_PICTURE);
 		}
 	};
@@ -121,8 +122,8 @@ public class EditMyProfileFragment extends Fragment implements TitledFragment{
 					String filePath = cursor.getString(columnIndex);
 					cursor.close();
 
-					Bitmap selectedImage = BitmapFactory.decodeFile(filePath);
-					_picture.setImageBitmap(selectedImage);
+					 _selectedImage = BitmapFactory.decodeFile(filePath);
+					_picture.setImageBitmap(_selectedImage);
 				}
 		        break;
 		}
@@ -133,7 +134,8 @@ public class EditMyProfileFragment extends Fragment implements TitledFragment{
 		public Void run(Object... parameters) {
 			Member member = _member.setEmail(_email.getText().toString())
 					.setFirstName(_firstName.getText().toString())
-					.setLastName(_lastName.getText().toString());
+					.setLastName(_lastName.getText().toString())
+					.setPicture(_selectedImage);
 			Model.getMemberRepo().update(member, member.getId());
 			return null;
 		}

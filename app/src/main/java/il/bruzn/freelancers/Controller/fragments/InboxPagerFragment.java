@@ -30,7 +30,7 @@ public class InboxPagerFragment extends Fragment implements TitledFragment {
 			Model.getHashMap().remove(hashMapKey);
 		}
 		else if (_fragments == null) {
-			_fragments = new Fragment[]{new DiscussionFragment(), new RequestFragment()};
+			_fragments = new Fragment[]{new DiscussionFragment(), new RequestReceivedFragment(), new RequestSentFragment()};
 			for (Fragment frag : _fragments)
 				frag.setHasOptionsMenu(true);
 		}

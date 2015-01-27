@@ -19,6 +19,8 @@ import il.bruzn.freelancers.Model.Entities.Member;
 import il.bruzn.freelancers.Model.Entities.Request;
 import il.bruzn.freelancers.Model.Model;
 import il.bruzn.freelancers.R;
+import il.bruzn.freelancers.basic.AsyncToRun;
+import il.bruzn.freelancers.basic.ToRun;
 
 /**
  * Created by Yair on 01/12/2014.
@@ -41,6 +43,7 @@ public class ProfileFragment extends Fragment  implements TitledFragment {
     private TextView _adress;
     private TextView _average;
 	private Button _reqButton;
+	private Request _requestInProgress;
 
 	@Override
 	public String getTitle() {
@@ -105,17 +108,20 @@ public class ProfileFragment extends Fragment  implements TitledFragment {
 				}
 			});
 		}else{
-			_reqButton.setText(R.string.request_button);
 			_reqButton.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
 					FragmentManager fm = getActivity().getSupportFragmentManager();
-					RequestEditTextFragment dialog = new RequestEditTextFragment();
+					EditTextDialogFragment dialog = EditTextDialogFragment.newInstance("Request");
 					dialog.setTargetFragment(ProfileFragment.this, REQUEST_ISSEND);
 					dialog.show(fm, DIALOG_REQUEST);
 				}
 			});
+			new AsyncToRun<Request>()
+					.setMain(mainRequestInProgress)
+					.setPost(postRequestInProgress).execute();
 		}
+
 		return v;
 	}
 
@@ -123,12 +129,36 @@ public class ProfileFragment extends Fragment  implements TitledFragment {
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (resultCode != Activity.RESULT_OK) return;
 		if (requestCode == REQUEST_ISSEND){
-				String message = (String)data.getSerializableExtra(RequestEditTextFragment.EXTRA_MESSAGE);
+				String message = (String)data.getSerializableExtra(EditTextDialogFragment.EXTRA_MESSAGE);
 				Request request = new Request(ConnectedMember.getMember(), _member, message);
 				Model.getRequestRepo().add(request);
-
 				_reqButton.setText("In Progress...");
 				_reqButton.setEnabled(false);
 		}
 	}
+
+	ToRun<Request> mainRequestInProgress = new ToRun<Request>() {
+		@Override
+		public Request run(Object... parameters) {
+		return 	Model.getRequestRepo().selectLastInProgress(ConnectedMember.getMember(), _member);
+		}
+	};
+
+	ToRun postRequestInProgress = new ToRun<Void>() {
+		@Override
+		public Void run(Object... parameters) {
+
+			if (parameters.length > 0 &&
+					parameters[0] != null &&
+					parameters[0].getClass() == Request.class)
+			{
+				_reqButton.setText("In Progress...");
+				_reqButton.setEnabled(false);
+			}else {
+				_reqButton.setText(R.string.request_button);
+			}
+
+			return null;
+		}
+	};
 }

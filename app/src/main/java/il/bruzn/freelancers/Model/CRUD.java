@@ -12,8 +12,8 @@ public interface CRUD<T> {
 	public void	add(T entry);
 
 	// Read
-	public T	selectById(int Id);
-	public ArrayList<T> selectWhereIdIn(List<Integer> listOfIds);
+	public	T selectById(int Id);
+	public	ArrayList<T> selectWhereIdIn(List<Integer> listOfIds);
 	public	ArrayList<T> selectAll();
 	public	ArrayList<T> selectBy(String field, String value);
 
