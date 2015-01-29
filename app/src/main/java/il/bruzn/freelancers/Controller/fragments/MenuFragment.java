@@ -1,15 +1,16 @@
 package il.bruzn.freelancers.Controller.fragments;
 
 import android.app.Activity;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
-import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+
 import il.bruzn.freelancers.R;
 
 /**
@@ -20,9 +21,9 @@ public class MenuFragment extends ListFragment {
 
 	private iMenulistener _activity;
 	static ItemMenu[] _menu = {	new ItemMenu(R.drawable.home_icon,		"Home",		new HomeFragment()),
-								new ItemMenu(R.drawable.profile_icon,	"Profile",	new ProfileFragment()),
-								new ItemMenu(R.drawable.inbox_icon,		"Inbox",	new InboxPagerFragment()),
-								new ItemMenu(R.drawable.disconnect_icon,"Disconnect",	null),
+			new ItemMenu(R.drawable.profile_icon,	"Profile",	new ProfileFragment()),
+			new ItemMenu(R.drawable.inbox_icon,		"Inbox",	new InboxPagerFragment()),
+			new ItemMenu(R.drawable.disconnect_icon,"Disconnect",	null),
 	};
 	public static ItemMenu[] getMenu(){
 		return _menu;

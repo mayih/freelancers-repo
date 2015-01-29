@@ -40,6 +40,7 @@ public class RequestSentFragment extends ListFragment implements TitledFragment 
 	private Request _currentRequest;
 	private Member _currentReceiver;
 	private View _currentView;
+	private Opinion _opinion;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -81,6 +82,9 @@ public class RequestSentFragment extends ListFragment implements TitledFragment 
 			nameView.setText(receiver.getFirstName() + " " + receiver.getLastName());
 			messageView.setText(getItem(position).getText());
 
+			opinionButton.setVisibility(View.INVISIBLE);
+			opinionButton.setEnabled(false);
+
 			if (getItem(position).getisDone()){
 				status.setText("Is done");
 				if (getItem(position).getOpinion() == null) {
@@ -111,6 +115,8 @@ public class RequestSentFragment extends ListFragment implements TitledFragment 
 				status.setText("In Progress..");
 			}
 
+
+
 			if (receiver.getPicture() != null)
 				picture = receiver.getPicture();
 			else
@@ -128,21 +134,40 @@ public class RequestSentFragment extends ListFragment implements TitledFragment 
 		if (requestCode == REQUEST_OPINION){
 			String message = (String)data.getSerializableExtra(EditTextDialogFragment.EXTRA_MESSAGE);
 			double level = (double)data.getSerializableExtra(EditTextDialogFragment.EXTRA_LEVEL);
-			Opinion opinion = new Opinion(ConnectedMember.getMember(), _currentReceiver, level, message, _currentRequest.getId());
-			Model.getOpnionRepo().add(opinion);
-			ArrayList<Opinion> opinions = Model.getOpnionRepo().selectBy(OpinionRepoSQLite.FIELDS_NAME.REQUEST_ID.toString(), _currentRequest.getId()+"");
-			_currentRequest.setOpinion(opinions.get(0));
-			Model.getRequestRepo().update(_currentRequest, _currentRequest.getId());
-
+			_opinion = new Opinion(ConnectedMember.getMember(), _currentReceiver, level, message, _currentRequest.getId());
+			new AsyncToRun<>()
+					.setMain(addOpinion)
+					.setPost(postAddOpinion)
+					.execute();
 			_currentView.findViewById(R.id.request_opinion_button).setVisibility(View.INVISIBLE);
 			_currentView.findViewById(R.id.request_opinion_button).setEnabled(false);
 		}
 		_currentView = null;
-		_currentRequest = null;
 		_currentReceiver = null;
 	}
 
-	ToRun getAllRequest = new ToRun<Void>() {
+	private ToRun addOpinion = new ToRun<Void>() {
+		@Override
+		public Void run(Object... parameters) {
+			Model.getOpnionRepo().add(_opinion);
+			ArrayList<Opinion> opinions = Model.getOpnionRepo().selectBy(OpinionRepoSQLite.FIELDS_NAME.REQUEST_ID.toString(), _currentRequest.getId()+"");
+			_currentRequest.setOpinion(opinions.get(0));
+			Model.getRequestRepo().update(_currentRequest, _currentRequest.getId());
+			return null;
+		}
+	};
+
+	private ToRun postAddOpinion = new ToRun<Void>() {
+		@Override
+		public Void run(Object... parameters) {
+			_opinion = null;
+			_currentRequest = null;
+			return null;
+		}
+
+	};
+
+	private ToRun getAllRequest = new ToRun<Void>() {
 		@Override
 		public Void run(Object... parameters) {
 			_listOfRequests = Model.getRequestRepo().selectFinishedRequest(ConnectedMember.getMember());
@@ -150,7 +175,7 @@ public class RequestSentFragment extends ListFragment implements TitledFragment 
 		}
 	};
 
-	ToRun postGetAllRequest = new ToRun<Void>() {
+	private ToRun postGetAllRequest = new ToRun<Void>() {
 		@Override
 		public Void run(Object... parameters) {
 			setListAdapter(new RequestSentFragmentAdapter(_listOfRequests));

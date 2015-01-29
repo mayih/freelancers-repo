@@ -20,8 +20,6 @@ public class Request extends Message{
 		_isAccepted = isAccepted;
 		_opinion = opinion;
 		_isDone = isDone;
-
-
 	}
 
 	public Boolean getIsAccepted() {

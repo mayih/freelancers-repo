@@ -9,7 +9,6 @@ import java.util.Date;
 
 import il.bruzn.freelancers.Model.Entities.Member;
 import il.bruzn.freelancers.Model.Entities.Opinion;
-import il.bruzn.freelancers.Model.Entities.Request;
 import il.bruzn.freelancers.Model.Model;
 import il.bruzn.freelancers.Model.iRepositories.iOpinionRepo;
 

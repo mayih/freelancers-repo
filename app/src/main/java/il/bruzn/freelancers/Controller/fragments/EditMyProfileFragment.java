@@ -5,10 +5,10 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.provider.MediaStore;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,7 +50,7 @@ public class EditMyProfileFragment extends Fragment implements TitledFragment{
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-			_member = ConnectedMember.getMember();
+		_member = ConnectedMember.getMember();
 	}
 
 	@Nullable
@@ -110,7 +110,7 @@ public class EditMyProfileFragment extends Fragment implements TitledFragment{
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		switch (requestCode) {
-		    case REQUEST_CODE_PICTURE:
+			case REQUEST_CODE_PICTURE:
 				if (data != null) {
 					Uri uri = data.getData();
 					String[] projection = {MediaStore.Images.Media.DATA};
@@ -122,14 +122,14 @@ public class EditMyProfileFragment extends Fragment implements TitledFragment{
 					String filePath = cursor.getString(columnIndex);
 					cursor.close();
 
-					 _selectedImage = BitmapFactory.decodeFile(filePath);
+					_selectedImage = BitmapFactory.decodeFile(filePath);
 					_picture.setImageBitmap(_selectedImage);
 				}
-		        break;
+				break;
 		}
 	}
 
-	ToRun<Void> updateMyProfile = new ToRun<Void>() {
+	private ToRun<Void> updateMyProfile = new ToRun<Void>() {
 		@Override
 		public Void run(Object... parameters) {
 			Member member = _member.setEmail(_email.getText().toString())

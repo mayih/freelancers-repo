@@ -1,10 +1,10 @@
 package il.bruzn.freelancers.Controller.fragments;
 
-import android.graphics.Bitmap;
-import android.support.v4.app.Fragment;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,8 +24,10 @@ import il.bruzn.freelancers.Model.Entities.Member;
 import il.bruzn.freelancers.Model.Entities.Message;
 import il.bruzn.freelancers.Model.Model;
 import il.bruzn.freelancers.R;
+import il.bruzn.freelancers.basic.AsyncToRun;
 import il.bruzn.freelancers.basic.ImageHelper;
 import il.bruzn.freelancers.basic.Sleep;
+import il.bruzn.freelancers.basic.ToRun;
 
 /**
  * Created by Yair on 11/12/2014.
@@ -88,7 +90,10 @@ public class MessageFragment extends Fragment  implements TitledFragment {
 				String text = editText.getText().toString();
 				// Send the message
 				Message message = new Message(ConnectedMember.getMember(),_interlocutor,text);
-				Model.getMessageRepo().add(message);
+				new AsyncToRun<Void>()
+						.setMain(addMessage)
+						.setPost(null)
+						.execute(message);
 				// Clear the EditText
 				editText.getText().clear();
 				// Update the ListView
@@ -133,7 +138,7 @@ public class MessageFragment extends Fragment  implements TitledFragment {
 			if (message.getAuthor().getId() == ConnectedMember.getMember().getId()) {
 				layoutId = R.layout.item_message_self;
 				Bitmap pictureInterlocutor = ImageHelper.getRoundedCornerBitmap(message.getAuthor().getPicture(), 100);
-				if (pictureInterlocutor != null)
+				if (pictureInterlocutor != null && convertView != null)
 					((ImageView)convertView.findViewById(R.id.picture_item_message)).setImageBitmap(pictureInterlocutor);
 			}
 			else
@@ -161,8 +166,33 @@ public class MessageFragment extends Fragment  implements TitledFragment {
 	}
 	public MessageFragment setInterlocutor(Member interlocutor) {
 		_interlocutor = interlocutor;
-		if (_messages == null)
-			_messages = Model.getMessageRepo().selectDiscussion(ConnectedMember.getMember(), interlocutor);
+		if (_messages == null) {
+			new AsyncToRun<Void>()
+					.setMain(selectDiscussion)
+					.setPost(null)
+					.execute();
+		}
+
 		return this;
 	}
+
+	private ToRun<Void> addMessage = new ToRun<Void>(){
+		@Override
+		public Void run(Object... parameters){
+			if (parameters.length > 0 &&
+					parameters[0] != null &&
+					parameters[0].getClass() == Message.class) {
+				Model.getMessageRepo().add((Message)parameters[0]);
+			}
+			return null;
+		}
+	};
+
+	private ToRun<Void> selectDiscussion = new ToRun<Void>() {
+		@Override
+		public Void run(Object... parameters) {
+			_messages = Model.getMessageRepo().selectDiscussion(ConnectedMember.getMember(), _interlocutor);
+			return null;
+		}
+	};
 }

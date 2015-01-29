@@ -1,34 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-			  android:orientation="vertical"
-			  android:layout_width="match_parent"
-			  android:layout_height="match_parent"
-			  android:weightSum="1">
-	<RelativeLayout
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_margin="20dp"
-		android:padding="10dp"
-		android:background="#55999999">
-		<ImageView
-			android:id="@+id/request_profile_pic"
-			android:layout_width="120dp"
-			android:layout_height="120dp"
-			android:src="@drawable/default_profile_pic"
-			/>
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:weightSum="1">
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:padding="10dp"
+        android:background="#55999999">
+        <ImageView
+            android:id="@+id/request_profile_pic"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:src="@drawable/default_profile_pic"
+            />
 
-		<TextView
-			android:id="@+id/item_request_name"
-			android:layout_width="fill_parent"
-			android:layout_height="120dp"
-			android:layout_toRightOf="@id/request_profile_pic"
-			android:textStyle="bold"
-			android:text="Firstname lastname"
-			android:textSize="20dp"
-			android:layout_alignBottom="@id/request_profile_pic"
-			android:layout_alignParentTop="true"
-			android:gravity="center"
-			/>
+        <TextView
+            android:id="@+id/item_request_name"
+            android:layout_width="fill_parent"
+            android:layout_height="120dp"
+            android:layout_toRightOf="@id/request_profile_pic"
+            android:textStyle="bold"
+            android:text="Firstname lastname"
+            android:textSize="20dp"
+            android:layout_alignBottom="@id/request_profile_pic"
+            android:layout_alignParentTop="true"
+            android:gravity="center"
+            />
         <TextView
             android:id="@+id/request_message_text"
             android:layout_below="@id/request_profile_pic"
@@ -41,13 +41,13 @@
             />
 
         <Button android:id="@+id/request_view_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_below="@+id/request_message_text"
-            android:visibility="invisible"
-            android:enabled="false"
-            android:text="View"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/request_message_text"
+                android:visibility="invisible"
+                android:enabled="false"
+                android:text="View"
             />
 
         <Button android:id="@+id/request_opinion_button"
@@ -77,5 +77,5 @@
             android:visibility="invisible"
             android:enabled="false"
             />
-	</RelativeLayout>
+    </RelativeLayout>
 </RelativeLayout>

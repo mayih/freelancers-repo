@@ -10,5 +10,4 @@ public class Recommendation extends Message {
 		super(author, receiver, text);
 		_subject = subject;
 	}
-
 }

@@ -2,11 +2,11 @@ package il.bruzn.freelancers.Controller.fragments;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.ListFragment;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.ListFragment;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -31,7 +31,7 @@ import il.bruzn.freelancers.basic.ToRun;
  */
 public class RequestReceivedFragment extends ListFragment implements TitledFragment {
 
-	ArrayList<Request> _listOfRequests;
+	private ArrayList<Request> _listOfRequests;
 	public static final int REQUEST_MESSAGE = 1;
 	public static final String DIALOG_MESSAGE = "Request Received";
 	private View _currentView;
@@ -111,9 +111,12 @@ public class RequestReceivedFragment extends ListFragment implements TitledFragm
 			done.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
+					_currentRequest = getItem(position);
 					getItem(position).setDone(true);
 					requestDone(finalConvertView);
-					Model.getRequestRepo().update(getItem(position), getItem(position).getId());
+					new AsyncToRun<>()
+							.setMain(updateRequest)
+							.setPost(null).execute();
 				}
 			});
 
@@ -165,13 +168,23 @@ public class RequestReceivedFragment extends ListFragment implements TitledFragm
 				_currentRequest.setAccepted(Boolean.FALSE);
 				requestRefused(_currentView);
 			}
-			Model.getRequestRepo().update(_currentRequest, _currentRequest.getId());
+			new AsyncToRun<>()
+					.setMain(updateRequest)
+					.setPost(null).execute();
 		}
-		_currentRequest = null;
 		_currentView = null;
 	}
 
-	ToRun getAllRequest = new ToRun<Void>() {
+	private ToRun updateRequest = new ToRun<Void>() {
+		@Override
+		public Void run(Object... parameters) {
+			Model.getRequestRepo().update(_currentRequest, _currentRequest.getId());
+			_currentRequest = null;
+			return null;
+		}
+	};
+
+	private ToRun getAllRequest = new ToRun<Void>() {
 		@Override
 		public Void run(Object... parameters) {
 			_listOfRequests = Model.getRequestRepo().selectByReceiver(ConnectedMember.getMember());
@@ -179,7 +192,7 @@ public class RequestReceivedFragment extends ListFragment implements TitledFragm
 		}
 	};
 
-	ToRun postGetAllRequest = new ToRun<Void>() {
+	private ToRun postGetAllRequest = new ToRun<Void>() {
 		@Override
 		public Void run(Object... parameters) {
 			setListAdapter(new RequestFragmentAdapter(_listOfRequests));

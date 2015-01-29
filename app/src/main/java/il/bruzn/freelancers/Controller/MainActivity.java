@@ -1,20 +1,20 @@
 package il.bruzn.freelancers.Controller;
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.content.Intent;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.MenuItem;
 
+import il.bruzn.freelancers.Controller.fragments.MenuFragment;
 import il.bruzn.freelancers.Controller.fragments.TitledFragment;
 import il.bruzn.freelancers.Model.ConnectedMember;
 import il.bruzn.freelancers.R;
-import il.bruzn.freelancers.Controller.fragments.MenuFragment;
 
 
 public class MainActivity extends ActionBarActivity implements MenuFragment.iMenulistener {

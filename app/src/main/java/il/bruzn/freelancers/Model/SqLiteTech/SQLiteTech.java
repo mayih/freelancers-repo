@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import il.bruzn.freelancers.Model.CRUD;
-import il.bruzn.freelancers.Model.Entities.Request;
 
 /**
  * Created by Moshe on 17/12/14.

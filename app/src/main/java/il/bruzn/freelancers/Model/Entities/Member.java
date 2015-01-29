@@ -4,8 +4,9 @@ import android.graphics.Bitmap;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import il.bruzn.freelancers.basic.WayToPay;
+
 import il.bruzn.freelancers.basic.Location;
+import il.bruzn.freelancers.basic.WayToPay;
 
 public class Member {
 

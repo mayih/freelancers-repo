@@ -2,9 +2,9 @@ package il.bruzn.freelancers.Controller.fragments;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,16 +34,16 @@ public class ProfileFragment extends Fragment  implements TitledFragment {
 	private Member _member;
 	private boolean _isMyProfile;
 
-    private ImageView _picture;
+	private ImageView _picture;
 	private TextView _firstName;
-    private TextView _lastName;
-    private TextView _speciality;
-    private TextView _email;
-    private TextView _phoneNumber;
-    private TextView _adress;
-    private TextView _average;
+	private TextView _lastName;
+	private TextView _speciality;
+	private TextView _email;
+	private TextView _phoneNumber;
+	private TextView _adress;
+	private TextView _average;
 	private Button _reqButton;
-	private Request _requestInProgress;
+	private Request _request;
 
 	@Override
 	public String getTitle() {
@@ -68,34 +68,34 @@ public class ProfileFragment extends Fragment  implements TitledFragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View v = inflater.inflate(R.layout.fragment_profile, container, false);
-        _picture = (ImageView)v.findViewById(R.id.profile_picture);
+		View v = inflater.inflate(R.layout.fragment_profile, container, false);
+		_picture = (ImageView)v.findViewById(R.id.profile_picture);
 		if (_member.getPicture() != null)
 			_picture.setImageBitmap(_member.getPicture());
 
-        _firstName = (TextView)v.findViewById(R.id.profile_firstName_label);
-        _firstName.setText(_member.getFirstName());
+		_firstName = (TextView)v.findViewById(R.id.profile_firstName_label);
+		_firstName.setText(_member.getFirstName());
 
-        _lastName = (TextView)v.findViewById(R.id.profile_lastName_label);
-        _lastName.setText(_member.getLastName());
+		_lastName = (TextView)v.findViewById(R.id.profile_lastName_label);
+		_lastName.setText(_member.getLastName());
 
-        _speciality = (TextView)v.findViewById(R.id.profile_specialisation_label);
+		_speciality = (TextView)v.findViewById(R.id.profile_specialisation_label);
 		_speciality.setText(_member.getSpeciality());
 
-        _email = (TextView)v.findViewById(R.id.profile_email_label);
-        _email.setText(_member.getEmail());
+		_email = (TextView)v.findViewById(R.id.profile_email_label);
+		_email.setText(_member.getEmail());
 
-        _phoneNumber = (TextView)v.findViewById(R.id.profile_phoneNumber_label);
-        _phoneNumber.setText(_member.getPhoneNumber());
+		_phoneNumber = (TextView)v.findViewById(R.id.profile_phoneNumber_label);
+		_phoneNumber.setText(_member.getPhoneNumber());
 
-        _adress = (TextView)v.findViewById(R.id.profile_adress_label);
+		_adress = (TextView)v.findViewById(R.id.profile_adress_label);
 		_adress.setText(_member.getAddress().toString());
 
-        _average = (TextView)v.findViewById(R.id.profile_average_label);
-        if(_member.getAverage() != 0) {
-            _average.setText(_member.getAverage() + " / 5");
-            _average.setVisibility(View.VISIBLE);
-        }
+		_average = (TextView)v.findViewById(R.id.profile_average_label);
+		if(_member.getAverage() != 0) {
+			_average.setText(_member.getAverage() + " / 5");
+			_average.setVisibility(View.VISIBLE);
+		}
 
 		_reqButton = (Button)v.findViewById(R.id.request_button);
 
@@ -129,22 +129,37 @@ public class ProfileFragment extends Fragment  implements TitledFragment {
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (resultCode != Activity.RESULT_OK) return;
 		if (requestCode == REQUEST_ISSEND){
-				String message = (String)data.getSerializableExtra(EditTextDialogFragment.EXTRA_MESSAGE);
-				Request request = new Request(ConnectedMember.getMember(), _member, message);
-				Model.getRequestRepo().add(request);
-				_reqButton.setText("In Progress...");
-				_reqButton.setEnabled(false);
+			String message = (String)data.getSerializableExtra(EditTextDialogFragment.EXTRA_MESSAGE);
+			Request request = new Request(ConnectedMember.getMember(), _member, message);
+			new AsyncToRun<Request>()
+					.setMain(addResquest)
+					.setPost(null)
+					.execute(request);
+			_reqButton.setText("In Progress...");
+			_reqButton.setEnabled(false);
 		}
 	}
 
-	ToRun<Request> mainRequestInProgress = new ToRun<Request>() {
+	private ToRun<Request> addResquest = new ToRun<Request>() {
 		@Override
 		public Request run(Object... parameters) {
-		return 	Model.getRequestRepo().selectLastInProgress(ConnectedMember.getMember(), _member);
+			if (parameters.length > 0 &&
+					parameters[0] != null &&
+					parameters[0].getClass() == Request.class){
+				Model.getRequestRepo().add((Request)parameters[0]);
+			}
+			return null;
 		}
 	};
 
-	ToRun postRequestInProgress = new ToRun<Void>() {
+	private ToRun<Request> mainRequestInProgress = new ToRun<Request>() {
+		@Override
+		public Request run(Object... parameters) {
+			return 	Model.getRequestRepo().selectLastInProgress(ConnectedMember.getMember(), _member);
+		}
+	};
+
+	private ToRun postRequestInProgress = new ToRun<Void>() {
 		@Override
 		public Void run(Object... parameters) {
 

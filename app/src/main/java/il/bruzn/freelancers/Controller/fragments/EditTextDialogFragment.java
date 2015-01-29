@@ -38,7 +38,7 @@ public class EditTextDialogFragment extends DialogFragment {
 	private void sendResult(int resultCode)
 	{
 		if (getTargetFragment() == null)
-		return;
+			return;
 		Intent i = new Intent();
 		i.putExtra(EXTRA_MESSAGE, _message);
 
@@ -73,7 +73,6 @@ public class EditTextDialogFragment extends DialogFragment {
 				}
 			});
 		}
-
 		return new AlertDialog.Builder(getActivity())
 				.setView(v)
 				.setTitle(title)
