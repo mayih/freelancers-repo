@@ -11,4 +11,6 @@ import il.bruzn.freelancers.Model.Entities.Request;
  */
 public interface iRequestRepo extends CRUD<Request>{
 	public ArrayList<Request> selectByReceiver(Member receiver);
+	public Request selectLastInProgress(Member author, Member receiver);
+	public ArrayList<Request> selectFinishedRequest(Member author);
 }

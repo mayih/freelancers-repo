@@ -65,4 +65,12 @@ public class RequestRepoList extends ListTech implements iRequestRepo {
 	public void delete(Request entry, int id) {
 		_requests.remove(entry);
 	}
+
+	public Request selectLastInProgress(Member author, Member receiver){
+		return null;
+	}
+
+	public ArrayList<Request> selectFinishedRequest(Member receiver){
+		return null;
+	}
 }

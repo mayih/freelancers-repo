@@ -6,25 +6,23 @@ import java.util.Date;
  * Created by Yair on 20/11/2014.
  */
 public class Request extends Message{
-	private boolean _isAccepted;
+	private Boolean _isAccepted;
 	private Opinion _opinion;
 	private boolean _isDone;
 
 	public Request(Member author, Member receiver, String text) {
 		super(author, receiver, text);
 		_isDone = false;
-		_isAccepted = false;
 	}
 
-	public Request(int id, Member author, Member receiver, Opinion opinion, String text, Date date, boolean isAccepted, boolean isDone) {
+	public Request(int id, Member author, Member receiver, Opinion opinion, String text, Date date, Boolean isAccepted, boolean isDone) {
 		super(id, author, receiver, text, date);
 		_isAccepted = isAccepted;
 		_opinion = opinion;
-
-
+		_isDone = isDone;
 	}
 
-	public boolean getIsAccepted() {
+	public Boolean getIsAccepted() {
 		return _isAccepted;
 	}
 
@@ -36,7 +34,7 @@ public class Request extends Message{
 		return _isDone;
 	}
 
-	public void setAccepted(boolean isAccepted) {
+	public void setAccepted(Boolean isAccepted) {
 		_isAccepted = isAccepted;
 	}
 

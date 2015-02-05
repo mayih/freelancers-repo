@@ -3,15 +3,15 @@ package il.bruzn.freelancers.Controller;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import il.bruzn.freelancers.Model.Entities.Member;
 import il.bruzn.freelancers.Model.ConnectedMember;
+import il.bruzn.freelancers.Model.Entities.Member;
 import il.bruzn.freelancers.Model.Model;
 import il.bruzn.freelancers.R;
 import il.bruzn.freelancers.basic.AsyncToRun;
@@ -49,7 +49,7 @@ public class SignInActivity extends ActionBarActivity {
 		_joinin.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-			startActivity(new Intent(SignInActivity.this, JoinInActivity.class));//, ActivityOptions.makeCustomAnimation(getApplicationContext(), R.transition.slide_right_to_left, R.transition.slide_left_to_right).toBundle());
+				startActivity(new Intent(SignInActivity.this, JoinInActivity.class));//, ActivityOptions.makeCustomAnimation(getApplicationContext(), R.transition.slide_right_to_left, R.transition.slide_left_to_right).toBundle());
 			}
 		});
 		_connect.setOnClickListener(new View.OnClickListener() {

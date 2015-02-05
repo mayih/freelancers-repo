@@ -1,8 +1,5 @@
 package il.bruzn.freelancers.Model.iRepositories;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import il.bruzn.freelancers.Model.CRUD;
 import il.bruzn.freelancers.Model.Entities.Member;
 

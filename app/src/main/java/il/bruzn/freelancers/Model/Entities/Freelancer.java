@@ -5,13 +5,11 @@ package il.bruzn.freelancers.Model.Entities;
  */
 public class Freelancer extends Member{
 	private Speciality _speciality;
-
 	/**
 	 * Created by Yair on 20/11/2014.
 	 */
 	public static enum Speciality {
 		TEACHING,
 		COMPUTER,
-
 	}
 }

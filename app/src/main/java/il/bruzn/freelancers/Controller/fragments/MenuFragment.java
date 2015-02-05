@@ -1,15 +1,16 @@
 package il.bruzn.freelancers.Controller.fragments;
 
 import android.app.Activity;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
-import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+
 import il.bruzn.freelancers.R;
 
 /**
@@ -19,13 +20,37 @@ import il.bruzn.freelancers.R;
 public class MenuFragment extends ListFragment {
 
 	private iMenulistener _activity;
-	static ItemMenu[] _menu = {	new ItemMenu(R.drawable.home_icon,		"Home",		new HomeFragment()),
-								new ItemMenu(R.drawable.profile_icon,	"Profile",	new ProfileFragment()),
-								new ItemMenu(R.drawable.inbox_icon,		"Inbox",	new InboxPagerFragment()),
-								new ItemMenu(R.drawable.disconnect_icon,"Disconnect",	null),
-	};
-	public static ItemMenu[] getMenu(){
-		return _menu;
+	public enum ItemMenu {
+		HOME("Home", R.drawable.home_icon),
+		PROFILE("Profile", R.drawable.profile_icon),
+		INBOX("Inbox", R.drawable.inbox_icon),
+		DISCONNECT("Disconnect",R.drawable.disconnect_icon);
+
+		String _text;
+		int _icon;
+		Fragment frag;
+		ItemMenu(String text, int icon){
+			_text = text;
+			_icon = icon;
+		}
+		public String toString(){
+			return _text;
+		}
+		public int getIcon(){
+			return _icon;
+		}
+		public Fragment getFragment(){
+			if (frag == null) {
+				if (this == HOME)
+					frag = new HomeFragment();
+				else if (this == PROFILE)
+					frag = new ProfileFragment();
+				else if (this == INBOX)
+					frag = new InboxPagerFragment();
+			}
+
+			return frag;
+		}
 	}
 
 	@Override
@@ -45,13 +70,13 @@ public class MenuFragment extends ListFragment {
 	public void onListItemClick(ListView l, View v, int position, long id) {
 		super.onListItemClick(l, v, position, id);
 		getListView().setItemChecked(position, true);    // Show the button has been clicked
-		_activity.menuItemClicked(_menu[position]); // Change the main activity
+		_activity.menuItemClicked(ItemMenu.values()[position]); // Change the main activity
 	}
 
 
 	private class MenuAdapter extends ArrayAdapter<ItemMenu> {
 		public MenuAdapter() {
-			super(getActivity(), R.layout.item_menu, _menu);
+			super(getActivity(), R.layout.item_menu, ItemMenu.values());
 		}
 
 		@Override
@@ -60,8 +85,8 @@ public class MenuFragment extends ListFragment {
 
 			if (convertView==null)
 				convertView = getActivity().getLayoutInflater().inflate(R.layout.item_menu, parent, false);
-			((ImageView)convertView.findViewById(R.id.menu_item_icon)).setImageResource(item.getImage());
-			((TextView)convertView.findViewById(R.id.menu_item_text)).setText(item.getText());
+			((ImageView)convertView.findViewById(R.id.menu_item_icon)).setImageResource(item.getIcon());
+			((TextView)convertView.findViewById(R.id.menu_item_text)).setText(item.toString());
 
 			return convertView;
 		}
@@ -69,41 +94,6 @@ public class MenuFragment extends ListFragment {
 
 	// Other classes ---
 
-	// An item in the menu list
-	public static class ItemMenu {
-		private int _image;
-		private String _text;
-		private Fragment _fragment;
-
-		public ItemMenu(int image, String text, Fragment fragment){
-			setImage(image);
-			setText(text);
-			setFragment(fragment);
-		}
-
-		public int getImage() {
-			return _image;
-		}
-		public String getText() {
-			return _text;
-		}
-		public Fragment getFragment() {
-			return _fragment;
-		}
-
-		public ItemMenu setImage(int image) {
-			this._image = image;
-			return this;
-		}
-		public ItemMenu setText(String text) {
-			_text = text;
-			return this;
-		}
-		public ItemMenu setFragment(Fragment fragment) {
-			_fragment = fragment;
-			return this;
-		}
-	}
 	//The activity which use this menu fragment has to implement this inerface
 	public interface iMenulistener {
 		public void menuItemClicked(ItemMenu item);

@@ -2,44 +2,44 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center">
-        <EditText
-            android:id="@+id/email"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="textEmailAddress"
-            android:ems="10"
-            android:hint="@string/email_edtext"
-            android:focusable="true"
-            />
+    <EditText
+        android:id="@+id/email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:ems="10"
+        android:hint="@string/email_edtext"
+        android:focusable="true"
+        />
 
-        <EditText
-            android:id="@+id/password"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="textPassword"
-            android:ems="10"
-            android:layout_below="@+id/email"
-            android:hint="@string/password_edtext"
-            />
+    <EditText
+        android:id="@+id/password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:layout_below="@+id/email"
+        android:hint="@string/password_edtext"
+        />
 
-        <Button
-            android:id="@+id/connect_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/password"
-            android:layout_alignLeft="@id/password"
-            android:text="@string/connect_button"
-            android:ems="5"
-            />
+    <Button
+        android:id="@+id/connect_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/password"
+        android:layout_alignLeft="@id/password"
+        android:text="@string/connect_button"
+        android:ems="5"
+        />
 
-        <Button
-            android:id="@+id/joinin_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/joinin_button"
-            android:layout_alignTop="@id/connect_button"
-            android:layout_toRightOf="@id/connect_button"
-            android:ems="5"
-            />
+    <Button
+        android:id="@+id/joinin_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/joinin_button"
+        android:layout_alignTop="@id/connect_button"
+        android:layout_toRightOf="@id/connect_button"
+        android:ems="5"
+        />
 
 </RelativeLayout>

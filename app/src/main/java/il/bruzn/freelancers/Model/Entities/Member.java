@@ -2,9 +2,11 @@ package il.bruzn.freelancers.Model.Entities;
 
 import android.graphics.Bitmap;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
-import il.bruzn.freelancers.basic.WayToPay;
+
 import il.bruzn.freelancers.basic.Location;
+import il.bruzn.freelancers.basic.WayToPay;
 
 public class Member {
 
@@ -35,6 +37,9 @@ public class Member {
 			}
 			average /= _opinionsOnMe.size();
 		}
+		BigDecimal bigDecimal = new BigDecimal(average);
+		bigDecimal = bigDecimal.setScale(1, BigDecimal.ROUND_HALF_UP);
+		average = bigDecimal.doubleValue();
 		return average;
 	}
 

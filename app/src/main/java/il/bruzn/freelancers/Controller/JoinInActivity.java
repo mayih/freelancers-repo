@@ -3,8 +3,8 @@ package il.bruzn.freelancers.Controller;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -16,14 +16,12 @@ import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 
 import il.bruzn.freelancers.Model.Entities.Member;
@@ -35,7 +33,7 @@ import il.bruzn.freelancers.basic.ToRun;
 
 public class JoinInActivity extends ActionBarActivity {
 
-	static final String myUrl = "http://147.161.45.9:8080/Freelancer/api";
+	static final String myUrl = "http://147.161.46.230:8080/Freelancer/api";
 
 	private ProgressDialog _progressDialog;
 	private EditText _email;
@@ -105,7 +103,7 @@ public class JoinInActivity extends ActionBarActivity {
 		});
 	}
 
-	ToRun<String> addMember = new ToRun<String>() {
+	private ToRun<String> addMember = new ToRun<String>() {
 		@Override
 		public String run(Object... parameters) {
 			Member IsMemberExist = Model.getMemberRepo().selectByEmail(_email.getText().toString());
@@ -141,7 +139,7 @@ public class JoinInActivity extends ActionBarActivity {
 		}
 	};
 
-	ToRun printIsMemberExist = new ToRun<Void>() {
+	private ToRun printIsMemberExist = new ToRun<Void>() {
 		@Override
 		public Void run(Object... parameters) {
 
@@ -162,12 +160,12 @@ public class JoinInActivity extends ActionBarActivity {
 		}
 	};
 
-	ToRun<String[]> mainFillSpecialities = new ToRun<String[]>() {
+	private ToRun<String[]> mainFillSpecialities = new ToRun<String[]>() {
 		@Override
 		public String[] run(Object... parameters) {
 
 
-			//String result = new String("[\"N/S\", \"Teacher\", \"Computer\"]");
+//			String result = new String("[\"N/S\", \"Teacher\", \"Computer\"]");
 			String [] specialitysArray = new String[]{};
 			try {
 				URL url = new URL(myUrl);
@@ -181,7 +179,7 @@ public class JoinInActivity extends ActionBarActivity {
 				specialitysArray = new String[jsonArray.length()];
 
 				for (int i = 0; i < jsonArray.length(); i++){
-				specialitysArray[i] = jsonArray.getString(i);
+					specialitysArray[i] = jsonArray.getString(i);
 				}
 			}
 			catch (JSONException e) {
@@ -194,31 +192,29 @@ public class JoinInActivity extends ActionBarActivity {
 			return specialitysArray;
 		}
 	};
-	ToRun postFillSpecialities = new ToRun<Void>() {
+	private	ToRun postFillSpecialities = new ToRun<Void>() {
 		@Override
 		public Void run(Object... parameters) {
 			if (parameters.length > 0 &&
-				parameters[0] != null &&
-				parameters[0].getClass() == String[].class) {
-
-
+					parameters[0] != null &&
+					parameters[0].getClass() == String[].class) {
 				String [] specialitysArray = (String[])parameters[0];
 				ArrayAdapter<String> adapter = new ArrayAdapter<String>(JoinInActivity.this, android.R.layout.simple_spinner_item, specialitysArray);
 				_specialities.setAdapter(adapter);
 			}
 			return null;
 		}
-		};
+	};
 
-private String convertIputStreamToString(InputStream inputStream)throws IOException{
-	BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-	String line = "";
-	String result = "";
-	while((line = bufferedReader.readLine()) != null){
-		result += line;
+	private String convertIputStreamToString(InputStream inputStream)throws IOException{
+		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+		String line = "";
+		String result = "";
+		while((line = bufferedReader.readLine()) != null){
+			result += line;
+		}
+		inputStream.close();
+		return result;
 	}
-	inputStream.close();
-	return result;
-}
 
 }

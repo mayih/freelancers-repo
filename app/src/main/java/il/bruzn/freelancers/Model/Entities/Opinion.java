@@ -14,21 +14,32 @@ public class Opinion {
 	private Member	_author;
 	private Member	_subject;
 	private Date _date = new Date();
+	private int _requestId;
 
-	public Opinion(Member author, Member subject, Level level, boolean done) {
+	public Opinion(Member author, Member subject,Level level, boolean done) {
 		_level = level;
 		_done = done;
 		_author = author;
 		_subject = subject;
 		_date = new Date();
 	}
-	public Opinion(int id, Level level, boolean done, String text, Member author, Member subject, Date date) {
+
+	public Opinion(Member author, Member subject, double level, String text, int requestId) {
+		_level = Level.fromDouble(level);
+		_requestId = requestId;
+		_author = author;
+		_subject = subject;
+		_date = new Date();
+		_text = text;
+	}
+	public Opinion(int id, double level, boolean done, String text, Member author, Member subject, int requestId, Date date) {
 		this.id = id;
-		_level = level;
+		_level = Level.fromDouble(level);
 		_done = done;
 		_text = text;
 		_author = author;
 		_subject = subject;
+		_requestId = requestId;
 		_date = date;
 	}
 
@@ -49,6 +60,9 @@ public class Opinion {
 	}
 	public Member getSubject() {
 		return _subject;
+	}
+	public int getRequestId() {
+		return _requestId;
 	}
 	public Date getDate() {
 		return _date;
@@ -84,26 +98,44 @@ public class Opinion {
 	}
 
 	public static enum Level {
-		ONE(1), TWO(2) ,THREE(3), FOUR(4), FIVE(5);
+		HALF(0.5), ONE(1), ONEANDHALF(1.5), TWO(2), TWOANDHALF(2.5), THREE(3), THREEANDHALF(3.5), FOUR(4), FOURANDHALF(4.5), FIVE(5);
 
-		private int _level;
-		Level(int level) { _level = level; }
-		public int getValue() { return _level; }
+		private double _level;
+		Level(double level) { _level = level; }
+		public double getValue() { return _level; }
 
-		public static Level fromInteger(int level){
-
-			switch (level){
-				case 1:
-					return ONE;
-				case 2:
-					return TWO;
-				case 3:
-					return THREE;
-				case 4:
-					return FOUR;
-				case 5:
-					return FIVE;
+		public static Level fromDouble(double level){
+			if (level == 0.5){
+				return HALF;
 			}
+			else if (level == 1) {
+				return ONE;
+			}
+			else if (level == 1.5){
+				return ONEANDHALF;
+			}
+			else if (level == 2){
+				return TWO;
+			}
+			else if (level == 2.5){
+				return TWOANDHALF;
+			}
+			else if (level == 3){
+				return THREE;
+			}
+			else if (level == 3.5){
+				return THREEANDHALF;
+			}
+			else if (level == 4){
+				return FOUR;
+			}
+			else if (level == 4.5){
+				return FOURANDHALF;
+			}
+			else if (level == 5){
+				return FIVE;
+			}
+
 			return null;
 
 		}

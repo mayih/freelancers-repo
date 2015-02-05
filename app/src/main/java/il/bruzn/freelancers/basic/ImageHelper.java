@@ -3,14 +3,15 @@ package il.bruzn.freelancers.basic;
 /**
  * Created by Yair on 15/12/2014.
  */
+
 import android.graphics.Bitmap;
+import android.graphics.Bitmap.Config;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.PorterDuff.Mode;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
-import android.graphics.Bitmap.Config;
-import android.graphics.PorterDuff.Mode;
 
 public class ImageHelper {
 	public static Bitmap getRoundedCornerBitmap(Bitmap bitmap, int pixels) {

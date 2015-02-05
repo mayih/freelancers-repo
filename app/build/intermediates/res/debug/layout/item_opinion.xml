@@ -1,30 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-				android:layout_width="match_parent"
-				android:layout_height="match_parent">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-	<TextView
-		android:id="@+id/item_opinion_name"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:textAppearance="?android:attr/textAppearanceSmall"
-		android:text="Author's name"
-		android:textStyle="bold"/>
+    <TextView
+        android:id="@+id/item_opinion_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Author's name"
+        android:textStyle="bold"/>
 
-	<TextView
-		android:id="@+id/item_opinion_mark"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:textAppearance="?android:attr/textAppearanceSmall"
-		android:text="mark /5"
-		android:layout_alignParentRight="true"/>
+    <TextView
+        android:id="@+id/item_opinion_mark"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="mark /5"
+        android:layout_alignParentRight="true"/>
 
-	<TextView
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:textAppearance="?android:attr/textAppearanceSmall"
-		android:text="Opinion's text.."
-		android:id="@+id/item_opinion_text"
-		android:layout_below="@+id/item_opinion_name"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Opinion's text.."
+        android:id="@+id/item_opinion_text"
+        android:layout_below="@+id/item_opinion_name"/>
 
 </RelativeLayout><!-- From: file:/C:/Users/yairo_000/Documents/Java-Projects/Freelancers/app/src/main/res/layout/item_opinion.xml -->

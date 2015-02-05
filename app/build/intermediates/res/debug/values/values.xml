@@ -1240,8 +1240,8 @@ m>        <item name="android:textColorLink">@color/link_text_material_dark</ite
     <!-- From: file:/C:/Users/yairo_000/Documents/Java-Projects/Freelancers/app/src/main/res/values/styles.xml -->
     <eat-comment/>
     <style name="pager_title_strip">
-		<item name="android:padding">10dp</item>
-		<item name="android:background">#880add7e</item>
-		<item name="android:textColor">#ffffff</item>
-	</style>
+        <item name="android:padding">10dp</item>
+        <item name="android:background">#880add7e</item>
+        <item name="android:textColor">#ffffff</item>
+    </style>
 </resources>

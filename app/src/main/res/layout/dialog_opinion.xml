@@ -1,0 +1,21 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_height="match_parent"
+              android:layout_width="match_parent"
+              android:orientation="vertical">
+    <EditText
+        android:id="@+id/dialog_opinion_editText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="top|left"
+        android:lines="8"
+        android:scrollbars="vertical"
+        android:inputType="textMultiLine|textCapSentences"
+        />
+    <RatingBar android:id="@+id/dialog_opinion_ratingbar"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_gravity="center"
+               android:numStars="5"
+               android:rating="0.5"
+        />
+</LinearLayout>

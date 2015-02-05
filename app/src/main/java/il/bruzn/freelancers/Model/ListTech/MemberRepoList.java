@@ -15,7 +15,7 @@ public class MemberRepoList extends ListTech implements iMemberRepo {
 	@Override
 	public void add(Member entry) {
 		_members.add(entry);
-			}
+	}
 
 	@Override
 	public Member selectByEmail(String email) {
@@ -78,7 +78,7 @@ public class MemberRepoList extends ListTech implements iMemberRepo {
 	@Override
 	public void update(Member entry, int id) {
 		// When the object changed the entry, the list is allready updated by reference.
-			} // NO USE
+	} // NO USE
 
 	@Override
 	public void delete(Member entry, int  id) {

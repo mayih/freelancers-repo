@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <translate xmlns:android="http://schemas.android.com/apk/res/android"
-		   android:fromXDelta="0"
-		   android:toXDelta="-50%p"
-		   android:duration="500"/><!-- From: file:/C:/Users/yairo_000/Documents/Java-Projects/Freelancers/app/src/main/res/transition/slide_left_to_right.xml -->
+           android:fromXDelta="0"
+           android:toXDelta="-50%p"
+           android:duration="500"/><!-- From: file:/C:/Users/yairo_000/Documents/Java-Projects/Freelancers/app/src/main/res/transition/slide_left_to_right.xml -->

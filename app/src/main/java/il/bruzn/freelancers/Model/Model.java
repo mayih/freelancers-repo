@@ -26,7 +26,7 @@ public class Model {
 
 	// DataBase Name
 	public final static String DB_NAME = "DB";
-	public final static int DB_VERSION = 10;
+	public final static int DB_VERSION = 15;
 
 	// Android FAQ: How do I pass data between Activities/Services within a single application?
 	// http://developer.android.com/guide/faq/framework.html

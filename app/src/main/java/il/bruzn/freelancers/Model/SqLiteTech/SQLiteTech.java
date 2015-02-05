@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import il.bruzn.freelancers.Model.CRUD;
-import il.bruzn.freelancers.Model.Entities.Request;
 
 /**
  * Created by Moshe on 17/12/14.
@@ -123,7 +122,12 @@ public abstract class SQLiteTech<T> extends SQLiteOpenHelper implements CRUD<T> 
 	@Override
 	public ArrayList<T> selectBy(String field, String value) {
 		SQLiteDatabase db = getReadableDatabase();
-		Cursor cursor = db.rawQuery("SELECT * FROM " + getNameTable() + " WHERE " + field + " = ?", new String[]{value});
+		Cursor cursor;
+		if (value == null)
+		cursor = db.rawQuery("SELECT * FROM " + getNameTable() + " WHERE " + field + " IS NULL", null);
+
+		else
+		cursor = db.rawQuery("SELECT * FROM " + getNameTable() + " WHERE " + field + " = ?", new String[]{value});
 		return toEntity(cursor);
 	}
 

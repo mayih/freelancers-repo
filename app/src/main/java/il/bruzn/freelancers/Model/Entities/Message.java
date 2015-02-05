@@ -11,12 +11,13 @@ public class Message implements Comparable<Message>{
 	private Member _author;
 	private Member _receiver;
 	private String _text;
-	private Date _date = new Date();
+	private Date _date;
 
 	public Message(Member author, Member receiver, String text) {
 		_author = author;
 		_receiver = receiver;
 		_text = text;
+		_date = new Date();
 	}
 	public Message(int id, Member author, Member receiver, String text, Date date) {
 		_id = id;

@@ -5,10 +5,10 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.provider.MediaStore;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,6 +38,7 @@ public class EditMyProfileFragment extends Fragment implements TitledFragment{
 	private EditText _phoneNumber;
 	private EditText _adress;
 	private Button _reqButton;
+	private Bitmap _selectedImage;
 
 	private final static int REQUEST_CODE_PICTURE = 1;
 
@@ -49,7 +50,7 @@ public class EditMyProfileFragment extends Fragment implements TitledFragment{
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-			_member = ConnectedMember.getMember();
+		_member = ConnectedMember.getMember();
 	}
 
 	@Nullable
@@ -89,8 +90,8 @@ public class EditMyProfileFragment extends Fragment implements TitledFragment{
 						.setMain(updateMyProfile)
 						.setPost(null).execute();
 
-				((HomeFragment)MenuFragment.getMenu()[0].getFragment()).isToUpdate();
-				((MainActivity)getActivity()).setFragment(MenuFragment.getMenu()[1].getFragment());
+				((HomeFragment)MenuFragment.ItemMenu.values()[0].getFragment()).isToUpdate();
+				((MainActivity)getActivity()).setFragment(MenuFragment.ItemMenu.values()[1].getFragment());
 			}
 		});
 
@@ -100,7 +101,7 @@ public class EditMyProfileFragment extends Fragment implements TitledFragment{
 	View.OnClickListener selectPicture = new View.OnClickListener() {
 		@Override
 		public void onClick(View v) {
-			Intent i=new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+			Intent i = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 			startActivityForResult(i, REQUEST_CODE_PICTURE);
 		}
 	};
@@ -109,7 +110,7 @@ public class EditMyProfileFragment extends Fragment implements TitledFragment{
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		switch (requestCode) {
-		    case REQUEST_CODE_PICTURE:
+			case REQUEST_CODE_PICTURE:
 				if (data != null) {
 					Uri uri = data.getData();
 					String[] projection = {MediaStore.Images.Media.DATA};
@@ -121,19 +122,20 @@ public class EditMyProfileFragment extends Fragment implements TitledFragment{
 					String filePath = cursor.getString(columnIndex);
 					cursor.close();
 
-					Bitmap selectedImage = BitmapFactory.decodeFile(filePath);
-					_picture.setImageBitmap(selectedImage);
+					_selectedImage = BitmapFactory.decodeFile(filePath);
+					_picture.setImageBitmap(_selectedImage);
 				}
-		        break;
+				break;
 		}
 	}
 
-	ToRun<Void> updateMyProfile = new ToRun<Void>() {
+	private ToRun<Void> updateMyProfile = new ToRun<Void>() {
 		@Override
 		public Void run(Object... parameters) {
 			Member member = _member.setEmail(_email.getText().toString())
 					.setFirstName(_firstName.getText().toString())
-					.setLastName(_lastName.getText().toString());
+					.setLastName(_lastName.getText().toString())
+					.setPicture(_selectedImage);
 			Model.getMemberRepo().update(member, member.getId());
 			return null;
 		}

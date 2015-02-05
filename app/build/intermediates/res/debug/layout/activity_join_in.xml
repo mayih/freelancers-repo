@@ -2,36 +2,36 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center">
-        <EditText
-            android:id="@+id/email_edtext"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="textEmailAddress"
-            android:ems="10"
-            android:layout_marginTop="10dp"
-            android:hint="@string/email_edtext"
-            />
-        <EditText
-            android:id="@+id/firstname_edtext"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:digits="@string/name_allowed_digits"
-            android:inputType="textPersonName"
-            android:ems="10"
-            android:layout_marginTop="10dp"
-            android:hint="@string/firstname_edtext"
-            android:layout_below="@id/email_edtext"/>
+    <EditText
+        android:id="@+id/email_edtext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:ems="10"
+        android:layout_marginTop="10dp"
+        android:hint="@string/email_edtext"
+        />
+    <EditText
+        android:id="@+id/firstname_edtext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:digits="@string/name_allowed_digits"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:layout_marginTop="10dp"
+        android:hint="@string/firstname_edtext"
+        android:layout_below="@id/email_edtext"/>
 
-        <EditText
-            android:id="@+id/lastname_edtext"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:digits="@string/name_allowed_digits"
-            android:inputType="textPersonName"
-            android:ems="10"
-            android:layout_marginTop="10dp"
-            android:hint="@string/lastname_edtext"
-            android:layout_below="@id/firstname_edtext"/>
+    <EditText
+        android:id="@+id/lastname_edtext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:digits="@string/name_allowed_digits"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:layout_marginTop="10dp"
+        android:hint="@string/lastname_edtext"
+        android:layout_below="@id/firstname_edtext"/>
 
     <Spinner android:id="@+id/speciality_spinner"
              android:layout_width="wrap_content"
@@ -41,32 +41,32 @@
         />
 
     <EditText
-            android:id="@+id/password_edtext"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="textPassword"
-            android:ems="10"
-            android:layout_marginTop="10dp"
-            android:hint="@string/password_edtext"
-            android:layout_below="@id/speciality_spinner"/>
+        android:id="@+id/password_edtext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:layout_marginTop="10dp"
+        android:hint="@string/password_edtext"
+        android:layout_below="@id/speciality_spinner"/>
 
-        <EditText
-            android:id="@+id/repeatpass_edtext"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="textPassword"
-            android:ems="10"
-            android:layout_marginTop="10dp"
-            android:hint="@string/repeatpass_edtext"
-            android:layout_below="@id/password_edtext"/>
+    <EditText
+        android:id="@+id/repeatpass_edtext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:layout_marginTop="10dp"
+        android:hint="@string/repeatpass_edtext"
+        android:layout_below="@id/password_edtext"/>
 
-        <Button
-            android:id="@+id/joinin_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/joinin_button"
-            android:ems="10"
-            android:layout_below="@id/repeatpass_edtext"
-            />
+    <Button
+        android:id="@+id/joinin_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/joinin_button"
+        android:ems="10"
+        android:layout_below="@id/repeatpass_edtext"
+        />
 </RelativeLayout>
 <!-- From: file:/C:/Users/yairo_000/Documents/Java-Projects/Freelancers/app/src/main/res/layout/activity_join_in.xml -->

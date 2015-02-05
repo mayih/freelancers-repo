@@ -1,9 +1,9 @@
 package il.bruzn.freelancers.Controller.fragments;
 
-import android.os.Bundle;
-import android.support.v4.app.ListFragment;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Bundle;
+import android.support.v4.app.ListFragment;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -23,7 +23,9 @@ import il.bruzn.freelancers.Model.Entities.Member;
 import il.bruzn.freelancers.Model.Entities.Message;
 import il.bruzn.freelancers.Model.Model;
 import il.bruzn.freelancers.R;
+import il.bruzn.freelancers.basic.AsyncToRun;
 import il.bruzn.freelancers.basic.ImageHelper;
+import il.bruzn.freelancers.basic.ToRun;
 
 /**
  * Created by Yair on 01/12/2014.
@@ -33,12 +35,13 @@ public class DiscussionFragment extends ListFragment implements TitledFragment {
 	ArrayList<ArrayList<Message>> _listOfDiscussion;
 	private final static String KEY_DISCUSSIONS = "key for discussion in hashmap";
 
-
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		_listOfDiscussion = Model.getMessageRepo().selectAllDiscussions(ConnectedMember.getMember());
-		setListAdapter(new MessagesArrayAdapter(_listOfDiscussion));
+		new AsyncToRun<Void>()
+				.setMain(selectAllDiscussions)
+				.setPost(listToAdapter)
+				.execute();
 	}
 
 	@Override
@@ -63,13 +66,28 @@ public class DiscussionFragment extends ListFragment implements TitledFragment {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-		    case R.id.action_new_discussion:
+			case R.id.action_new_discussion:
 				((MainActivity)getActivity()).setFragment(new NewDiscussionFragment());
-		        return true;
-		    default:
+				return true;
+			default:
 				return super.onOptionsItemSelected(item);
 		}
 	}
+
+	private ToRun<Void> selectAllDiscussions = new ToRun<Void>() {
+		@Override
+		public Void run(Object... parameters) {
+			_listOfDiscussion = Model.getMessageRepo().selectAllDiscussions(ConnectedMember.getMember());
+			return null;
+		}
+	};
+	private ToRun listToAdapter = new ToRun<Void>() {
+		@Override
+		public Void run(Object... parameters) {
+			setListAdapter(new MessagesArrayAdapter(_listOfDiscussion));
+			return null;
+		}
+	};
 
 	// The arrayList passed to the constructor contains the discussions. A discussion is a list of messages sorted by dates.
 	public class MessagesArrayAdapter extends ArrayAdapter<ArrayList<Message>> {

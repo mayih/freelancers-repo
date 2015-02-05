@@ -14,7 +14,7 @@ public class OpinionRepoList extends ListTech implements iOpinionRepo {
 	@Override
 	public void add(Opinion entry) {
 		_opinions.add(entry);
-		}
+	}
 
 	@Override
 	public ArrayList<Opinion> selectBySubject(Member subject) {
@@ -72,7 +72,7 @@ public class OpinionRepoList extends ListTech implements iOpinionRepo {
 	@Override
 	public void update(Opinion entry, int id) {
 		// In list technology, entities are already updated by reference.
-		}
+	}
 
 	@Override
 	public void delete(Opinion entry, int id) {

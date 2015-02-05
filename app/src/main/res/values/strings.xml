@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-	<string name="app_name">Freelance-it</string>
-	<string name="action_settings">Settings</string>
+    <string name="app_name">Freelance-it</string>
+    <string name="action_settings">Settings</string>
 
-	<!-- SignIn activity -->
-	<string name="title_activity_sign_in">Sign In</string>
-	<string name="email_edtext">Email</string>
-	<string name="password_edtext">Password</string>
-	<string name="connect_button">Connect</string>
-	<string name="joinin_button">Join in</string>
-	<string name="wrong_login_message">Wrong login or password</string>
+    <!-- SignIn activity -->
+    <string name="title_activity_sign_in">Sign In</string>
+    <string name="email_edtext">Email</string>
+    <string name="password_edtext">Password</string>
+    <string name="connect_button">Connect</string>
+    <string name="joinin_button">Join in</string>
+    <string name="wrong_login_message">Wrong login or password</string>
 
     <!-- JoinIn activity -->
     <string name="title_activity_join_in">Join-In</string>
@@ -19,24 +19,24 @@
     <string name="repeatpass_edtext">Repeat password</string>
     <string name="name_allowed_digits">azeéèrtyuiopqsdfghjklmwxcçvbnAZERTYUIOPQSDFGHJKLMWXCVBN</string>
 
-	<!--Home activity-->
-	<string name="title_activity_home">Home</string>
-	<string name="menu_opened">Menu opened</string>
-	<string name="menu_closed">Menu closed</string>
-	<string name="Welcome">Welcome home!</string>
-	<string name="disconnect_button">Disconnect</string>
+    <!--Home activity-->
+    <string name="title_activity_home">Home</string>
+    <string name="menu_opened">Menu opened</string>
+    <string name="menu_closed">Menu closed</string>
+    <string name="Welcome">Welcome home!</string>
+    <string name="disconnect_button">Disconnect</string>
 
-	<!--Inbox fragment-->
-	<string name="inbox_actionbar_title">Inbox</string>
+    <!--Inbox fragment-->
+    <string name="inbox_actionbar_title">Inbox</string>
 
-	<!--Messages Fragment-->
-	<string name="new_button">New</string>
-	<string name="messages_title">Messages</string>
+    <!--Messages Fragment-->
+    <string name="new_button">New</string>
+    <string name="messages_title">Messages</string>
 
-	<!--New discussion fragment-->
-	<string name="title_new_discussion">New discussion</string>
+    <!--New discussion fragment-->
+    <string name="title_new_discussion">New discussion</string>
 
-   <!-- Profile fragment-->
+    <!-- Profile fragment-->
     <string name="request_button">Request</string>
     <string name="modify_button">Modify</string>
 </resources>
